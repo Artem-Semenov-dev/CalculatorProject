@@ -1,0 +1,2 @@
+--1, 1, Extra negative sign has not failed the test
+-1.2.3, 4, Second dot has not failed the test

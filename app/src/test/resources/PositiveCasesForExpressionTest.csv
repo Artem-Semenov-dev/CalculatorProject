@@ -1,0 +1,5 @@
+1+2, 3.0, Simple sum action test has failed
+2*4, 8.0, Simple multiplication action test has failed
+1+2*3, 7.0, Several digits test has failed
+3*4+6*7+9^2, 135.0, Negative several digits test has failed
+2 * 4, 8.0, Space between operands test has failed
