@@ -8,8 +8,7 @@ public class MathematicalExpression {
 
     public MathematicalExpression(String expression) {
         Preconditions.checkNotNull(expression);
-
-        this.expression = expression;
+        this.expression = expression.replaceAll("\\s+","");
     }
 
     public String getExpression() {
