@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 import java.util.Set;
 
-public abstract class FiniteStateMachine<S extends Transducer<O>, O> {
+public abstract class FiniteStateMachine<S extends Transducer<O>, O> implements Transducer<O>{
 
     private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
 
@@ -17,10 +17,12 @@ public abstract class FiniteStateMachine<S extends Transducer<O>, O> {
 
 
     protected FiniteStateMachine(TransitionMatrix<S> matrix) {
+
         this.matrix = Preconditions.checkNotNull(matrix);
     }
 
-    public boolean run(InputChain inputChain, O outputChain) throws DeadlockException {
+    @Override
+    public boolean doTransition(InputChain inputChain, O outputChain) throws DeadlockException {
 
         if (logger.isInfoEnabled()){
 

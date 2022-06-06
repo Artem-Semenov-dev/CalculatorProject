@@ -3,6 +3,8 @@ package src;
 import com.google.common.base.Preconditions;
 import src.fsm.DeadlockException;
 import src.fsm.InputChain;
+import src.fsm.Transducer;
+import src.fsm.calculator.CalculatorMachine;
 import src.fsm.expression.ShuntingYardStack;
 
 import java.util.function.DoubleBinaryOperator;
@@ -12,13 +14,13 @@ public class CalculatorAPI {
     public CalculationResult calculate(MathematicalExpression expression) throws WrongExpressionException {
         Preconditions.checkNotNull(expression);
 
-        CalculatorMachine numberStateMachine = CalculatorMachine.create();
+        Transducer<ShuntingYardStack> numberStateMachine = CalculatorMachine.create();
 
         InputChain inputChain = new InputChain(expression.getExpression());
         ShuntingYardStack outputChain = new ShuntingYardStack();
 
         try {
-            if (!numberStateMachine.run(inputChain, outputChain) || outputChain.peekResult() == Infinity()) {
+            if (!numberStateMachine.doTransition(inputChain, outputChain) || outputChain.peekResult() == Infinity()) {
 
                 raiseException(inputChain);
             }

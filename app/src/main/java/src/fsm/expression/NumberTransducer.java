@@ -11,9 +11,9 @@ public class NumberTransducer implements Transducer<ShuntingYardStack> {
     public boolean doTransition(InputChain inputChain, ShuntingYardStack outputChain) throws DeadlockException {
         StringBuilder numberMachineOutput = new StringBuilder();
 
-        NumberStateMachine numberStateMachine = NumberStateMachine.create();
+        Transducer<StringBuilder> numberStateMachine = NumberStateMachine.create();
 
-        if (numberStateMachine.run(inputChain, numberMachineOutput)){
+        if (numberStateMachine.doTransition(inputChain, numberMachineOutput)){
 
             outputChain.pushOperand(Double.parseDouble(numberMachineOutput.toString()));
 

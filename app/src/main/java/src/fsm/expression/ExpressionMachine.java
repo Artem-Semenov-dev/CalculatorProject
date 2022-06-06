@@ -1,13 +1,14 @@
 package src.fsm.expression;
 
 import src.fsm.FiniteStateMachine;
+import src.fsm.Transducer;
 import src.fsm.TransitionMatrix;
 
 import static src.fsm.expression.ExpressionStates.*;
 
 public class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYardStack> {
 
-    public static ExpressionMachine create() {
+    public static Transducer<ShuntingYardStack> create() {
 
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(START)

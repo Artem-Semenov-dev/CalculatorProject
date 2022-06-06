@@ -7,7 +7,7 @@ import static src.fsm.number.NumberState.*;
 
 public final class NumberStateMachine extends FiniteStateMachine<NumberState, StringBuilder> {
 
-    public static NumberStateMachine create(){
+    public static Transducer<StringBuilder> create(){
         TransitionMatrix<NumberState> matrix = TransitionMatrix.<NumberState>builder().
                 withStartState(START)
                 .withFinishState(FINISH)

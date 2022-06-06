@@ -1,14 +1,14 @@
-package src;
+package src.fsm.calculator;
 
 import src.fsm.FiniteStateMachine;
 import src.fsm.TransitionMatrix;
 import src.fsm.expression.ShuntingYardStack;
 
-import static src.CalculatorState.*;
+import static src.fsm.calculator.CalculatorState.*;
 
-final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYardStack> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYardStack> {
 
-    static CalculatorMachine create() {
+    public static CalculatorMachine create() {
         TransitionMatrix<CalculatorState> matrix =
         TransitionMatrix.<CalculatorState>builder()
                 .withStartState(START)
