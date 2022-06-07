@@ -11,21 +11,7 @@ public enum BracketsStates implements Transducer<ShuntingYardStack> {
 
     START(Transducer.illegalTransition()),
     OPENING_BRACKET(Transducer.checkAndPassChar('(')),
-    EXPRESSION((inputChain, outputChain) -> {
-
-        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
-
-        Transducer<ShuntingYardStack> expressionMachine = ExpressionMachine.create();
-
-        if (expressionMachine.doTransition(inputChain, nestingShuntingYardStack)){
-
-            outputChain.pushOperand(nestingShuntingYardStack.popResult());
-
-            return true;
-        }
-
-        return false;
-    }),
+    EXPRESSION(Transducer.machineOnNewShuntingYard(ExpressionMachine.create())),
     CLOSING_BRACKET(Transducer.checkAndPassChar(')')),
     FINISH(Transducer.autoTransition());
 

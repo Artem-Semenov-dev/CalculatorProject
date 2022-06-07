@@ -1,5 +1,8 @@
 package src.fsm;
 
+import src.fsm.brackets.BracketsMachine;
+import src.fsm.expression.ShuntingYardStack;
+
 @FunctionalInterface
 public interface Transducer<O> {
 
@@ -25,6 +28,22 @@ public interface Transducer<O> {
                 inputChain.next();
                 return true;
             }
+            return false;
+        };
+    }
+
+    static Transducer<ShuntingYardStack> machineOnNewShuntingYard(Transducer<ShuntingYardStack> finiteStateMachine){
+
+        return (inputChain, outputChain) -> {
+            ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
+
+            if (finiteStateMachine.doTransition(inputChain, nestingShuntingYardStack)){
+
+                outputChain.pushOperand(nestingShuntingYardStack.popResult());
+
+                return true;
+            }
+
             return false;
         };
     }
