@@ -1,13 +1,15 @@
 package src.fsm.number;
 
 import com.google.common.base.Preconditions;
-import src.fsm.*;
+import src.fsm.FiniteStateMachine;
+import src.fsm.Transducer;
+import src.fsm.TransitionMatrix;
 
 import static src.fsm.number.NumberState.*;
 
 public final class NumberStateMachine extends FiniteStateMachine<NumberState, StringBuilder> {
 
-    public static Transducer<StringBuilder> create(){
+    public static Transducer<StringBuilder> create() {
         TransitionMatrix<NumberState> matrix = TransitionMatrix.<NumberState>builder().
                 withStartState(START)
                 .withFinishState(FINISH)

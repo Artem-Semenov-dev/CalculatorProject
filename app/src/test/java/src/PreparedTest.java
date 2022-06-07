@@ -18,7 +18,7 @@ public class PreparedTest {
         assertEquals(resultExpected, result.getResult(), errorMessage);
     }
 
-    public void negativeCase(String mathExpression, int expectedErrorPosition, String errorMessage){
+    public void negativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) {
         CalculatorAPI calculator = new CalculatorAPI();
 
 
@@ -30,7 +30,7 @@ public class PreparedTest {
         assertEquals(expectedErrorPosition, exception.getErrorPosition(), errorMessage);
     }
 
-    public void ShuntingYardResultTest(double left, char symbol, double right, double expected, String errorMassage ){
+    public void ShuntingYardResultTest(double left, char symbol, double right, double expected, String errorMassage) {
 
         ShuntingYardStack shuntingYardStack = new ShuntingYardStack();
 
@@ -46,7 +46,7 @@ public class PreparedTest {
 
         shuntingYardStack.pushOperand(right);
 
-        double result = shuntingYardStack.popResult();
+        double result = shuntingYardStack.peekResult();
 
         assertEquals(expected, result, errorMassage);
     }

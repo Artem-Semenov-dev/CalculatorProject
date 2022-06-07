@@ -16,9 +16,9 @@ public class ShuntingYardStack {
 
     private final Deque<PrioritizedBinaryOperator> operatorStack = new ArrayDeque<>();
 
-    public void pushOperand(double operand){
+    public void pushOperand(double operand) {
 
-        if (logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
 
             logger.info("Pushed operand -> {}", operand);
         }
@@ -26,9 +26,11 @@ public class ShuntingYardStack {
         operandStack.push(operand);
     }
 
-    public void pushOperator(PrioritizedBinaryOperator operator){
+    public void pushOperator(PrioritizedBinaryOperator operator) {
 
-        while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0){
+        Preconditions.checkNotNull(operator);
+
+        while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) {
 
             actionTopOperator();
         }
@@ -36,26 +38,24 @@ public class ShuntingYardStack {
         operatorStack.push(operator);
     }
 
-    public double popResult(){
+    public double peekResult() {
 
-        while (!operatorStack.isEmpty()){
+        while (!operatorStack.isEmpty()) {
 
             actionTopOperator();
         }
 
         Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
 
-        if (logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
             logger.info("Result -> {}", operandStack.peek());
             logger.info("------------------------------------------------------------------------------");
         }
 
-        return operandStack.pop();
+        assert operandStack.peek() != null;
+        return Preconditions.checkNotNull(operandStack.peek());
     }
 
-//    public double peekOperand(){
-//        return operandStack.peek();
-//    }
 
     private void actionTopOperator() {
         Double rightOperand = operandStack.pop();
@@ -69,12 +69,12 @@ public class ShuntingYardStack {
         operandStack.push(result);
     }
 
-    double peekOperand(){
+    double peekOperand() {
         assert operandStack.peek() != null;
         return Preconditions.checkNotNull(operandStack.peek());
     }
 
-    PrioritizedBinaryOperator peekOperator(){
+    PrioritizedBinaryOperator peekOperator() {
         assert operatorStack.peek() != null;
         return Preconditions.checkNotNull(operatorStack.peek());
     }

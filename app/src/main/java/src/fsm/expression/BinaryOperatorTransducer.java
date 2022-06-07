@@ -1,5 +1,6 @@
 package src.fsm.expression;
 
+import com.google.common.base.Preconditions;
 import src.fsm.InputChain;
 import src.fsm.Transducer;
 
@@ -11,6 +12,8 @@ class BinaryOperatorTransducer implements Transducer<ShuntingYardStack> {
 
     @Override
     public boolean doTransition(InputChain inputChain, ShuntingYardStack outputChain) {
+
+        Preconditions.checkNotNull(inputChain, outputChain);
 
         if (!inputChain.hasNext()) {
             return false;

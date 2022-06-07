@@ -15,9 +15,9 @@ public enum ExpressionStates implements Transducer<ShuntingYardStack> {
 
         OperandMachine operandMachine = OperandMachine.create();
 
-        if (operandMachine.doTransition(inputChain, nestingShuntingYardStack)){
+        if (operandMachine.doTransition(inputChain, nestingShuntingYardStack)) {
 
-            outputChain.pushOperand(nestingShuntingYardStack.popResult());
+            outputChain.pushOperand(nestingShuntingYardStack.peekResult());
 
             return true;
         }

@@ -1,17 +1,15 @@
 package src.fsm;
 
 import com.google.common.base.Preconditions;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 import java.util.Set;
 
-public abstract class FiniteStateMachine<S extends Transducer<O>, O> implements Transducer<O>{
+public abstract class FiniteStateMachine<S extends Transducer<O>, O> implements Transducer<O> {
 
     private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
-
 
     private final TransitionMatrix<S> matrix;
 
@@ -24,9 +22,9 @@ public abstract class FiniteStateMachine<S extends Transducer<O>, O> implements 
     @Override
     public boolean doTransition(InputChain inputChain, O outputChain) throws DeadlockException {
 
-        if (logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
 
-            logger.info("Start of machine: {} for {}",getClass().getSimpleName() ,inputChain.toString());
+            logger.info("Start of machine: {} for {}", getClass().getSimpleName(), inputChain.toString());
         }
 
         S currentState = matrix.getStartState();
@@ -35,14 +33,14 @@ public abstract class FiniteStateMachine<S extends Transducer<O>, O> implements 
 
             Optional<S> nextState = makeNextStep(inputChain, outputChain, currentState);
 
-            if (nextState.isEmpty()){
+            if (nextState.isEmpty()) {
 
-                if (matrix.getStartState().equals(currentState)){
+                if (matrix.getStartState().equals(currentState)) {
 
                     return false;
                 }
 
-                throw  new DeadlockException();
+                throw new DeadlockException();
             }
 
             currentState = nextState.get();
@@ -54,13 +52,13 @@ public abstract class FiniteStateMachine<S extends Transducer<O>, O> implements 
     private Optional<S> makeNextStep(InputChain inputChain, O outputChain, S currentState) throws DeadlockException {
         Set<S> possibleTransitions = matrix.getPossibleTransitions(currentState);
 
-        for (S potentialState : possibleTransitions){
+        for (S potentialState : possibleTransitions) {
 
-            if (potentialState.doTransition(inputChain, outputChain)){
+            if (potentialState.doTransition(inputChain, outputChain)) {
 
-                if (logger.isInfoEnabled()){
+                if (logger.isInfoEnabled()) {
 
-                    logger.info("Machine on work: {} -> {} on index {}",getClass().getSimpleName() ,potentialState, inputChain.currentPosition());
+                    logger.info("Machine on work: {} -> {} on index {}", getClass().getSimpleName(), potentialState, inputChain.currentPosition());
                 }
 
                 return Optional.of(potentialState);

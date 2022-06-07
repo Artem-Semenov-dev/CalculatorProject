@@ -1,5 +1,6 @@
 package src.fsm.expression;
 
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,18 +16,18 @@ public class BinaryOperatorFactory {
 
     private final Map<Character, PrioritizedBinaryOperator> binaryOperators = new HashMap<>();
 
-    public BinaryOperatorFactory(){
+    public BinaryOperatorFactory() {
 
         binaryOperators.put('+', new PrioritizedBinaryOperator(LOW, Double::sum));
         binaryOperators.put('-', new PrioritizedBinaryOperator(LOW, (left, right) -> left - right));
         binaryOperators.put('*', new PrioritizedBinaryOperator(MEDIUM, (left, right) -> left * right));
-        binaryOperators.put('/', new PrioritizedBinaryOperator(MEDIUM, (left, right) -> left/right));
+        binaryOperators.put('/', new PrioritizedBinaryOperator(MEDIUM, (left, right) -> left / right));
         binaryOperators.put('^', new PrioritizedBinaryOperator(HIGH, Math::pow));
     }
 
-    public Optional<PrioritizedBinaryOperator> create(char operatorSymbol){
+    public Optional<PrioritizedBinaryOperator> create(char operatorSymbol) {
 
-        if (logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
 
             logger.info("Current binary operator -> {}", operatorSymbol);
         }

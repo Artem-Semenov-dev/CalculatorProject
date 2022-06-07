@@ -23,7 +23,7 @@ public class ShuntingYardStackTest {
     }
 
     @Test
-    public void testPushOperand(){
+    public void testPushOperand() {
 
         shuntingYardStack.pushOperand(3);
 
@@ -31,7 +31,7 @@ public class ShuntingYardStackTest {
     }
 
     @Test
-    public void testPushOperator(){
+    public void testPushOperator() {
 
         PrioritizedBinaryOperator operator = new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.LOW, Double::sum);
 

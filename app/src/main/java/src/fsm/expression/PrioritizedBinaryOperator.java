@@ -7,7 +7,7 @@ import java.util.function.DoubleBinaryOperator;
 public class PrioritizedBinaryOperator implements DoubleBinaryOperator, Comparable<PrioritizedBinaryOperator> {
 
 
-    public enum Priority{
+    public enum Priority {
         LOW, MEDIUM, HIGH
     }
 

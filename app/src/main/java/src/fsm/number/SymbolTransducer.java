@@ -23,6 +23,8 @@ class SymbolTransducer implements Transducer<StringBuilder> {
     @Override
     public boolean doTransition(InputChain inputChain, StringBuilder outputChain) {
 
+        Preconditions.checkNotNull(inputChain, outputChain);
+
         boolean nextCharIsAvailable = inputChain.hasNext();
 
         if (nextCharIsAvailable && condition.test(inputChain.currentSymbol())) {

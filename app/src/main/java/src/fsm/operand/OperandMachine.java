@@ -8,9 +8,9 @@ import static src.fsm.operand.OperandStates.*;
 
 public class OperandMachine extends FiniteStateMachine<OperandStates, ShuntingYardStack> {
 
-    public static OperandMachine create(){
+    public static OperandMachine create() {
 
-        TransitionMatrix<OperandStates> matrix= TransitionMatrix.<OperandStates>builder()
+        TransitionMatrix<OperandStates> matrix = TransitionMatrix.<OperandStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)
                 .allowTransition(START, NUMBER, BRACKETS)

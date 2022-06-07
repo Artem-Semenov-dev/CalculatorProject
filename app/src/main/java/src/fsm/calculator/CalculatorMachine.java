@@ -10,11 +10,11 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorState,
 
     public static CalculatorMachine create() {
         TransitionMatrix<CalculatorState> matrix =
-        TransitionMatrix.<CalculatorState>builder()
-                .withStartState(START)
-                .withFinishState(FINISH)
-                .allowTransition(START, EXPRESSION)
-                .allowTransition(EXPRESSION, FINISH).build();
+                TransitionMatrix.<CalculatorState>builder()
+                        .withStartState(START)
+                        .withFinishState(FINISH)
+                        .allowTransition(START, EXPRESSION)
+                        .allowTransition(EXPRESSION, FINISH).build();
 
         return new CalculatorMachine(matrix);
     }

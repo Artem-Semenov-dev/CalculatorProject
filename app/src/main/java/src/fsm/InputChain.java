@@ -14,7 +14,7 @@ public final class InputChain {
         this.source = Preconditions.checkNotNull(source).toCharArray();
     }
 
-    public char currentSymbol(){
+    public char currentSymbol() {
         return source[currentPosition];
     }
 
@@ -27,12 +27,12 @@ public final class InputChain {
         return currentPosition;
     }
 
-    public boolean hasNext(){
+    public boolean hasNext() {
 
         return currentPosition < source.length;
     }
 
-    public String toString(){
+    public String toString() {
         return Arrays.toString(source);
     }
 }

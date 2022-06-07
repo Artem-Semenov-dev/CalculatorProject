@@ -12,7 +12,7 @@ public interface TransitionMatrix<S> {
 
     Set<S> getPossibleTransitions(S state);
 
-    static <S> MatrixBuider<S> builder(){
+    static <S> MatrixBuider<S> builder() {
         return new MatrixBuider<>();
     }
 
@@ -23,9 +23,10 @@ public interface TransitionMatrix<S> {
 
         private final Map<S, Set<S>> transitions = new TreeMap<>();
 
-        private MatrixBuider() {}
+        private MatrixBuider() {
+        }
 
-        public MatrixBuider<S> withStartState(S startState){
+        public MatrixBuider<S> withStartState(S startState) {
 
             Preconditions.checkState(this.startState == null, "Start state is already defined");
 
@@ -34,7 +35,7 @@ public interface TransitionMatrix<S> {
             return this;
         }
 
-        public MatrixBuider<S> withFinishState(S finishState){
+        public MatrixBuider<S> withFinishState(S finishState) {
 
             Preconditions.checkState(this.finishState == null, "Finish state is already defined");
 
@@ -44,7 +45,7 @@ public interface TransitionMatrix<S> {
         }
 
         @SafeVarargs
-        public final MatrixBuider<S> allowTransition(S currentState, S... states){
+        public final MatrixBuider<S> allowTransition(S currentState, S... states) {
 
             transitions.put(currentState, new TreeSet<>(Arrays.stream(states).toList()));
 

@@ -9,7 +9,6 @@ import src.fsm.expression.ShuntingYardStack;
 
 import java.util.function.DoubleBinaryOperator;
 
-
 public class CalculatorAPI {
     public CalculationResult calculate(MathematicalExpression expression) throws WrongExpressionException {
         Preconditions.checkNotNull(expression);
@@ -20,7 +19,7 @@ public class CalculatorAPI {
         ShuntingYardStack outputChain = new ShuntingYardStack();
 
         try {
-            if (!numberStateMachine.doTransition(inputChain, outputChain) ) {
+            if (!numberStateMachine.doTransition(inputChain, outputChain) || outputChain.peekResult() == infinity()) {
 
                 raiseException(inputChain);
             }
@@ -28,15 +27,15 @@ public class CalculatorAPI {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(outputChain.popResult());
+        return new CalculationResult(outputChain.peekResult());
     }
 
     private void raiseException(InputChain inputChain) throws WrongExpressionException {
         throw new WrongExpressionException("Wrong mathematical expression", inputChain.currentPosition());
     }
 
-    private double Infinity(){
-        DoubleBinaryOperator divisionByZero = (left, right) -> left/right;
+    private double infinity() {
+        DoubleBinaryOperator divisionByZero = (left, right) -> left / right;
         return divisionByZero.applyAsDouble(1, 0);
     }
 
