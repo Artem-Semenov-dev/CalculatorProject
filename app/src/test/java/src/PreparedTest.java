@@ -46,7 +46,7 @@ public class PreparedTest {
 
         shuntingYardStack.pushOperand(right);
 
-        double result = shuntingYardStack.peekResult();
+        double result = shuntingYardStack.popResult();
 
         assertEquals(expected, result, errorMassage);
     }

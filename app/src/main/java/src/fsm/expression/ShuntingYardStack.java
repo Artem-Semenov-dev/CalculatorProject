@@ -36,7 +36,7 @@ public class ShuntingYardStack {
         operatorStack.push(operator);
     }
 
-    public double peekResult(){
+    public double popResult(){
 
         while (!operatorStack.isEmpty()){
 
@@ -50,8 +50,7 @@ public class ShuntingYardStack {
             logger.info("------------------------------------------------------------------------------");
         }
 
-        assert operandStack.peek() != null;
-        return operandStack.peek();
+        return operandStack.pop();
     }
 
 //    public double peekOperand(){

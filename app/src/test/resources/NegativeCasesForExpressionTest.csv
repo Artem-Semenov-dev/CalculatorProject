@@ -1,4 +1,4 @@
-1/0, 3, Division by zero test has failed
+
 1**2, 2, Double minus action test has failed
 2//2, 2, Double division action test has failed
 2.22.2/5, 4, Error in number test has failed

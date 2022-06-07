@@ -20,7 +20,7 @@ public class CalculatorAPI {
         ShuntingYardStack outputChain = new ShuntingYardStack();
 
         try {
-            if (!numberStateMachine.doTransition(inputChain, outputChain) || outputChain.peekResult() == Infinity()) {
+            if (!numberStateMachine.doTransition(inputChain, outputChain) ) {
 
                 raiseException(inputChain);
             }
@@ -28,7 +28,7 @@ public class CalculatorAPI {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(outputChain.peekResult());
+        return new CalculationResult(outputChain.popResult());
     }
 
     private void raiseException(InputChain inputChain) throws WrongExpressionException {

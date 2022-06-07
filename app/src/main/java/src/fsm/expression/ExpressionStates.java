@@ -4,11 +4,26 @@ import com.google.common.base.Preconditions;
 import src.fsm.DeadlockException;
 import src.fsm.InputChain;
 import src.fsm.Transducer;
+import src.fsm.operand.OperandMachine;
 
 public enum ExpressionStates implements Transducer<ShuntingYardStack> {
 
     START(Transducer.illegalTransition()),
-    NUMBER(new NumberTransducer()),
+    OPERAND((inputChain, outputChain) -> {
+
+        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
+
+        OperandMachine operandMachine = OperandMachine.create();
+
+        if (operandMachine.doTransition(inputChain, nestingShuntingYardStack)){
+
+            outputChain.pushOperand(nestingShuntingYardStack.popResult());
+
+            return true;
+        }
+
+        return false;
+    }),
     BINARY_OPERATOR(new BinaryOperatorTransducer()),
     FINISH(Transducer.autoTransition());
 

@@ -13,9 +13,9 @@ public class ExpressionMachine extends FiniteStateMachine<ExpressionStates, Shun
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)
-                .allowTransition(START, NUMBER)
-                .allowTransition(NUMBER, BINARY_OPERATOR, FINISH)
-                .allowTransition(BINARY_OPERATOR, NUMBER)
+                .allowTransition(START, OPERAND)
+                .allowTransition(OPERAND, BINARY_OPERATOR, FINISH)
+                .allowTransition(BINARY_OPERATOR, OPERAND)
 
                 .build();
 

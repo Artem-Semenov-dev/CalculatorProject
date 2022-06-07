@@ -17,7 +17,7 @@ public class BracketsMachineTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/NegativeCasesForExpressionTest.csv")
+    @CsvFileSource(resources = "/NegativeCasesForBracketsTest.csv")
     void testNegativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) {
 
         preparedTest.negativeCase(mathExpression, expectedErrorPosition, errorMessage);

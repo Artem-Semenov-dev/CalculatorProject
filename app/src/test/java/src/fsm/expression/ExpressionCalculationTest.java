@@ -23,3 +23,5 @@ public class ExpressionCalculationTest {
         preparedTest.negativeCase(mathExpression, expectedErrorPosition, errorMessage);
     }
 }
+
+
