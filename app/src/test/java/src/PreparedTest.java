@@ -18,7 +18,7 @@ public class PreparedTest {
         assertEquals(resultExpected, result.getResult(), errorMessage);
     }
 
-    void negativeCase(String mathExpression, int expectedErrorPosition, String errorMessage){
+    public void negativeCase(String mathExpression, int expectedErrorPosition, String errorMessage){
         CalculatorAPI calculator = new CalculatorAPI();
 
 

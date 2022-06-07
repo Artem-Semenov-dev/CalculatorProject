@@ -1,7 +1,9 @@
-package src;
+package src.fsm.expression;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import src.PreparedTest;
+import src.WrongExpressionException;
 
 public class ExpressionCalculationTest {
 
