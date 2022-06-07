@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class ExpressionCalculationTest {
 
-    PreparedTest preparedTest = new PreparedTest();
+    private final PreparedTest preparedTest = new PreparedTest();
 
     @ParameterizedTest
     @CsvFileSource(resources = "/PositiveCasesForExpressionTest.csv")

@@ -2,14 +2,10 @@ package src.fsm.expression;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import src.WrongExpressionException;
-import src.fsm.DeadlockException;
-import src.fsm.InputChain;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.DoubleBinaryOperator;
 
 import static src.fsm.expression.PrioritizedBinaryOperator.Priority.*;
 

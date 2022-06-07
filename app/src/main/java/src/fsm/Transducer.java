@@ -18,5 +18,14 @@ public interface Transducer<O> {
         };
     }
 
+    static <O> Transducer<O> checkAndPassChar(char character){
 
+        return (inputChain, outputChain) -> {
+            if (inputChain.hasNext() && inputChain.currentSymbol() == character){
+                inputChain.next();
+                return true;
+            }
+            return false;
+        };
+    }
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class NumberParcingTest {
 
-    PreparedTest preparedTest = new PreparedTest();
+    private final PreparedTest preparedTest = new PreparedTest();
 
     @ParameterizedTest
     @CsvFileSource(resources = "/PositiveCasesForNumberTest.csv")
@@ -16,7 +16,7 @@ public class NumberParcingTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/NegativeCasesForNumberTest.csv")
-    void testNegativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) throws WrongExpressionException {
+    void testNegativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) {
 
         preparedTest.negativeCase(mathExpression, expectedErrorPosition, errorMessage);
     }

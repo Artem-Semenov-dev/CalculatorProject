@@ -10,9 +10,9 @@ import src.fsm.expression.ShuntingYardStack;
 public enum BracketsStates implements Transducer<ShuntingYardStack> {
 
     START(Transducer.illegalTransition()),
-    OPENING_BRACKET(new OpeningTransducer()),
+    OPENING_BRACKET(Transducer.checkAndPassChar('(')),
     EXPRESSION(ExpressionMachine.create()),
-    CLOSING_BRACKET(new ClosingTransducer()),
+    CLOSING_BRACKET(Transducer.checkAndPassChar(')')),
     FINISH(Transducer.autoTransition());
 
     private final Transducer<ShuntingYardStack> origin;

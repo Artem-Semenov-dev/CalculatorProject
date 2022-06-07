@@ -69,4 +69,14 @@ public class ShuntingYardStack {
 
         operandStack.push(result);
     }
+
+    double peekOperand(){
+        assert operandStack.peek() != null;
+        return Preconditions.checkNotNull(operandStack.peek());
+    }
+
+    PrioritizedBinaryOperator peekOperator(){
+        assert operatorStack.peek() != null;
+        return Preconditions.checkNotNull(operatorStack.peek());
+    }
 }
