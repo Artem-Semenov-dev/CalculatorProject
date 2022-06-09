@@ -3,25 +3,45 @@ package src.calculator.fsm.brackets;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
+import src.calculator.fsm.expression.ExpressionMachine;
 import src.calculator.fsm.expression.ShuntingYardStack;
 
-public class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
+import static src.calculator.fsm.brackets.BracketsStates.*;
 
-    public static Transducer<ShuntingYardStack> create() {
+public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
+
+    public static BracketsMachine create() {
 
         TransitionMatrix<BracketsStates> matrix = TransitionMatrix.<BracketsStates>builder()
-                .withStartState(BracketsStates.START)
-                .withFinishState(BracketsStates.FINISH)
-                .allowTransition(BracketsStates.START, BracketsStates.OPENING_BRACKET)
-                .allowTransition(BracketsStates.OPENING_BRACKET, BracketsStates.EXPRESSION)
-                .allowTransition(BracketsStates.EXPRESSION, BracketsStates.CLOSING_BRACKET)
-                .allowTransition(BracketsStates.CLOSING_BRACKET, BracketsStates.FINISH)
+                .withStartState(START)
+                .withFinishState(FINISH)
+                .allowTransition(START, OPENING_BRACKET)
+                .allowTransition(OPENING_BRACKET, EXPRESSION)
+                .allowTransition(EXPRESSION, CLOSING_BRACKET)
+                .allowTransition(CLOSING_BRACKET, FINISH)
                 .build();
 
         return new BracketsMachine(matrix);
     }
 
-    protected BracketsMachine(TransitionMatrix<BracketsStates> matrix) {
+    private BracketsMachine(TransitionMatrix<BracketsStates> matrix) {
         super(matrix);
+
+        registerTransducer(START, Transducer.illegalTransition());
+        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('(') );
+        registerTransducer(EXPRESSION, new ExpressionTransducer());
+        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(FINISH, Transducer.autoTransition());
     }
 }
+//    START(Transducer.illegalTransition()),
+//    OPENING_BRACKET(Transducer.checkAndPassChar('(')),
+//    EXPRESSION(Transducer.machineOnNewShuntingYard(ExpressionMachine.create())),
+//    CLOSING_BRACKET(Transducer.checkAndPassChar(')')),
+//    FINISH(Transducer.autoTransition());
+//
+//    private final Transducer<ShuntingYardStack> origin;
+//
+//    BracketsStates(Transducer<ShuntingYardStack> origin) {
+//        this.origin = Preconditions.checkNotNull(origin);
+//    }

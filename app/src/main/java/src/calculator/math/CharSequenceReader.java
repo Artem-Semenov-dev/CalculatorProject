@@ -18,13 +18,13 @@ public final class CharSequenceReader {
         return source[readingPosition];
     }
 
-    public int position() {
-        return readingPosition;
-    }
-
     public void incrementPosition() {
 
         readingPosition++;
+    }
+
+    public int position() {
+        return readingPosition;
     }
 
     public boolean canRead() {

@@ -1,7 +1,7 @@
 package src.calculator.fsm.number;
 
 import com.google.common.base.Preconditions;
-import src.calculator.fsm.InputChain;
+import src.calculator.math.CharSequenceReader;
 import src.calculator.fsm.Transducer;
 
 import java.util.function.Predicate;
@@ -21,17 +21,17 @@ class SymbolTransducer implements Transducer<StringBuilder> {
     }
 
     @Override
-    public boolean doTransition(InputChain inputChain, StringBuilder outputChain) {
+    public boolean doTransition(CharSequenceReader inputChain, StringBuilder outputChain) {
 
         Preconditions.checkNotNull(inputChain, outputChain);
 
-        boolean nextCharIsAvailable = inputChain.hasNext();
+        boolean nextCharIsAvailable = inputChain.canRead();
 
-        if (nextCharIsAvailable && condition.test(inputChain.currentSymbol())) {
+        if (nextCharIsAvailable && condition.test(inputChain.read())) {
 
-            outputChain.append(inputChain.currentSymbol());
+            outputChain.append(inputChain.read());
 
-            inputChain.next();
+            inputChain.incrementPosition();
 
             return true;
         }

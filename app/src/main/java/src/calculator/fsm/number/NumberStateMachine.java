@@ -9,7 +9,7 @@ import static src.calculator.fsm.number.NumberState.*;
 
 public final class NumberStateMachine extends FiniteStateMachine<NumberState, StringBuilder> {
 
-    public static Transducer<StringBuilder> create() {
+    public static NumberStateMachine create() {
         TransitionMatrix<NumberState> matrix = TransitionMatrix.<NumberState>builder().
                 withStartState(START)
                 .withFinishState(FINISH)
@@ -26,6 +26,25 @@ public final class NumberStateMachine extends FiniteStateMachine<NumberState, St
     private NumberStateMachine(TransitionMatrix<NumberState> matrix) {
 
         super(Preconditions.checkNotNull(matrix));
+
+        registerTransducer(START, Transducer.illegalTransition());
+        registerTransducer(NEGATIVE_SIGN, new SymbolTransducer('-'));
+        registerTransducer(INTEGER_DIGIT, new SymbolTransducer(Character::isDigit));
+        registerTransducer(DOT, new SymbolTransducer('.'));
+        registerTransducer(FLOATING_INTEGER, new SymbolTransducer(Character::isDigit));
+        registerTransducer(FINISH, Transducer.autoTransition());
     }
 
 }
+//    START(Transducer.illegalTransition()),
+//    NEGATIVE_SIGN(new SymbolTransducer('-')),
+//    INTEGER_DIGIT(new SymbolTransducer(Character::isDigit)),
+//    DOT(new SymbolTransducer('.')),
+//    FLOATING_INTEGER(new SymbolTransducer(Character::isDigit)),
+//    FINISH(Transducer.autoTransition());
+//
+//    private final Transducer<StringBuilder> origin;
+//
+//    NumberState(Transducer<StringBuilder> origin) {
+//        this.origin = Preconditions.checkNotNull(origin);
+//    }

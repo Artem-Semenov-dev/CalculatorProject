@@ -1,11 +1,12 @@
 package src.calculator.fsm;
 
 import src.calculator.fsm.expression.ShuntingYardStack;
+import src.calculator.math.CharSequenceReader;
 
 @FunctionalInterface
 public interface Transducer<O> {
 
-    boolean doTransition(InputChain inputChain, O outputChain) throws DeadlockException;
+    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws DeadlockException;
 
     static <O> Transducer<O> autoTransition() {
 
@@ -23,8 +24,8 @@ public interface Transducer<O> {
     static <O> Transducer<O> checkAndPassChar(char character) {
 
         return (inputChain, outputChain) -> {
-            if (inputChain.hasNext() && inputChain.currentSymbol() == character) {
-                inputChain.next();
+            if (inputChain.canRead() && inputChain.read() == character) {
+                inputChain.incrementPosition();
                 return true;
             }
             return false;
