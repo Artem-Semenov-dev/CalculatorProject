@@ -27,6 +27,12 @@ dependencies {
 
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(15))
+    }
+}
+
 application {
     // Define the main class for the application.
     mainClass.set("src.App")
