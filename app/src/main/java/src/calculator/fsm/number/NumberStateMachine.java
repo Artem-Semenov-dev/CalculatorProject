@@ -1,9 +1,9 @@
 package src.calculator.fsm.number;
 
 import com.google.common.base.Preconditions;
-import src.calculator.fsm.TransitionMatrix;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
+import src.calculator.fsm.TransitionMatrix;
 
 import static src.calculator.fsm.number.NumberState.*;
 
@@ -36,15 +36,4 @@ public final class NumberStateMachine extends FiniteStateMachine<NumberState, St
     }
 
 }
-//    START(Transducer.illegalTransition()),
-//    NEGATIVE_SIGN(new SymbolTransducer('-')),
-//    INTEGER_DIGIT(new SymbolTransducer(Character::isDigit)),
-//    DOT(new SymbolTransducer('.')),
-//    FLOATING_INTEGER(new SymbolTransducer(Character::isDigit)),
-//    FINISH(Transducer.autoTransition());
-//
-//    private final Transducer<StringBuilder> origin;
-//
-//    NumberState(Transducer<StringBuilder> origin) {
-//        this.origin = Preconditions.checkNotNull(origin);
-//    }
+

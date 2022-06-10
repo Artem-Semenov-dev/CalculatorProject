@@ -1,12 +1,12 @@
 package src.calculator.fsm;
 
-import src.calculator.fsm.expression.ShuntingYardStack;
 import src.calculator.math.CharSequenceReader;
+import src.calculator.math.ResolvingException;
 
 @FunctionalInterface
 public interface Transducer<O> {
 
-    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws DeadlockException;
+    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws DeadlockException, ResolvingException;
 
     static <O> Transducer<O> autoTransition() {
 
@@ -28,22 +28,6 @@ public interface Transducer<O> {
                 inputChain.incrementPosition();
                 return true;
             }
-            return false;
-        };
-    }
-
-    static Transducer<ShuntingYardStack> machineOnNewShuntingYard(Transducer<ShuntingYardStack> finiteStateMachine) {
-
-        return (inputChain, outputChain) -> {
-            ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
-
-            if (finiteStateMachine.doTransition(inputChain, nestingShuntingYardStack)) {
-
-                outputChain.pushOperand(nestingShuntingYardStack.peekResult());
-
-                return true;
-            }
-
             return false;
         };
     }

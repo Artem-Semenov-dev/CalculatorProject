@@ -1,29 +1,32 @@
 package src.calculator.fsm.operand;
 
-import com.google.common.base.Preconditions;
+import src.calculator.math.CharSequenceReader;
 import src.calculator.fsm.DeadlockException;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.expression.ShuntingYardStack;
-import src.calculator.fsm.number.NumberStateMachine;
-import src.calculator.math.CharSequenceReader;
+import src.calculator.math.MathElementResolver;
+import src.calculator.math.ResolvingException;
+
+import java.util.Optional;
 
 public class NumberTransducer implements Transducer<ShuntingYardStack> {
 
+    MathElementResolver resolver;
+
+    NumberTransducer(MathElementResolver resolver) {
+        this.resolver = resolver;
+    }
+
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ShuntingYardStack outputChain) throws DeadlockException {
+    public boolean doTransition(CharSequenceReader inputChain, ShuntingYardStack outputChain) throws DeadlockException, ResolvingException {
 
-        Preconditions.checkNotNull(inputChain, outputChain);
-
-        StringBuilder numberMachineOutput = new StringBuilder();
-
-        NumberStateMachine numberStateMachine = NumberStateMachine.create();
-
-        if (numberStateMachine.run(inputChain, numberMachineOutput)) {
-
-            outputChain.pushOperand(Double.parseDouble(numberMachineOutput.toString()));
+        Optional<Double> resolve = resolver.resolve(inputChain);
+        if (resolve.isPresent()){
+            outputChain.pushOperand(resolve.get());
 
             return true;
         }
         return false;
     }
+
 }

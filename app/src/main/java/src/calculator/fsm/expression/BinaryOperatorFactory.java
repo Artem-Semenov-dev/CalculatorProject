@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static src.calculator.fsm.expression.PrioritizedBinaryOperator.*;
+
 public class BinaryOperatorFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(BinaryOperatorFactory.class);
@@ -15,11 +17,11 @@ public class BinaryOperatorFactory {
 
     public BinaryOperatorFactory() {
 
-        binaryOperators.put('+', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.LOW, Double::sum));
-        binaryOperators.put('-', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.LOW, (left, right) -> left - right));
-        binaryOperators.put('*', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.MEDIUM, (left, right) -> left * right));
-        binaryOperators.put('/', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.MEDIUM, (left, right) -> left / right));
-        binaryOperators.put('^', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.HIGH, Math::pow));
+        binaryOperators.put('+', new PrioritizedBinaryOperator(Priority.LOW, Double::sum));
+        binaryOperators.put('-', new PrioritizedBinaryOperator(Priority.LOW, (left, right) -> left - right));
+        binaryOperators.put('*', new PrioritizedBinaryOperator(Priority.MEDIUM, (left, right) -> left * right));
+        binaryOperators.put('/', new PrioritizedBinaryOperator(Priority.MEDIUM, (left, right) -> left / right));
+        binaryOperators.put('^', new PrioritizedBinaryOperator(Priority.HIGH, Math::pow));
     }
 
     public Optional<PrioritizedBinaryOperator> create(char operatorSymbol) {

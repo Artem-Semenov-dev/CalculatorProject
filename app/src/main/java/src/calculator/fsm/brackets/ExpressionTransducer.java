@@ -1,27 +1,31 @@
 package src.calculator.fsm.brackets;
 
+import src.calculator.math.CharSequenceReader;
 import src.calculator.fsm.DeadlockException;
 import src.calculator.fsm.Transducer;
-import src.calculator.fsm.expression.ExpressionMachine;
 import src.calculator.fsm.expression.ShuntingYardStack;
-import src.calculator.fsm.operand.OperandMachine;
-import src.calculator.math.CharSequenceReader;
+import src.calculator.math.MathElementResolver;
+import src.calculator.math.ResolvingException;
+
+import java.util.Optional;
 
 public class ExpressionTransducer implements Transducer<ShuntingYardStack> {
+
+    MathElementResolver resolver;
+
+    public ExpressionTransducer(MathElementResolver resolver) {
+        this.resolver = resolver;
+    }
+
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ShuntingYardStack outputChain) throws DeadlockException {
+    public boolean doTransition(CharSequenceReader inputChain, ShuntingYardStack outputChain) throws DeadlockException, ResolvingException {
 
-        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
-
-        ExpressionMachine expressionMachine = ExpressionMachine.create();
-
-        if (expressionMachine.run(inputChain, nestingShuntingYardStack)) {
-
-            outputChain.pushOperand(nestingShuntingYardStack.peekResult());
+        Optional<Double> resolve = resolver.resolve(inputChain);
+        if (resolve.isPresent()){
+            outputChain.pushOperand(resolve.get());
 
             return true;
         }
-
         return false;
     }
 }

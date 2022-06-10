@@ -2,6 +2,7 @@ package src.calculator.fsm;
 
 import com.google.common.base.Preconditions;
 
+
 import java.util.*;
 
 public interface TransitionMatrix<S> {
@@ -22,9 +23,6 @@ public interface TransitionMatrix<S> {
         private S finishState;
 
         private final Map<S, Set<S>> transitions = new TreeMap<>();
-
-        private MatrixBuilder() {
-        }
 
         public MatrixBuilder<S> withStartState(S startState) {
 

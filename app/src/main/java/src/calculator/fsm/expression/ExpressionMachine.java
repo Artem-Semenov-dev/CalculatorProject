@@ -1,14 +1,16 @@
 package src.calculator.fsm.expression;
 
 import src.calculator.fsm.FiniteStateMachine;
-import src.calculator.fsm.TransitionMatrix;
 import src.calculator.fsm.Transducer;
+import src.calculator.fsm.TransitionMatrix;
+import src.calculator.math.MathElement;
+import src.calculator.math.MathElementResolverFactory;
 
 import static src.calculator.fsm.expression.ExpressionStates.*;
 
 public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYardStack> {
 
-    public static ExpressionMachine create() {
+    public static ExpressionMachine create(MathElementResolverFactory factory) {
 
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(START)
@@ -19,36 +21,17 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
 
                 .build();
 
-        return new ExpressionMachine(matrix);
+        return new ExpressionMachine(matrix, factory);
     }
 
-    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix) {
+    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix, MathElementResolverFactory factory) {
         super(matrix);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(OPERAND, new OperandTransducer());
+        registerTransducer(OPERAND, new OperandTransducer(factory.create(MathElement.OPERAND)));
         registerTransducer(BINARY_OPERATOR, new BinaryOperatorTransducer());
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 }
 
-//    START(Transducer.illegalTransition()),
-//        OPERAND((inputChain, outputChain) -> {
-//
-//        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
-//
-//        Transducer<ShuntingYardStack> operandMachine = OperandMachine.create();
-//
-//        if (operandMachine.doTransition(inputChain, nestingShuntingYardStack)) {
-//
-//        outputChain.pushOperand(nestingShuntingYardStack.peekResult());
-//
-//        return true;
-//        }
-//
-//        return false;
-//        }),
-//        BINARY_OPERATOR(new BinaryOperatorTransducer()),
-//        FINISH(Transducer.autoTransition());
-//
-//private final Transducer<ShuntingYardStack> origin;
+

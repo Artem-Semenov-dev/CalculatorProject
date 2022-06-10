@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import src.calculator.math.CharSequenceReader;
+import src.calculator.math.ResolvingException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class FiniteStateMachine<S, O> {
         this.matrix = Preconditions.checkNotNull(matrix);
     }
 
-    public boolean run(CharSequenceReader inputChain, O outputChain) throws DeadlockException {
+    public boolean run(CharSequenceReader inputChain, O outputChain) throws DeadlockException, ResolvingException {
 
         if (logger.isInfoEnabled()) {
 
@@ -52,7 +53,7 @@ public class FiniteStateMachine<S, O> {
         return true;
     }
 
-    private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws DeadlockException {
+    private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws DeadlockException, ResolvingException {
         Set<S> possibleTransitions = matrix.getPossibleTransitions(currentState);
 
         for (S potentialState : possibleTransitions) {
