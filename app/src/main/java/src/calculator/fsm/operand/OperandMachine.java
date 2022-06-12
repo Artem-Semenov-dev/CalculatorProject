@@ -3,7 +3,8 @@ package src.calculator.fsm.operand;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
-import src.calculator.fsm.expression.ShuntingYardStack;
+import src.calculator.fsm.calculator.DetachedShuntingYardTransducer;
+import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
 
@@ -30,7 +31,7 @@ public final class OperandMachine extends FiniteStateMachine<OperandStates, Shun
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(NUMBER, new NumberTransducer(factory.create(MathElement.NUMBER)));
-        registerTransducer(BRACKETS, new BracketsTransducer(factory.create(MathElement.BRACKETS)));
+        registerTransducer(BRACKETS, new DetachedShuntingYardTransducer(factory.create(MathElement.BRACKETS)));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 }

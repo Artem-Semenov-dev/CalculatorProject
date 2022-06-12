@@ -1,8 +1,8 @@
 package src.calculator.fsm.number;
 
 import com.google.common.base.Preconditions;
-import src.calculator.math.CharSequenceReader;
 import src.calculator.fsm.Transducer;
+import src.calculator.fsm.util.CharSequenceReader;
 
 import java.util.function.Predicate;
 

@@ -1,4 +1,4 @@
-package src.calculator.fsm.expression;
+package src.calculator.fsm.util;
 
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
@@ -69,12 +69,12 @@ public class ShuntingYardStack {
         operandStack.push(result);
     }
 
-    double peekOperand() {
+    public double peekOperand() {
         assert operandStack.peek() != null;
         return Preconditions.checkNotNull(operandStack.peek());
     }
 
-    PrioritizedBinaryOperator peekOperator() {
+    public PrioritizedBinaryOperator peekOperator() {
         assert operatorStack.peek() != null;
         return Preconditions.checkNotNull(operatorStack.peek());
     }

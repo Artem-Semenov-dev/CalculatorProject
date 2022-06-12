@@ -3,6 +3,8 @@ package src.calculator.fsm.expression;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
+import src.calculator.fsm.calculator.DetachedShuntingYardTransducer;
+import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
 
@@ -28,7 +30,7 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
         super(matrix);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(OPERAND, new OperandTransducer(factory.create(MathElement.OPERAND)));
+        registerTransducer(OPERAND, new DetachedShuntingYardTransducer(factory.create(MathElement.OPERAND)));
         registerTransducer(BINARY_OPERATOR, new BinaryOperatorTransducer());
         registerTransducer(FINISH, Transducer.autoTransition());
     }

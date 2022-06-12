@@ -3,7 +3,8 @@ package src.calculator.fsm.brackets;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
-import src.calculator.fsm.expression.ShuntingYardStack;
+import src.calculator.fsm.calculator.DetachedShuntingYardTransducer;
+import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
 
@@ -30,7 +31,7 @@ public final class BracketsMachine extends FiniteStateMachine<BracketsStates, Sh
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('(') );
-        registerTransducer(EXPRESSION, new ExpressionTransducer(factory.create(MathElement.EXPRESSION)));
+        registerTransducer(EXPRESSION, new DetachedShuntingYardTransducer(factory.create(MathElement.EXPRESSION)));
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
         registerTransducer(FINISH, Transducer.autoTransition());
     }

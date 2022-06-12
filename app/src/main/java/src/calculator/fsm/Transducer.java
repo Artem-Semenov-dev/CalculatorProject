@@ -1,12 +1,12 @@
 package src.calculator.fsm;
 
-import src.calculator.math.CharSequenceReader;
-import src.calculator.math.ResolvingException;
+import src.calculator.fsm.util.CharSequenceReader;
+import src.calculator.fsm.util.ResolvingException;
 
 @FunctionalInterface
 public interface Transducer<O> {
 
-    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws DeadlockException, ResolvingException;
+    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException;
 
     static <O> Transducer<O> autoTransition() {
 

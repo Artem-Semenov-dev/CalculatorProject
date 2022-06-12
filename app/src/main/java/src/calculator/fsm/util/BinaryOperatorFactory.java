@@ -1,4 +1,4 @@
-package src.calculator.fsm.expression;
+package src.calculator.fsm.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static src.calculator.fsm.expression.PrioritizedBinaryOperator.*;
+import static src.calculator.fsm.util.PrioritizedBinaryOperator.Priority;
 
 public class BinaryOperatorFactory {
 

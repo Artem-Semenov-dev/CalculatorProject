@@ -1,8 +1,11 @@
 package src.calculator.fsm.expression;
 
 import com.google.common.base.Preconditions;
-import src.calculator.math.CharSequenceReader;
 import src.calculator.fsm.Transducer;
+import src.calculator.fsm.util.BinaryOperatorFactory;
+import src.calculator.fsm.util.CharSequenceReader;
+import src.calculator.fsm.util.PrioritizedBinaryOperator;
+import src.calculator.fsm.util.ShuntingYardStack;
 
 import java.util.Optional;
 

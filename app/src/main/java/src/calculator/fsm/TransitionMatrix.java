@@ -2,7 +2,6 @@ package src.calculator.fsm;
 
 import com.google.common.base.Preconditions;
 
-
 import java.util.*;
 
 public interface TransitionMatrix<S> {

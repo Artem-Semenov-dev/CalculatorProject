@@ -3,8 +3,7 @@ package src.calculator.fsm.calculator;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
-import src.calculator.fsm.brackets.ExpressionTransducer;
-import src.calculator.fsm.expression.ShuntingYardStack;
+import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
 
@@ -27,7 +26,7 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorState,
         super(matrix);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(EXPRESSION, new ExpressionTransducer(factory.create(MathElement.EXPRESSION)));
+        registerTransducer(EXPRESSION, new DetachedShuntingYardTransducer(factory.create(MathElement.EXPRESSION)));
         registerTransducer(FINISH, (inputChain, outputChain) -> !inputChain.canRead());
     }
 }

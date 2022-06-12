@@ -1,4 +1,4 @@
-package src.calculator.math;
+package src.calculator.fsm.util;
 
 public class ResolvingException extends Exception{
 

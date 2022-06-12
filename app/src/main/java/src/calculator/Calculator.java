@@ -1,13 +1,11 @@
 package src.calculator;
 
 import com.google.common.base.Preconditions;
-import src.calculator.fsm.DeadlockException;
 import src.calculator.fsm.calculator.CalculatorMachine;
-import src.calculator.fsm.expression.ShuntingYardStack;
-import src.calculator.math.CharSequenceReader;
+import src.calculator.fsm.util.CharSequenceReader;
+import src.calculator.fsm.util.ResolvingException;
+import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElementResolverFactory;
-import src.calculator.math.MathElementResolverFactoryImpl;
-import src.calculator.math.ResolvingException;
 
 import java.util.function.DoubleBinaryOperator;
 
@@ -27,10 +25,8 @@ public class Calculator {
 
                 raiseException(inputChain);
             }
-        } catch (DeadlockException e) {
-            raiseException(inputChain);
         } catch (ResolvingException e) {
-            e.printStackTrace();
+            raiseException(inputChain);
         }
 
         return new CalculationResult(outputChain.peekResult());

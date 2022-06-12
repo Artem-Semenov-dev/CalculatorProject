@@ -5,14 +5,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import src.calculator.PreparedTest;
 import src.calculator.WrongExpressionException;
+import src.calculator.fsm.util.PrioritizedBinaryOperator;
+import src.calculator.fsm.util.ShuntingYardStack;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShuntingYardStackTest {
 
-    PreparedTest preparedTest = new PreparedTest();
+    private final PreparedTest preparedTest = new PreparedTest();
 
-    ShuntingYardStack shuntingYardStack = new ShuntingYardStack();
+    private final ShuntingYardStack shuntingYardStack = new ShuntingYardStack();
 
 
     @ParameterizedTest

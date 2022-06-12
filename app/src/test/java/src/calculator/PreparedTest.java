@@ -1,9 +1,9 @@
 package src.calculator;
 
 import org.junit.jupiter.api.Assertions;
-import src.calculator.fsm.expression.BinaryOperatorFactory;
-import src.calculator.fsm.expression.PrioritizedBinaryOperator;
-import src.calculator.fsm.expression.ShuntingYardStack;
+import src.calculator.fsm.util.BinaryOperatorFactory;
+import src.calculator.fsm.util.PrioritizedBinaryOperator;
+import src.calculator.fsm.util.ShuntingYardStack;
 
 import java.util.Optional;
 
