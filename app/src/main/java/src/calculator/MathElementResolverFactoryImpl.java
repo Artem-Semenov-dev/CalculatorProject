@@ -8,6 +8,7 @@ import src.calculator.math.MathElementResolver;
 import src.calculator.math.MathElementResolverFactory;
 import src.calculator.resolvers.DetachedShuntingYardResolvers;
 import src.calculator.resolvers.ExpressionResolver;
+import src.calculator.resolvers.FunctionResolver;
 import src.calculator.resolvers.NumberResolver;
 
 import java.util.EnumMap;
@@ -19,7 +20,7 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
     private final Map<MathElement, MathElementResolverCreator> resolvers = new EnumMap<>(MathElement.class);
 
-    public MathElementResolverFactoryImpl() {
+    MathElementResolverFactoryImpl() {
 
         resolvers.put(NUMBER, NumberResolver::new);
 
@@ -28,6 +29,8 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
         resolvers.put(OPERAND, () -> new DetachedShuntingYardResolvers<>(OperandMachine.create(this)));
 
         resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolvers<>(BracketsMachine.create(this)));
+
+        resolvers.put(FUNCTION, () -> new FunctionResolver(this));
     }
 
 

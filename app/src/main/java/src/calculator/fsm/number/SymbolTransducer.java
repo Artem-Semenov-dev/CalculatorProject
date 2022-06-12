@@ -6,16 +6,16 @@ import src.calculator.fsm.util.CharSequenceReader;
 
 import java.util.function.Predicate;
 
-class SymbolTransducer implements Transducer<StringBuilder> {
+public class SymbolTransducer implements Transducer<StringBuilder> {
 
     private final Predicate<Character> condition;
 
-    SymbolTransducer(Predicate<Character> condition) {
+    public SymbolTransducer(Predicate<Character> condition) {
 
         this.condition = Preconditions.checkNotNull(condition);
     }
 
-    SymbolTransducer(char symbol) {
+    public SymbolTransducer(char symbol) {
 
         this(character -> symbol == character);
     }

@@ -4,6 +4,7 @@ import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
 import src.calculator.fsm.calculator.DetachedShuntingYardTransducer;
+import src.calculator.fsm.function.FunctionTransducer;
 import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
@@ -18,8 +19,9 @@ public final class OperandMachine extends FiniteStateMachine<OperandStates, Shun
         TransitionMatrix<OperandStates> matrix = TransitionMatrix.<OperandStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)
-                .allowTransition(START, NUMBER, BRACKETS)
+                .allowTransition(START, NUMBER, BRACKETS, FUNCTION)
                 .allowTransition(NUMBER, FINISH)
+                .allowTransition(FUNCTION, FINISH)
                 .allowTransition(BRACKETS, FINISH)
                 .build();
 
@@ -32,6 +34,7 @@ public final class OperandMachine extends FiniteStateMachine<OperandStates, Shun
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(NUMBER, new NumberTransducer(factory.create(MathElement.NUMBER)));
         registerTransducer(BRACKETS, new DetachedShuntingYardTransducer(factory.create(MathElement.BRACKETS)));
+        registerTransducer(FUNCTION, new FunctionTransducer(factory.create(MathElement.FUNCTION)));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 }

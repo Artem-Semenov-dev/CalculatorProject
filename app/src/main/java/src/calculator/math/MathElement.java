@@ -6,5 +6,6 @@ public enum MathElement {
     NUMBER,
     OPERAND,
     BRACKETS,
-    CALCULATOR
+    CALCULATOR,
+    FUNCTION
 }
