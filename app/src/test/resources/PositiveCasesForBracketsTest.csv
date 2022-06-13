@@ -1,3 +1,0 @@
-2 * (2+3), 10.0, Simple one brackets test has failed
-2*(7+3/(2+3)), 15.2, Double nesting brackets test has failed
-2*(7+3/(2+3)^4), 14.0096, Double nesting brackets with degree test has failed

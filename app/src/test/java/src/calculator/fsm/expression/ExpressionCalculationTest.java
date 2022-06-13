@@ -1,26 +1,32 @@
 package src.calculator.fsm.expression;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import src.calculator.PreparedTest;
-import src.calculator.WrongExpressionException;
+import org.junit.jupiter.params.provider.Arguments;
+import src.calculator.AbstractCalculatorTest;
 
-public class ExpressionCalculationTest {
+import java.util.stream.Stream;
 
-    private final PreparedTest preparedTest = new PreparedTest();
+import static org.junit.jupiter.params.provider.Arguments.of;
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/PositiveCasesForExpressionTest.csv")
-    void testPositiveCase(String mathExpression, double resultExpected, String errorMessage) throws WrongExpressionException {
+class ExpressionCalculationTest extends AbstractCalculatorTest {
 
-        preparedTest.positiveCase(mathExpression, resultExpected, errorMessage);
+    static Stream<Arguments> positiveCases(){
+        return Stream.of(
+                of("1 + 2", 3.0, "Simple sum action test has failed"),
+                of("2*4", 8.0, "Simple multiplication action test has failed"),
+                of("1+2*3", 7.0, "Several digits test has failed"),
+                of("3*4   +6*7+9^2", 135.0, "Negative several digits test has failed"),
+                of("2 * 4", 8.0, "Space between operands test has failed")
+        );
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/NegativeCasesForExpressionTest.csv")
-    void testNegativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) {
-
-        preparedTest.negativeCase(mathExpression, expectedErrorPosition, errorMessage);
+    static Stream<Arguments> negativeCases(){
+        return Stream.of(
+                of("1/0", 3, "Division by zero test has failed"),
+                of("1**2", 2, "Double minus action test has failed"),
+                of("1-+2", 2, "Several operators test has failed"),
+                of("2//2", 2, "Double division action test has failed"),
+                of("2.22.2/5", 4, "Error in number test has failed")
+        );
     }
 }
 

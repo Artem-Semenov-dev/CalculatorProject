@@ -1,27 +1,29 @@
 package src.calculator.fsm.number;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import src.calculator.PreparedTest;
-import src.calculator.WrongExpressionException;
+import org.junit.jupiter.params.provider.Arguments;
+import src.calculator.AbstractCalculatorTest;
 
-public class NumberParcingTest {
+import java.util.stream.Stream;
 
-    private final PreparedTest preparedTest = new PreparedTest();
+import static org.junit.jupiter.params.provider.Arguments.of;
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/PositiveCasesForNumberTest.csv")
-    void testPositiveCase(String mathExpression, double resultExpected, String errorMessage) throws WrongExpressionException {
+class NumberParcingTest extends AbstractCalculatorTest {
 
-        preparedTest.positiveCase(mathExpression, resultExpected, errorMessage);
+    static Stream<Arguments> positiveCases(){
+        return Stream.of(
+                of("4", 4.0, "Single digit test has failed."),
+                of("-4", -4.0, "Negative single digit test has failed"),
+                of("123", 123.0, "Several digits test has failed"),
+                of("-123", -123.0, "Negative several digits test has failed"),
+                of("123.78", 123.78, "Number with floating point test has failed"),
+                of("-123.78", -123.78, "Negative number with floating point test has failed")
+        );
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/NegativeCasesForNumberTest.csv")
-    void testNegativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) {
-
-        preparedTest.negativeCase(mathExpression, expectedErrorPosition, errorMessage);
+    static Stream<Arguments> negativeCases(){
+        return Stream.of(
+                of("--1", 1, "Extra negative sign has not failed the test"),
+                of("-1.2.3", 4, "Second dot has not failed the test")
+        );
     }
-
-
 }

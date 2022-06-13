@@ -1,25 +1,27 @@
 package src.calculator.fsm.brackets;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import src.calculator.PreparedTest;
-import src.calculator.WrongExpressionException;
+import org.junit.jupiter.params.provider.Arguments;
+import src.calculator.AbstractCalculatorTest;
 
-public class BracketsMachineTest {
+import java.util.stream.Stream;
 
-    private final PreparedTest preparedTest = new PreparedTest();
+import static org.junit.jupiter.params.provider.Arguments.of;
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/PositiveCasesForBracketsTest.csv")
-    void testPositiveCase(String mathExpression, double resultExpected, String errorMessage) throws WrongExpressionException {
+class BracketsMachineTest extends AbstractCalculatorTest {
 
-        preparedTest.positiveCase(mathExpression, resultExpected, errorMessage);
+    static Stream<Arguments> positiveCases(){
+        return Stream.of(
+                of("2 * (2+3)", 10.0, "Simple one brackets test has failed"),
+                of("2*(7+3/(2+3))", 15.2, "Double nesting brackets test has failed"),
+                of("2*(7+3/(2+3)^4)", 14.0096, "Double nesting brackets with degree test has failed")
+        );
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/NegativeCasesForBracketsTest.csv")
-    void testNegativeCase(String mathExpression, int expectedErrorPosition, String errorMessage) {
-
-        preparedTest.negativeCase(mathExpression, expectedErrorPosition, errorMessage);
+    static Stream<Arguments> negativeCases(){
+        return Stream.of(
+                of("1+3*(4+2", 8, "Opened but not closed brackets test has failed"),
+                of("1+3*4)+2", 5, "Closed but not opened brackets test has failed"),
+                of("()", 1, "Empty brackets test has failed")
+        );
     }
 }

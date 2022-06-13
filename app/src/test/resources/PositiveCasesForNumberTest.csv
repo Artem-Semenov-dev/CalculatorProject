@@ -1,6 +1,0 @@
-4, 4.0, Single digit test has failed
--4, -4.0, Negative single digit test has failed
-123, 123.0, Several digits test has failed
--123, -123.0, Negative several digits test has failed
-123.78, 123.78, Number with floating point test has failed
--123.78, -123.78, Negative number with floating point test has failed

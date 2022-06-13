@@ -36,7 +36,7 @@ public final class FunctionMachine extends FiniteStateMachine<FunctionStates, Fu
         registerTransducer(FINISH, Transducer.autoTransition());
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
-        registerTransducer(SEPARATOR, Transducer.checkAndPassChar('`'));
+        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
         registerTransducer(IDENTIFIER, new FunctionNameTransducer());
         registerTransducer(EXPRESSION, new ExpressionFunctionTransducer(factory.create(MathElement.EXPRESSION)));
     }
