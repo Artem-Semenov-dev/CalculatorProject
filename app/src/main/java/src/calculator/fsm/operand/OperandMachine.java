@@ -29,7 +29,7 @@ public final class OperandMachine extends FiniteStateMachine<OperandStates, Shun
     }
 
     private OperandMachine(TransitionMatrix<OperandStates> matrix, MathElementResolverFactory factory) {
-        super(matrix);
+        super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(NUMBER, new NumberTransducer(factory.create(MathElement.NUMBER)));

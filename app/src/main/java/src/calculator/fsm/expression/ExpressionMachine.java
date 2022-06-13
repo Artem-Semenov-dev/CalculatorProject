@@ -27,7 +27,7 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
     }
 
     private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix, MathElementResolverFactory factory) {
-        super(matrix);
+        super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(OPERAND, new DetachedShuntingYardTransducer(factory.create(MathElement.OPERAND)));

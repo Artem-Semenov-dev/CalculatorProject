@@ -23,7 +23,7 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorState,
     }
 
     private CalculatorMachine(TransitionMatrix<CalculatorState> matrix, MathElementResolverFactory factory) {
-        super(matrix);
+        super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(EXPRESSION, new DetachedShuntingYardTransducer(factory.create(MathElement.EXPRESSION)));

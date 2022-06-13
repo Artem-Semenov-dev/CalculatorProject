@@ -19,9 +19,17 @@ public class FiniteStateMachine<S, O> {
 
     private final Map<S, Transducer<O>> transducers = new HashMap<>();
 
-    protected FiniteStateMachine(TransitionMatrix<S> matrix) {
+    private boolean allowedSkippingWhitespaces;
+
+    public FiniteStateMachine(TransitionMatrix<S> matrix, boolean allowedSkippingWhitespaces) {
 
         this.matrix = Preconditions.checkNotNull(matrix);
+        this.allowedSkippingWhitespaces = allowedSkippingWhitespaces;
+    }
+
+    protected FiniteStateMachine(TransitionMatrix<S> matrix) {
+
+        this(matrix, false);
     }
 
     public boolean run(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
@@ -54,6 +62,10 @@ public class FiniteStateMachine<S, O> {
     }
 
     private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws ResolvingException {
+        if (allowedSkippingWhitespaces){
+
+            inputChain.skipWhitespaces();
+        }
         Set<S> possibleTransitions = matrix.getPossibleTransitions(currentState);
 
         for (S potentialState : possibleTransitions) {

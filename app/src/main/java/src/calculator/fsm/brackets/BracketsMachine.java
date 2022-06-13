@@ -27,7 +27,7 @@ public final class BracketsMachine extends FiniteStateMachine<BracketsStates, Sh
     }
 
     private BracketsMachine(TransitionMatrix<BracketsStates> matrix, MathElementResolverFactory factory) {
-        super(matrix);
+        super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('(') );

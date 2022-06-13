@@ -36,4 +36,12 @@ public final class CharSequenceReader {
     public String toString() {
         return Arrays.toString(source);
     }
+
+    public void skipWhitespaces() {
+
+        while (canRead() && Character.isWhitespace(read())){
+
+                incrementPosition();
+        }
+    }
 }

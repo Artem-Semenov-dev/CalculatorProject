@@ -30,7 +30,7 @@ public final class FunctionMachine extends FiniteStateMachine<FunctionStates, Fu
 
 
     private FunctionMachine(TransitionMatrix<FunctionStates> matrix, MathElementResolverFactory factory) {
-        super(matrix);
+        super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(FINISH, Transducer.autoTransition());
