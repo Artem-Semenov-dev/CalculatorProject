@@ -1,4 +1,4 @@
-package src.calculator.fsm.function;
+package src.calculator.fsm.util;
 
 import com.google.common.base.Preconditions;
 
@@ -15,12 +15,12 @@ public class FunctionHolder {
         arguments = new ArrayList<>();
     }
 
-    void setFunctionName(String name){
+    public void setFunctionName(String name){
 
         this.functionName = Preconditions.checkNotNull(name);
     }
 
-    void setArgument(Double argument){
+    public void setArgument(Double argument){
 
         arguments.add(argument);
     }

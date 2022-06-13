@@ -3,6 +3,7 @@ package src.calculator.fsm.function;
 import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
+import src.calculator.fsm.util.FunctionHolder;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
 

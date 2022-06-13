@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.identifier.IdentifierMachine;
 import src.calculator.fsm.util.CharSequenceReader;
+import src.calculator.fsm.util.FunctionHolder;
 import src.calculator.fsm.util.ResolvingException;
 
 

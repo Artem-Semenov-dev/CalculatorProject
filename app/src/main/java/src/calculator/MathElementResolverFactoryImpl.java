@@ -26,6 +26,8 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
         resolvers.put(EXPRESSION, () -> new ExpressionResolver(this));
 
+//        resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolvers<>(ExpressionMachine.create(this)));
+
         resolvers.put(OPERAND, () -> new DetachedShuntingYardResolvers<>(OperandMachine.create(this)));
 
         resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolvers<>(BracketsMachine.create(this)));

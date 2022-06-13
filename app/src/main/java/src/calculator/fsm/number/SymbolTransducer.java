@@ -15,7 +15,7 @@ public class SymbolTransducer implements Transducer<StringBuilder> {
         this.condition = Preconditions.checkNotNull(condition);
     }
 
-    public SymbolTransducer(char symbol) {
+    SymbolTransducer(char symbol) {
 
         this(character -> symbol == character);
     }

@@ -3,6 +3,7 @@ package src.calculator.fsm.function;
 import com.google.common.base.Preconditions;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.util.CharSequenceReader;
+import src.calculator.fsm.util.FunctionHolder;
 import src.calculator.fsm.util.ResolvingException;
 import src.calculator.math.MathElementResolver;
 

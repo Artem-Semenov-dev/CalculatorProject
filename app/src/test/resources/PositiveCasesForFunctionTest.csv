@@ -1,4 +1,6 @@
 min(6`2`4), 2.0, Simple minimum function test has failed
+min(3*2`2`4), 2.0, Expression inside function test has failed
+min(min(6`9)`max(1`2)`4), 2.0, Nested functions test has failed
 max(1`2), 2.0, Simple minimum function test has failed
 avg(1`2), 1.5, Simple minimum function test has failed
 sqrt(4), 2.0, Simple minimum function test has failed
