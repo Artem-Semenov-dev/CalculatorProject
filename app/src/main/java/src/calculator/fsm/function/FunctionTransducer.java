@@ -9,6 +9,12 @@ import src.calculator.math.MathElementResolver;
 
 import java.util.Optional;
 
+/**
+ * {@code FunctionTransducer} is an implementation of {@link Transducer}
+ * that produce a number as a result of applying a function
+ * to {@link ShuntingYardStack} output for {@link FunctionMachine}.
+ */
+
 public class FunctionTransducer implements Transducer<ShuntingYardStack> {
 
     private final MathElementResolver resolver;

@@ -2,6 +2,10 @@ package src.calculator;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * {@code CalculationResult} is a tiny type which is used to store result of calculation.
+ */
+
 public class CalculationResult {
 
     private final double result;

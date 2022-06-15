@@ -9,6 +9,14 @@ import src.calculator.math.MathElementResolver;
 
 import java.util.Optional;
 
+/**
+ * {@code DetachedShuntingYardTransducer} is a universal implementation of {@link Transducer}
+ * that can be used for state machines which work based on new instances of {@link ShuntingYardStack}.
+ * <p>
+ * New instance of {@link ShuntingYardStack} is required for all operations with brackets.
+ * </p>
+ */
+
 public class DetachedShuntingYardTransducer implements Transducer<ShuntingYardStack> {
 
     private final MathElementResolver resolver;

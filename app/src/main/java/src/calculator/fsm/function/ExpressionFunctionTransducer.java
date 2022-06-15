@@ -9,7 +9,12 @@ import src.calculator.math.MathElementResolver;
 
 import java.util.Optional;
 
-public class ExpressionFunctionTransducer implements Transducer<FunctionHolder> {
+/**
+ * {@code ExpressionFunctionTransducer} is an implementation of {@link Transducer}
+ * that produce an argument list for {@link FunctionHolder} output.
+ */
+
+class ExpressionFunctionTransducer implements Transducer<FunctionHolder> {
 
     private final MathElementResolver resolver;
 

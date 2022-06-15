@@ -11,6 +11,10 @@ import src.calculator.math.MathElementResolverFactory;
 
 import static src.calculator.fsm.operand.OperandStates.*;
 
+/**
+ * {@code OperandMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing an operand. How an operand can act a number, an expression in brackets or function.
+ */
 
 public final class OperandMachine extends FiniteStateMachine<OperandStates, ShuntingYardStack> {
 

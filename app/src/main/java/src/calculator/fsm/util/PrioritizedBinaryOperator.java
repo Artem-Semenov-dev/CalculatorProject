@@ -4,6 +4,14 @@ import com.google.common.base.Preconditions;
 
 import java.util.function.DoubleBinaryOperator;
 
+/**
+ * {@code PrioritizedBinaryOperator} is an implementation of {@link DoubleBinaryOperator}
+ * which is {@link Comparable} and have a priority.
+ * <p>
+ * Note: this class has a natural ordering that is inconsistent with equals.
+ * </p>
+ */
+
 public class PrioritizedBinaryOperator implements DoubleBinaryOperator, Comparable<PrioritizedBinaryOperator> {
 
 

@@ -2,12 +2,18 @@ package src.calculator.fsm.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import src.calculator.fsm.function.Function;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import static src.calculator.fsm.util.PrioritizedBinaryOperator.Priority;
+
+/**
+ * {@code BinaryOperatorFactory} is a realization of factory pattern
+ * that create an instance of {@link PrioritizedBinaryOperator} by symbol.
+ */
 
 public class BinaryOperatorFactory {
 

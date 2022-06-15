@@ -9,11 +9,18 @@ import src.calculator.math.MathElementResolver;
 
 import java.util.Optional;
 
-public class DetachedShuntingYardResolvers<I> implements MathElementResolver {
+/**
+ * {@code DetachedShuntingYardResolver} is a universal implementation of {@link MathElementResolver}
+ * that can be used for resolve input chain for {@link FiniteStateMachine}
+ * which work based on new instances of {@link ShuntingYardStack}.
+ * @param <I> input chain for state machine.
+ */
+
+public class DetachedShuntingYardResolver<I> implements MathElementResolver {
 
     private final FiniteStateMachine<I, ShuntingYardStack> machine;
 
-    public DetachedShuntingYardResolvers(FiniteStateMachine<I, ShuntingYardStack> machine) {
+    public DetachedShuntingYardResolver(FiniteStateMachine<I, ShuntingYardStack> machine) {
         this.machine = Preconditions.checkNotNull(machine);
     }
 

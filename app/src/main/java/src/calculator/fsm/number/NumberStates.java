@@ -1,6 +1,11 @@
 package src.calculator.fsm.number;
 
-public enum NumberState {
+/**
+ * {@code NumberState} is an enumeration of states
+ * that used in {@link NumberStateMachine}.
+ */
+
+enum NumberStates {
 
     START,
     NEGATIVE_SIGN,

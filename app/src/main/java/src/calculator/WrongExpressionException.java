@@ -2,6 +2,11 @@ package src.calculator;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * {@code WrongExpressionException} throw when {@link MathematicalExpression} contains syntax errors.
+ * Provides position of syntax error in expression.
+ */
+
 public class WrongExpressionException extends Exception {
 
     private final int errorPosition;

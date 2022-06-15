@@ -8,7 +8,10 @@ import src.calculator.fsm.util.CharSequenceReader;
 import src.calculator.fsm.util.FunctionHolder;
 import src.calculator.fsm.util.ResolvingException;
 
-
+/**
+ * {@code FunctionNameTransducer} is an implementation of {@link Transducer}
+ * that produce a name of function for {@link FunctionHolder} output.
+ */
 
 class FunctionNameTransducer implements Transducer<FunctionHolder> {
 

@@ -9,6 +9,12 @@ import src.calculator.fsm.util.ShuntingYardStack;
 
 import java.util.Optional;
 
+/**
+ * {@code FunctionTransducer} is an implementation of {@link Transducer}
+ * that produce an {@link PrioritizedBinaryOperator} to {@link ShuntingYardStack} output
+ * for {@link ExpressionMachine}.
+ */
+
 class BinaryOperatorTransducer implements Transducer<ShuntingYardStack> {
 
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();

@@ -7,6 +7,11 @@ import src.calculator.math.MathElementResolver;
 
 import java.util.Optional;
 
+/**
+ * {@code NumberResolver} is an implementation of {@link MathElementResolver} that
+ * resolve input chain for {@link NumberStateMachine}.
+ */
+
 public class NumberResolver implements MathElementResolver {
     @Override
     public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {

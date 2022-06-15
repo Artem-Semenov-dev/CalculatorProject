@@ -8,6 +8,11 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.function.DoubleBinaryOperator;
 
+/**
+ * {@code ShuntingYardStack} is a data storing class for realization of concept of
+ *  * <a href = "https://en.wikipedia.org/wiki/Shunting_yard_algorithm"> Shunting yard algorithm </a>
+ */
+
 public class ShuntingYardStack {
 
     private static final Logger logger = LoggerFactory.getLogger(ShuntingYardStack.class);

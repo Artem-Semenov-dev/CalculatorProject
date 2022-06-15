@@ -4,6 +4,11 @@ import com.google.common.base.Preconditions;
 
 import java.util.Arrays;
 
+/**
+ * {@code CharSequenceReader} is a class which can be used to
+ * simple work with char array and have a position of reading.
+ */
+
 public final class CharSequenceReader {
 
     private final char[] source;

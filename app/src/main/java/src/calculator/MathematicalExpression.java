@@ -2,7 +2,11 @@ package src.calculator;
 
 import com.google.common.base.Preconditions;
 
-import java.util.regex.Pattern;
+/**
+ * {@code MathematicalExpression } is a tiny type which is used to store mathematical expression
+ * which user want to resolve.
+ */
+
 
 public class MathematicalExpression {
 

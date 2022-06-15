@@ -4,6 +4,12 @@ import com.google.common.base.Preconditions;
 
 import java.util.*;
 
+/**
+ * {@code TransitionMatrix} is an interface that can be used to
+ * build state-transition matrix for {@link FiniteStateMachine}.
+ * @param <S> states for {@link FiniteStateMachine}.
+ */
+
 public interface TransitionMatrix<S> {
 
     S getStartState();

@@ -1,5 +1,10 @@
 package src.calculator.fsm.function;
 
+/**
+ * {@code NumberState} is an enumeration of states
+ * that used in {@link FunctionMachine}.
+ */
+
 public enum FunctionStates {
 
     START,

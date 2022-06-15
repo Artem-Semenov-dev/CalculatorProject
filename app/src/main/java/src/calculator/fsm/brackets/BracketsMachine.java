@@ -10,6 +10,11 @@ import src.calculator.math.MathElementResolverFactory;
 
 import static src.calculator.fsm.brackets.BracketsStates.*;
 
+/**
+ * {@code BracketsMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing an expression inside the brackets.
+ */
+
 public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
 
     public static BracketsMachine create(MathElementResolverFactory factory) {

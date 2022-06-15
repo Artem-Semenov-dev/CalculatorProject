@@ -3,6 +3,12 @@ package src.calculator.fsm;
 import src.calculator.fsm.util.CharSequenceReader;
 import src.calculator.fsm.util.ResolvingException;
 
+/**
+ * {@code Transducer} is a functional interface that can be used to
+ * produce {@param <O>} output based on a given input
+ * and potentially throws a {@link ResolvingException}.
+ */
+
 @FunctionalInterface
 public interface Transducer<O> {
 

@@ -11,6 +11,20 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * {@code FiniteStateMachine} is a realization of concept of
+ * <a href = "https://en.wikipedia.org/wiki/Finite-state_machine">Finite state machine</a>
+ * <p>
+ * It can change states with help of {@link Transducer}
+ * </p>
+ *
+ * <p>
+ * Requires a {@link TransitionMatrix} which is a definition of directed graph
+ * </p>
+ * @param <S> States for {@link TransitionMatrix}
+ * @param <O> Output chain
+ */
+
 public class FiniteStateMachine<S, O> {
 
     private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
@@ -19,7 +33,7 @@ public class FiniteStateMachine<S, O> {
 
     private final Map<S, Transducer<O>> transducers = new HashMap<>();
 
-    private boolean allowedSkippingWhitespaces;
+    private final boolean allowedSkippingWhitespaces;
 
     public FiniteStateMachine(TransitionMatrix<S> matrix, boolean allowedSkippingWhitespaces) {
 

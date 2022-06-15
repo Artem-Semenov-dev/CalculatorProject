@@ -9,6 +9,11 @@ import src.calculator.math.MathElementResolverFactory;
 
 import static src.calculator.fsm.function.FunctionStates.*;
 
+/**
+ * {@code FunctionMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing a function.
+ */
+
 public final class FunctionMachine extends FiniteStateMachine<FunctionStates, FunctionHolder> {
 
     public static FunctionMachine create(MathElementResolverFactory factory){

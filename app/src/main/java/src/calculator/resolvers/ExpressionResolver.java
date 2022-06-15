@@ -10,6 +10,11 @@ import src.calculator.math.MathElementResolverFactory;
 
 import java.util.Optional;
 
+/**
+ * {@code ExpressionResolver} is an implementation of {@link MathElementResolver} that
+ * resolve input chain for {@link ExpressionMachine}.
+ */
+
 public class ExpressionResolver implements MathElementResolver {
 
     private final MathElementResolverFactory factory;

@@ -7,13 +7,18 @@ import src.calculator.fsm.util.ShuntingYardStack;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolverFactory;
 
-import static src.calculator.fsm.calculator.CalculatorState.*;
+import static src.calculator.fsm.calculator.CalculatorStates.*;
 
-public final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYardStack> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYardStack> {
+
+    /**
+     * {@code CalculatorMachine} is a realisation of {@link FiniteStateMachine}
+     * that used to launch a {@link src.calculator.fsm.expression.ExpressionMachine}.
+     * */
 
     public static CalculatorMachine create(MathElementResolverFactory factory) {
-        TransitionMatrix<CalculatorState> matrix =
-                TransitionMatrix.<CalculatorState>builder()
+        TransitionMatrix<CalculatorStates> matrix =
+                TransitionMatrix.<CalculatorStates>builder()
                         .withStartState(START)
                         .withFinishState(FINISH)
                         .allowTransition(START, EXPRESSION)
@@ -22,7 +27,7 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorState,
         return new CalculatorMachine(matrix, factory);
     }
 
-    private CalculatorMachine(TransitionMatrix<CalculatorState> matrix, MathElementResolverFactory factory) {
+    private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());

@@ -6,6 +6,11 @@ import src.calculator.fsm.util.CharSequenceReader;
 
 import java.util.function.Predicate;
 
+/**
+ * {@code SymbolTransducer} is an implementation of {@link Transducer}
+ * that produce a symbol to {@link StringBuilder} output.
+ */
+
 public class SymbolTransducer implements Transducer<StringBuilder> {
 
     private final Predicate<Character> condition;

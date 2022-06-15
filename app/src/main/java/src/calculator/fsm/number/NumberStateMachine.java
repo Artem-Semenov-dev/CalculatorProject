@@ -5,12 +5,17 @@ import src.calculator.fsm.FiniteStateMachine;
 import src.calculator.fsm.Transducer;
 import src.calculator.fsm.TransitionMatrix;
 
-import static src.calculator.fsm.number.NumberState.*;
+import static src.calculator.fsm.number.NumberStates.*;
 
-public final class NumberStateMachine extends FiniteStateMachine<NumberState, StringBuilder> {
+/**
+ * {@code NumberStateMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing a number.
+ */
+
+public final class NumberStateMachine extends FiniteStateMachine<NumberStates, StringBuilder> {
 
     public static NumberStateMachine create() {
-        TransitionMatrix<NumberState> matrix = TransitionMatrix.<NumberState>builder().
+        TransitionMatrix<NumberStates> matrix = TransitionMatrix.<NumberStates>builder().
                 withStartState(START)
                 .withFinishState(FINISH)
                 .allowTransition(START, NEGATIVE_SIGN, INTEGER_DIGIT)
@@ -23,7 +28,7 @@ public final class NumberStateMachine extends FiniteStateMachine<NumberState, St
         return new NumberStateMachine(matrix);
     }
 
-    private NumberStateMachine(TransitionMatrix<NumberState> matrix) {
+    private NumberStateMachine(TransitionMatrix<NumberStates> matrix) {
 
         super(Preconditions.checkNotNull(matrix));
 

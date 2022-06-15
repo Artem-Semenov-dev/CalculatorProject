@@ -10,6 +10,13 @@ import src.calculator.math.MathElementResolverFactory;
 
 import static src.calculator.fsm.expression.ExpressionStates.*;
 
+/**
+ * {@code ExpressionMachine} implementation of {@link FiniteStateMachine} which is intended to process
+ * the general structure of math expression — operands and binary operators.
+ * Operand may be a number, an expression in brackets, or a function —
+ * see {@link src.calculator.fsm.operand.OperandMachine} for details.
+ */
+
 public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYardStack> {
 
     public static ExpressionMachine create(MathElementResolverFactory factory) {

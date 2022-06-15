@@ -6,6 +6,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+/**
+ * {@code FunctionFactory} is a realization of factory pattern
+ * that create an instance of {@link Function} by name.
+ */
+
 public class FunctionFactory {
 
     private final Map<String, Function> functions = new TreeMap<>();

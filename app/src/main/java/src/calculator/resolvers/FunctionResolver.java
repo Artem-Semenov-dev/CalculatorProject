@@ -10,6 +10,11 @@ import src.calculator.math.MathElementResolverFactory;
 
 import java.util.Optional;
 
+/**
+ * {@code FunctionResolver} is an implementation of {@link MathElementResolver} that
+ * resolve input chain for {@link FunctionMachine}.
+ */
+
 public class FunctionResolver implements MathElementResolver {
 
     private final MathElementResolverFactory elementResolverFactory;

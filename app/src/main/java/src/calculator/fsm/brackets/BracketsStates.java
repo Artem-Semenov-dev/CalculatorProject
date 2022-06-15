@@ -1,6 +1,11 @@
 package src.calculator.fsm.brackets;
 
-public enum BracketsStates {
+/**
+ * {@code BracketsStates} is an enumeration of states
+ * that used in {@link BracketsMachine}.
+ */
+
+enum BracketsStates {
 
     START,
     OPENING_BRACKET,

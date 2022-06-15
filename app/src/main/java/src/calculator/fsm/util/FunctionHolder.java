@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * {@code FunctionHolder} is a simple holder class that can be used like an output chain for
+ * {@link src.calculator.fsm.identifier.IdentifierMachine} and {@link src.calculator.fsm.expression.ExpressionMachine}.
+ * Class can be used for store data to make an instance of {@link com.google.common.base.Function}.
+ */
+
 public class FunctionHolder {
 
     private String functionName;

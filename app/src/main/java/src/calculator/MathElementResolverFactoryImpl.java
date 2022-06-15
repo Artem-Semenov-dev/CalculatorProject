@@ -6,7 +6,7 @@ import src.calculator.fsm.operand.OperandMachine;
 import src.calculator.math.MathElement;
 import src.calculator.math.MathElementResolver;
 import src.calculator.math.MathElementResolverFactory;
-import src.calculator.resolvers.DetachedShuntingYardResolvers;
+import src.calculator.resolvers.DetachedShuntingYardResolver;
 import src.calculator.resolvers.ExpressionResolver;
 import src.calculator.resolvers.FunctionResolver;
 import src.calculator.resolvers.NumberResolver;
@@ -28,9 +28,9 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
 //        resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolvers<>(ExpressionMachine.create(this)));
 
-        resolvers.put(OPERAND, () -> new DetachedShuntingYardResolvers<>(OperandMachine.create(this)));
+        resolvers.put(OPERAND, () -> new DetachedShuntingYardResolver<>(OperandMachine.create(this)));
 
-        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolvers<>(BracketsMachine.create(this)));
+        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(this)));
 
         resolvers.put(FUNCTION, () -> new FunctionResolver(this));
     }
