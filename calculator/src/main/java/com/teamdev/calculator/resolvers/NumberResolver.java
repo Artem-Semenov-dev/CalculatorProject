@@ -1,0 +1,30 @@
+package com.teamdev.calculator.resolvers;
+
+import com.teamdev.calculator.fsm.number.NumberStateMachine;
+import com.teamdev.calculator.math.MathElementResolver;
+import com.teamdev.fsm.CharSequenceReader;
+import com.teamdev.fsm.ResolvingException;
+
+import java.util.Optional;
+
+/**
+ * {@code NumberResolver} is an implementation of {@link MathElementResolver} that
+ * resolve input chain for {@link NumberStateMachine}.
+ */
+
+public class NumberResolver implements MathElementResolver {
+    @Override
+    public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {
+
+        StringBuilder stringBuilder = new StringBuilder(32);
+
+        NumberStateMachine numberMachine = NumberStateMachine.create();
+
+        if (numberMachine.run(inputChain, stringBuilder)){
+
+            return Optional.of(Double.parseDouble(stringBuilder.toString()));
+        }
+
+        return Optional.empty();
+    }
+}

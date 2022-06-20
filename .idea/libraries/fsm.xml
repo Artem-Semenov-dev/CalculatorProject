@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="fsm">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/fsm" />
+      <root url="file://$PROJECT_DIR$/fsm/src/main/java" />
+    </SOURCES>
+  </library>
+</component>
