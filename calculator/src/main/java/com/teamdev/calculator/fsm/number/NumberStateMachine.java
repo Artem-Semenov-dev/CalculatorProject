@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
+import com.teamdev.fsm.identifier.SymbolTransducer;
 
 import static com.teamdev.calculator.fsm.number.NumberStates.*;
 

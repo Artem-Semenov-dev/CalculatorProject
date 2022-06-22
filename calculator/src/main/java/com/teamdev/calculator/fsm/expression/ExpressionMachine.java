@@ -2,7 +2,7 @@ package com.teamdev.calculator.fsm.expression;
 
 import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
 import com.teamdev.calculator.fsm.operand.OperandMachine;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.FiniteStateMachine;
@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
  * see {@link OperandMachine} for details.
  */
 
-public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYardStack> {
+public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYard> {
 
     public static ExpressionMachine create(MathElementResolverFactory factory) {
 
@@ -37,7 +37,7 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
     private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
-        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
         registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
         registerTransducer(ExpressionStates.OPERAND, new DetachedShuntingYardTransducer<>(factory.create(MathElement.OPERAND), consumer));

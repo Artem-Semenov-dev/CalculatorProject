@@ -1,12 +1,8 @@
 package com.teamdev.calculator;
 
-import com.teamdev.calculator.CalculationResult;
-import com.teamdev.calculator.Calculator;
-import com.teamdev.calculator.MathematicalExpression;
-import com.teamdev.calculator.WrongExpressionException;
 import com.teamdev.calculator.fsm.util.BinaryOperatorFactory;
 import com.teamdev.calculator.fsm.util.PrioritizedBinaryOperator;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Optional;
@@ -36,7 +32,7 @@ public class PreparedTest {
 
     public void ShuntingYardResultTest(double left, char symbol, double right, double expected, String errorMassage) {
 
-        ShuntingYardStack shuntingYardStack = new ShuntingYardStack();
+        ShuntingYard shuntingYardStack = new ShuntingYard();
 
         Optional<PrioritizedBinaryOperator> operator;
 

@@ -45,9 +45,4 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
         return resolverCreator.create();
     }
 
-    @FunctionalInterface
-    interface MathElementResolverCreator{
-
-        MathElementResolver create();
-    }
 }

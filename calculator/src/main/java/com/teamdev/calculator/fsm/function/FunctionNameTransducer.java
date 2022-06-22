@@ -1,6 +1,6 @@
 package com.teamdev.calculator.fsm.function;
 
-import com.teamdev.calculator.fsm.identifier.IdentifierMachine;
+import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.calculator.fsm.util.FunctionHolder;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;

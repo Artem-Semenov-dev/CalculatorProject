@@ -13,9 +13,9 @@ import java.util.function.DoubleBinaryOperator;
  *  * <a href = "https://en.wikipedia.org/wiki/Shunting_yard_algorithm"> Shunting yard algorithm </a>
  */
 
-public class ShuntingYardStack {
+public class ShuntingYard {
 
-    private static final Logger logger = LoggerFactory.getLogger(ShuntingYardStack.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShuntingYard.class);
 
     private final Deque<Double> operandStack = new ArrayDeque<>();
 

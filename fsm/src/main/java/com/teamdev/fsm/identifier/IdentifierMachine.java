@@ -1,6 +1,5 @@
-package com.teamdev.calculator.fsm.identifier;
+package com.teamdev.fsm.identifier;
 
-import com.teamdev.calculator.fsm.number.SymbolTransducer;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;

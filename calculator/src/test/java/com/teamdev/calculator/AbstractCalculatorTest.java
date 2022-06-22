@@ -1,9 +1,5 @@
 package com.teamdev.calculator;
 
-import com.teamdev.calculator.CalculationResult;
-import com.teamdev.calculator.Calculator;
-import com.teamdev.calculator.MathematicalExpression;
-import com.teamdev.calculator.WrongExpressionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

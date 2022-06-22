@@ -1,7 +1,7 @@
 package com.teamdev.calculator.fsm.operand;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
@@ -12,19 +12,19 @@ import java.util.Optional;
 /**
  * {@code NumberTransducer} is an implementation of {@link Transducer}
  * that produce a number as a result of reading input
- * to {@link ShuntingYardStack} output.
+ * to {@link ShuntingYard} output.
  */
 
-public class NumberTransducer implements Transducer<ShuntingYardStack> {
+public class NumberTransducer implements Transducer<ShuntingYard> {
 
     private final MathElementResolver resolver;
 
-    NumberTransducer(MathElementResolver resolver) {
+    public NumberTransducer(MathElementResolver resolver) {
         this.resolver = Preconditions.checkNotNull(resolver);
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ShuntingYardStack outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ShuntingYard outputChain) throws ResolvingException {
 
         Optional<Double> resolve = resolver.resolve(inputChain);
         if (resolve.isPresent()){

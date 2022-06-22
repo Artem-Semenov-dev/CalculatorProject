@@ -1,4 +1,4 @@
-package com.teamdev.calculator.fsm.number;
+package com.teamdev.fsm.identifier;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.fsm.CharSequenceReader;
@@ -20,10 +20,12 @@ public class SymbolTransducer implements Transducer<StringBuilder> {
         this.condition = Preconditions.checkNotNull(condition);
     }
 
-    SymbolTransducer(char symbol) {
+    public SymbolTransducer(char symbol) {
 
         this(character -> symbol == character);
     }
+
+
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, StringBuilder outputChain) {

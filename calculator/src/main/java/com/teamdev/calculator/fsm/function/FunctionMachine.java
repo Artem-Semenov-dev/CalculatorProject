@@ -16,7 +16,7 @@ import static com.teamdev.calculator.fsm.function.FunctionStates.*;
 
 public final class FunctionMachine extends FiniteStateMachine<FunctionStates, FunctionHolder> {
 
-    FunctionFactory functionFactory = new FunctionFactory();
+    private final FunctionFactory functionFactory = new FunctionFactory();
 
     public static FunctionMachine create(MathElementResolverFactory factory){
 
@@ -42,19 +42,20 @@ public final class FunctionMachine extends FiniteStateMachine<FunctionStates, Fu
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(FINISH, Transducer.autoTransition());
-        registerTransducer(OPENING_BRACKET, Transducer.<FunctionHolder>checkAndPassChar('(').and((inputChain, outputChain) -> {
-
-            String functionName = outputChain.getFunctionName();
-
-            if (!functionFactory.hasFunction(functionName)){
-                throw new ResolvingException("Unknown function: " + functionName);
-            }
-
-            return true;
-        }));
+        registerTransducer(OPENING_BRACKET, Transducer.<FunctionHolder>checkAndPassChar('('));
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
         registerTransducer(IDENTIFIER, new FunctionNameTransducer());
         registerTransducer(EXPRESSION, new ExpressionFunctionTransducer(factory.create(MathElement.EXPRESSION)));
     }
 }
+//.and((inputChain, outputChain) -> {
+//
+//        String functionName = outputChain.getFunctionName();
+//
+//        if (!functionFactory.hasFunction(functionName)){
+//        throw new ResolvingException("Unknown function: " + functionName);
+//        }
+//
+//        return true;
+//        })

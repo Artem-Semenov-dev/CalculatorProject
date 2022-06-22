@@ -2,7 +2,7 @@ package com.teamdev.calculator;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.calculator.CalculatorMachine;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
@@ -41,7 +41,7 @@ public class Calculator {
         CalculatorMachine numberStateMachine = CalculatorMachine.create(factory);
 
         CharSequenceReader inputChain = new CharSequenceReader(expression.getExpression());
-        ShuntingYardStack outputChain = new ShuntingYardStack();
+        ShuntingYard outputChain = new ShuntingYard();
 
         try {
             if (!numberStateMachine.run(inputChain, outputChain) || outputChain.peekResult() == infinity()) {

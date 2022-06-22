@@ -2,7 +2,7 @@ package com.teamdev.calculator.fsm.util;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.expression.ExpressionMachine;
-import com.teamdev.calculator.fsm.identifier.IdentifierMachine;
+import com.teamdev.fsm.identifier.IdentifierMachine;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,8 +1,11 @@
 package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
+import com.teamdev.bazascript.interpreter.util.ScriptElementResolverFactory;
+import com.teamdev.calculator.MathElementResolverFactoryImpl;
 import com.teamdev.calculator.WrongExpressionException;
 import com.teamdev.bazascript.interpreter.execute.InterpreterMachine;
+import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
 
@@ -16,29 +19,31 @@ import com.teamdev.fsm.ResolvingException;
 
 public class Interpreter {
 
-    public ProgramResult interpret(BazaScriptProgram code) throws WrongExpressionException {
+    public ProgramResult interpret(BazaScriptProgram code) throws IncorrectProgramException {
 
         Preconditions.checkNotNull(code);
 
         CharSequenceReader inputChain = new CharSequenceReader(code.getValue());
 
-        VariableHolder outputChain = new VariableHolder();
+        ProgramMemory outputChain = new ProgramMemory();
 
-        InterpreterMachine interpreterMachine = InterpreterMachine.create();
+        MathElementResolverFactory factory = new ScriptElementResolverFactory();
+
+        InterpreterMachine interpreterMachine = InterpreterMachine.create(factory);
 
         try {
             if (!interpreterMachine.run(inputChain, outputChain)) {
 
                 raiseException(inputChain);
             }
-        } catch (ResolvingException | WrongExpressionException e) {
+        } catch (ResolvingException | IncorrectProgramException e) {
             raiseException(inputChain);
         }
 
-        return new ProgramResult(outputChain.getVariableData());
+        return new ProgramResult(outputChain.getOutput().toString());
     }
 
-    private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {
-        throw new WrongExpressionException("Syntax error", inputChain.position());
+    private static void raiseException(CharSequenceReader inputChain) throws IncorrectProgramException {
+        throw new IncorrectProgramException("Syntax error", inputChain.position());
     }
 }

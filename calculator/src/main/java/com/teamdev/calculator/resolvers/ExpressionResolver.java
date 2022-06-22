@@ -2,7 +2,7 @@ package com.teamdev.calculator.resolvers;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.expression.ExpressionMachine;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
@@ -25,7 +25,7 @@ public class ExpressionResolver implements MathElementResolver {
 
     @Override
     public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {
-        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
+        ShuntingYard nestingShuntingYardStack = new ShuntingYard();
 
         ExpressionMachine expressionMachine = ExpressionMachine.create(factory);
 

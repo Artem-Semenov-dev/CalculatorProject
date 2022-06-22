@@ -1,7 +1,7 @@
 package com.teamdev.calculator.fsm.brackets;
 
 import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.FiniteStateMachine;
@@ -15,7 +15,7 @@ import java.util.function.BiConsumer;
  * for parsing an expression inside the brackets.
  */
 
-public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
+public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYard> {
 
     public static BracketsMachine create(MathElementResolverFactory factory) {
 
@@ -34,7 +34,7 @@ public final class BracketsMachine extends FiniteStateMachine<BracketsStates, Sh
     private BracketsMachine(TransitionMatrix<BracketsStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
-        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
         registerTransducer(BracketsStates.START, Transducer.illegalTransition());
         registerTransducer(BracketsStates.OPENING_BRACKET, Transducer.checkAndPassChar('(') );

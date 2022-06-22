@@ -86,7 +86,7 @@ public class FiniteStateMachine<S, O> {
 
         if (logger.isInfoEnabled()) {
 
-            logger.info("Start of machine: {} for {}", getClass().getSimpleName(), inputChain.toString());
+            logger.info("Start of machine: {} ", getClass().getSimpleName());
         }
 
         S currentState = matrix.getStartState();
@@ -103,6 +103,11 @@ public class FiniteStateMachine<S, O> {
                 }
 
                 if (matrix.isTemporaryState(currentState)){
+
+                    if (logger.isInfoEnabled()){
+
+                        logger.info("Rejected temporary state -> {}", currentState);
+                    }
 
                     inputChain.restorePosition();
 

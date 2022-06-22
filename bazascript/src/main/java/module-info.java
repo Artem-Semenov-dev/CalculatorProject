@@ -3,5 +3,4 @@ module bazascript{
     requires src;
     requires com.google.common;
     requires org.slf4j;
-
 }

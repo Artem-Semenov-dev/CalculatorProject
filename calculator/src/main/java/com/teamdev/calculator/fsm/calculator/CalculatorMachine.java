@@ -1,7 +1,7 @@
 package com.teamdev.calculator.fsm.calculator;
 
 import com.teamdev.calculator.fsm.expression.ExpressionMachine;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.FiniteStateMachine;
@@ -15,7 +15,7 @@ import java.util.function.BiConsumer;
  * that used to launch a {@link ExpressionMachine}.
  * */
 
-public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYardStack> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYard> {
 
     public static CalculatorMachine create(MathElementResolverFactory factory) {
         TransitionMatrix<CalculatorStates> matrix =
@@ -31,7 +31,7 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates
     private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
-        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
         registerTransducer(CalculatorStates.START, Transducer.illegalTransition());
         registerTransducer(CalculatorStates.EXPRESSION, new DetachedShuntingYardTransducer<>(factory.create(MathElement.EXPRESSION), consumer));

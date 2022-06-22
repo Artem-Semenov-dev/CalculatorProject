@@ -3,7 +3,7 @@ package com.teamdev.calculator.fsm.expression;
 import com.teamdev.calculator.PreparedTest;
 import com.teamdev.calculator.WrongExpressionException;
 import com.teamdev.calculator.fsm.util.PrioritizedBinaryOperator;
-import com.teamdev.calculator.fsm.util.ShuntingYardStack;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -14,7 +14,7 @@ public class ShuntingYardStackTest {
 
     private final PreparedTest preparedTest = new PreparedTest();
 
-    private final ShuntingYardStack shuntingYardStack = new ShuntingYardStack();
+    private final ShuntingYard shuntingYardStack = new ShuntingYard();
 
 
     @ParameterizedTest

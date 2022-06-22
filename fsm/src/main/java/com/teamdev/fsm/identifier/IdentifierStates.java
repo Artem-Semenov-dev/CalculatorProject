@@ -1,4 +1,4 @@
-package com.teamdev.calculator.fsm.identifier;
+package com.teamdev.fsm.identifier;
 
 /**
  * {@code IdentifierState} is an enumeration of states
