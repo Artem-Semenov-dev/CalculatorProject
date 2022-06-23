@@ -1,4 +1,4 @@
-package com.teamdev.bazascript.interpreter;
+package com.teamdev.bazascript.interpreter.runtime;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.util.ShuntingYard;

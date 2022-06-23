@@ -11,4 +11,5 @@ module src {
     exports com.teamdev.calculator.fsm.expression;
     exports com.teamdev.calculator.fsm.number;
     exports com.teamdev.calculator.fsm.brackets;
+    exports com.teamdev.calculator.resolvers;
 }

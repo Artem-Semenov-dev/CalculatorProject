@@ -2,7 +2,9 @@ package com.teamdev.calculator.fsm.calculator;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
+import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
+import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
 import com.teamdev.fsm.Transducer;
@@ -20,21 +22,28 @@ import java.util.function.BiConsumer;
 
 public class DetachedShuntingYardTransducer<O> implements Transducer<O> {
 
-    private final MathElementResolver resolver;
+    private final MathElementResolverFactory factory;
+
+    private final MathElement resolverType;
 
     private final BiConsumer<O, Double> resultConsumer;
 
-    public DetachedShuntingYardTransducer(MathElementResolver resolver, BiConsumer<O, Double> resultConsumer) {
-        this.resolver = Preconditions.checkNotNull(resolver);
+    public DetachedShuntingYardTransducer(MathElement resolver, BiConsumer<O, Double> resultConsumer,
+                                          MathElementResolverFactory factory) {
+        this.resolverType =  Preconditions.checkNotNull(resolver);
         this.resultConsumer = Preconditions.checkNotNull(resultConsumer);
+        this.factory = factory;
     }
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
-        Optional<Double> resolve = resolver.resolve(inputChain);
 
-        resolve.ifPresent((Double value) -> resultConsumer.accept(outputChain, value));
+        MathElementResolver resolver = factory.create(resolverType);
 
-        return resolve.isPresent();
+        Optional<Double> resolveResult = resolver.resolve(inputChain);
+
+        resolveResult.ifPresent((Double value) -> resultConsumer.accept(outputChain, value));
+
+        return resolveResult.isPresent();
     }
 }

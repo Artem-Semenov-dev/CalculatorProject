@@ -10,11 +10,11 @@ import com.teamdev.fsm.ResolvingException;
 
 import java.util.Optional;
 
-public class variableExpressionResolver implements MathElementResolver {
+public class VariableExpressionResolver implements MathElementResolver {
 
     private final MathElementResolverFactory factory;
 
-    public variableExpressionResolver(MathElementResolverFactory factory) {
+    public VariableExpressionResolver(MathElementResolverFactory factory) {
         this.factory = Preconditions.checkNotNull(factory);
     }
 
@@ -22,12 +22,12 @@ public class variableExpressionResolver implements MathElementResolver {
     public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {
         ProgramMemory nestingShuntingYardStack = new ProgramMemory();
 
-        ExpressionMachine expressionMachine = ExpressionMachine.create(factory);
+//        ExpressionMachine expressionMachine = ExpressionMachine.create(factory);
 
-        if (expressionMachine.run(inputChain, nestingShuntingYardStack)) {
-
-            return Optional.of(nestingShuntingYardStack.peekResult());
-        }
+//        if (expressionMachine.run(inputChain, nestingShuntingYardStack)) {
+//
+//            return Optional.of(nestingShuntingYardStack.peekResult());
+//        }
 
         return Optional.empty();
     }

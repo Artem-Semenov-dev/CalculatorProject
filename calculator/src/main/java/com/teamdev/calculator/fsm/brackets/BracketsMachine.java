@@ -38,7 +38,7 @@ public final class BracketsMachine extends FiniteStateMachine<BracketsStates, Sh
 
         registerTransducer(BracketsStates.START, Transducer.illegalTransition());
         registerTransducer(BracketsStates.OPENING_BRACKET, Transducer.checkAndPassChar('(') );
-        registerTransducer(BracketsStates.EXPRESSION, new DetachedShuntingYardTransducer<>(factory.create(MathElement.EXPRESSION), consumer));
+        registerTransducer(BracketsStates.EXPRESSION, new DetachedShuntingYardTransducer<>(MathElement.EXPRESSION, consumer, factory));
         registerTransducer(BracketsStates.CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
         registerTransducer(BracketsStates.FINISH, Transducer.autoTransition());
     }

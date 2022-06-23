@@ -2,12 +2,14 @@ package com.teamdev.calculator;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.brackets.BracketsMachine;
+import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
+import com.teamdev.calculator.fsm.expression.ExpressionMachine;
 import com.teamdev.calculator.fsm.operand.OperandMachine;
+import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.calculator.resolvers.DetachedShuntingYardResolver;
-import com.teamdev.calculator.resolvers.ExpressionResolver;
 import com.teamdev.calculator.resolvers.FunctionResolver;
 import com.teamdev.calculator.resolvers.NumberResolver;
 
@@ -24,9 +26,9 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
         resolvers.put(NUMBER, NumberResolver::new);
 
-        resolvers.put(EXPRESSION, () -> new ExpressionResolver(this));
-
-//        resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolvers<>(ExpressionMachine.create(this)));
+        resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolver<>
+                (ExpressionMachine.create(ShuntingYard::pushOperator,
+                        new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this))));
 
         resolvers.put(OPERAND, () -> new DetachedShuntingYardResolver<>(OperandMachine.create(this)));
 

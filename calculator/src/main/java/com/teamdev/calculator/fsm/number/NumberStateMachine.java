@@ -1,10 +1,11 @@
 package com.teamdev.calculator.fsm.number;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.fsm.FiniteStateMachine;
-import com.teamdev.fsm.Transducer;
-import com.teamdev.fsm.TransitionMatrix;
+import com.teamdev.fsm.*;
 import com.teamdev.fsm.identifier.SymbolTransducer;
+
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import static com.teamdev.calculator.fsm.number.NumberStates.*;
 
@@ -14,6 +15,19 @@ import static com.teamdev.calculator.fsm.number.NumberStates.*;
  */
 
 public final class NumberStateMachine extends FiniteStateMachine<NumberStates, StringBuilder> {
+
+    public static Optional<Double> execute(CharSequenceReader inputChain) throws ResolvingException {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        NumberStateMachine numberMachine = NumberStateMachine.create();
+
+        if (numberMachine.run(inputChain, stringBuilder)) {
+
+            return Optional.of(Double.parseDouble(stringBuilder.toString()));
+        }
+
+        return Optional.empty();
+    }
 
     public static NumberStateMachine create() {
         TransitionMatrix<NumberStates> matrix = TransitionMatrix.<NumberStates>builder().

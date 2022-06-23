@@ -1,9 +1,7 @@
 package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.bazascript.interpreter.util.ScriptElementResolverFactory;
-import com.teamdev.calculator.MathElementResolverFactoryImpl;
-import com.teamdev.calculator.WrongExpressionException;
+import com.teamdev.bazascript.interpreter.util.CalculatorElementResolverFactory;
 import com.teamdev.bazascript.interpreter.execute.InterpreterMachine;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
@@ -27,7 +25,7 @@ public class Interpreter {
 
         ProgramMemory outputChain = new ProgramMemory();
 
-        MathElementResolverFactory factory = new ScriptElementResolverFactory();
+        MathElementResolverFactory factory = new CalculatorElementResolverFactory();
 
         InterpreterMachine interpreterMachine = InterpreterMachine.create(factory);
 

@@ -1,4 +1,4 @@
-package com.teamdev.bazascript.interpreter;
+package com.teamdev.bazascript.interpreter.runtime;
 
 import java.util.HashMap;
 import java.util.Map;

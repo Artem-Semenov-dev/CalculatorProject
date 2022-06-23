@@ -16,15 +16,6 @@ public class NumberResolver implements MathElementResolver {
     @Override
     public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {
 
-        StringBuilder stringBuilder = new StringBuilder(32);
-
-        NumberStateMachine numberMachine = NumberStateMachine.create();
-
-        if (numberMachine.run(inputChain, stringBuilder)){
-
-            return Optional.of(Double.parseDouble(stringBuilder.toString()));
-        }
-
-        return Optional.empty();
+        return NumberStateMachine.execute(inputChain);
     }
 }

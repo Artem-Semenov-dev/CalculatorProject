@@ -7,20 +7,21 @@ import com.teamdev.calculator.MathElementResolverCreator;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.calculator.math.MathElementResolverFactory;
+import com.teamdev.calculator.resolvers.NumberResolver;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 import static com.teamdev.calculator.math.MathElement.*;
 
-public class ScriptElementResolverFactory implements MathElementResolverFactory {
+public class CalculatorElementResolverFactory implements MathElementResolverFactory {
 
     private final Map<MathElement, MathElementResolverCreator> resolvers = new EnumMap<>(MathElement.class);
 
-    public ScriptElementResolverFactory() {
-        resolvers.put(NUMBER, ScriptNumberResolver::new);
+    public CalculatorElementResolverFactory() {
+        resolvers.put(NUMBER, NumberResolver::new);
 
-        resolvers.put(EXPRESSION, () -> new variableExpressionResolver(this));
+        resolvers.put(EXPRESSION, () -> new VariableExpressionResolver(this));
 
         resolvers.put(OPERAND, () -> new DetachedMemoryResolver<>(OperandMachine.create(this)));
 

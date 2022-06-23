@@ -20,9 +20,9 @@ public final class OperandMachine extends FiniteStateMachine<Object, ShuntingYar
 
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
-        return FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(factory.create(MathElement.NUMBER), consumer),
-                new DetachedShuntingYardTransducer<>(factory.create(MathElement.BRACKETS), consumer),
-                new DetachedShuntingYardTransducer<>(factory.create(MathElement.FUNCTION), consumer));
+        return FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(MathElement.NUMBER, consumer, factory),
+                new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, consumer, factory),
+                new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, consumer, factory));
     }
 
     private OperandMachine(TransitionMatrix<Object> matrix, MathElementResolverFactory factory) {

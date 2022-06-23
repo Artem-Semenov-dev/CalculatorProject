@@ -8,6 +8,7 @@ import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 /**
  * {@code FunctionTransducer} is an implementation of {@link Transducer}
@@ -15,12 +16,19 @@ import java.util.Optional;
  * for {@link ExpressionMachine}.
  */
 
-class BinaryOperatorTransducer implements Transducer<ShuntingYard> {
+class BinaryOperatorTransducer<O> implements Transducer<O> {
 
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();
 
+    private final BiConsumer<O, PrioritizedBinaryOperator> operatorConsumer;
+
+    BinaryOperatorTransducer(BiConsumer<O, PrioritizedBinaryOperator> operatorConsumer) {
+
+        this.operatorConsumer = Preconditions.checkNotNull(operatorConsumer);
+    }
+
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ShuntingYard outputChain) {
+    public boolean doTransition(CharSequenceReader inputChain, O outputChain) {
 
         Preconditions.checkNotNull(inputChain, outputChain);
 
@@ -31,7 +39,8 @@ class BinaryOperatorTransducer implements Transducer<ShuntingYard> {
         Optional<PrioritizedBinaryOperator> operator = factory.create(inputChain.read());
 
         if (operator.isPresent()) {
-            outputChain.pushOperator(operator.get());
+
+            operatorConsumer.accept(outputChain, operator.get());
 
             inputChain.incrementPosition();
 

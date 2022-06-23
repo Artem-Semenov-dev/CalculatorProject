@@ -2,6 +2,7 @@ package com.teamdev.calculator.fsm.expression;
 
 import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
 import com.teamdev.calculator.fsm.operand.OperandMachine;
+import com.teamdev.calculator.fsm.util.PrioritizedBinaryOperator;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolverFactory;
@@ -18,9 +19,10 @@ import java.util.function.BiConsumer;
  * see {@link OperandMachine} for details.
  */
 
-public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYard> {
+public final class  ExpressionMachine<O> extends FiniteStateMachine<ExpressionStates, O> {
 
-    public static ExpressionMachine create(MathElementResolverFactory factory) {
+    public static <O> ExpressionMachine<O> create(BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
+                                                  Transducer<O> operandTransducer) {
 
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(ExpressionStates.START)
@@ -31,19 +33,20 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
 
                 .build();
 
-        return new ExpressionMachine(matrix, factory);
+        return new ExpressionMachine<>(matrix, binaryConsumer, operandTransducer);
     }
 
-    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix, MathElementResolverFactory factory) {
+    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
+                              BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
+                              Transducer<O> operandTransducer) {
         super(matrix, true);
 
-        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
-
         registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
-        registerTransducer(ExpressionStates.OPERAND, new DetachedShuntingYardTransducer<>(factory.create(MathElement.OPERAND), consumer));
-        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer());
+        registerTransducer(ExpressionStates.OPERAND, operandTransducer);
+        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(binaryConsumer));
         registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
     }
 }
+//new DetachedShuntingYardTransducer<O>(MathElement.OPERAND, consumer, factory)
 
 

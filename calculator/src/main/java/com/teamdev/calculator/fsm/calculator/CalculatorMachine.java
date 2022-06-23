@@ -34,7 +34,7 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
         registerTransducer(CalculatorStates.START, Transducer.illegalTransition());
-        registerTransducer(CalculatorStates.EXPRESSION, new DetachedShuntingYardTransducer<>(factory.create(MathElement.EXPRESSION), consumer));
+        registerTransducer(CalculatorStates.EXPRESSION, new DetachedShuntingYardTransducer<>(MathElement.EXPRESSION, consumer, factory));
         registerTransducer(CalculatorStates.FINISH, (inputChain, outputChain) -> !inputChain.canRead());
     }
 }

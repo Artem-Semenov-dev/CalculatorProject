@@ -15,9 +15,9 @@ public class OperandMachine extends FiniteStateMachine<Object, ProgramMemory> {
 
         BiConsumer<ProgramMemory, Double> consumer = ProgramMemory::pushOperand;
 
-        return FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(factory.create(MathElement.NUMBER), consumer),
-                new DetachedShuntingYardTransducer<>(factory.create(MathElement.BRACKETS), consumer),
-                new DetachedShuntingYardTransducer<>(factory.create(MathElement.FUNCTION), consumer),
+        return FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(MathElement.NUMBER, consumer, factory),
+                new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, consumer, factory),
+                new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, consumer, factory),
                 new VariableTransducer());
     }
 
