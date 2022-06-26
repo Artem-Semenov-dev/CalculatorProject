@@ -10,19 +10,19 @@ public class SystemStack {
 
     private final Deque<ShuntingYard> stacks = new ArrayDeque<>();
 
-    public void create(){
+    public void create() {
 
         stacks.push(new ShuntingYard());
     }
 
-    public ShuntingYard current(){
+    public ShuntingYard current() {
 
         Preconditions.checkState(stacks.size() > 0);
 
         return stacks.peek();
     }
 
-    public ShuntingYard close(){
+    public ShuntingYard close() {
 
         Preconditions.checkState(stacks.size() > 0);
 

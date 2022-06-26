@@ -14,8 +14,13 @@ public class Output {
         return printStream;
     }
 
-    public String content(){
+    public String content() {
 
-        return printStream.toString();
+        return outputStream.toString();
+    }
+
+    public void print(String value) {
+
+        printStream.print(value);
     }
 }

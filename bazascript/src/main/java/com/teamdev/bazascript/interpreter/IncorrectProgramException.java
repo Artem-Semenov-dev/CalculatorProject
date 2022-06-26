@@ -2,7 +2,7 @@ package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
 
-public class IncorrectProgramException extends Exception{
+public class IncorrectProgramException extends Exception {
 
     private final int errorPosition;
 

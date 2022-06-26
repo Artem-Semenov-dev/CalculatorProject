@@ -1,10 +1,10 @@
 package com.teamdev.bazascript.interpreter.procedure;
 
-import com.teamdev.bazascript.interpreter.ProgramMemory;
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 
 import java.util.List;
 
 public interface Procedure {
 
-    void create(List<Double> arguments, ProgramMemory output);
+    void execute(List<Double> arguments, ScriptContext output);
 }

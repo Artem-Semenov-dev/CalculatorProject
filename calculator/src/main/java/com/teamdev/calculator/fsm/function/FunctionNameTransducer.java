@@ -8,17 +8,26 @@ import com.teamdev.fsm.Transducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.BiConsumer;
+
 /**
  * {@code FunctionNameTransducer} is an implementation of {@link Transducer}
  * that produce a name of function for {@link FunctionHolder} output.
  */
 
-class FunctionNameTransducer implements Transducer<FunctionHolder> {
+public class FunctionNameTransducer<O> implements Transducer<O> {
+
+    private final BiConsumer<O, String> resultConsumer;
 
     private static final Logger logger = LoggerFactory.getLogger(FunctionNameTransducer.class);
 
+    public FunctionNameTransducer(BiConsumer<O, String> resultConsumer) {
+
+        this.resultConsumer = resultConsumer;
+    }
+
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, FunctionHolder outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -31,7 +40,7 @@ class FunctionNameTransducer implements Transducer<FunctionHolder> {
                 logger.info("Function name - {}", stringBuilder);
             }
 
-            outputChain.setFunctionName(stringBuilder.toString());
+            resultConsumer.accept(outputChain, stringBuilder.toString());
             return true;
         }
 

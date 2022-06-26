@@ -9,5 +9,6 @@ public enum ScriptElement {
     STATEMENT,
     INITVAR,
     PROGRAM,
-    PROCEDURE
+    PROCEDURE,
+    READVARIABLE
 }

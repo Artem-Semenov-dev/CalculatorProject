@@ -12,6 +12,7 @@ import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.calculator.resolvers.DetachedShuntingYardResolver;
 import com.teamdev.calculator.resolvers.FunctionResolver;
 import com.teamdev.calculator.resolvers.NumberResolver;
+import com.teamdev.fsm.FiniteStateMachine;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -30,9 +31,13 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
                 (ExpressionMachine.create(ShuntingYard::pushOperator,
                         new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this))));
 
-        resolvers.put(OPERAND, () -> new DetachedShuntingYardResolver<>(OperandMachine.create(this)));
+        resolvers.put(OPERAND, () -> new DetachedShuntingYardResolver<>(
+                FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this),
+                        new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this),
+                        new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this))));
 
-        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(this)));
+        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(
+                new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this))));
 
         resolvers.put(FUNCTION, () -> new FunctionResolver(this));
     }

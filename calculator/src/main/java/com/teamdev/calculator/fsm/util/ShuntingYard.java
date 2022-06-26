@@ -52,13 +52,9 @@ public class ShuntingYard {
 
         Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
 
-        if (logger.isInfoEnabled()) {
-            logger.info("Result -> {}", operandStack.peek());
-            logger.info("------------------------------------------------------------------------------");
-        }
-
-        assert operandStack.peek() != null;
-        return Preconditions.checkNotNull(operandStack.peek());
+//        assert operandStack.peek() != null;
+//        return Preconditions.checkNotNull(operandStack.peek());
+        return operandStack.pop();
     }
 
 

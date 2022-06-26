@@ -1,25 +1,23 @@
-package com.teamdev.bazascript.interpreter.util;
+package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ScriptElement;
+import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
+import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
-import java.util.function.BiConsumer;
-
-public class ExecuteProgramElementTransducer implements Transducer<ScriptContext> {
+public class ExecutorProgramElementTransducer implements Transducer<ScriptContext> {
 
     private final ScriptElementExecutorFactory factory;
 
     private final ScriptElement scriptElement;
 
-    private final BiConsumer<ScriptContext, Double> resultConsumer;
-
-    public ExecuteProgramElementTransducer(ScriptElement resolver, BiConsumer<ScriptContext, Double> resultConsumer,
-                                           ScriptElementExecutorFactory factory) {
+    public ExecutorProgramElementTransducer(ScriptElement resolver,
+                                            ScriptElementExecutorFactory factory) {
         this.scriptElement = Preconditions.checkNotNull(resolver);
-        this.resultConsumer = Preconditions.checkNotNull(resultConsumer);
         this.factory = factory;
     }
 
@@ -29,10 +27,6 @@ public class ExecuteProgramElementTransducer implements Transducer<ScriptContext
         ScriptElementExecutor elementExecutor = factory.create(scriptElement);
 
         boolean executeResult = elementExecutor.execute(inputChain, outputChain);
-
-        if (executeResult){
-            
-        }
 
         return executeResult;
     }

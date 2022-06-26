@@ -1,25 +1,26 @@
 package com.teamdev.bazascript.interpreter.program;
 
-import com.teamdev.bazascript.interpreter.ProgramMemory;
-import com.teamdev.calculator.math.MathElementResolverFactory;
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ScriptElement;
+import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.program.ProgramStates.*;
 
-public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ProgramMemory> {
+public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext> {
 
-    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, MathElementResolverFactory factory) {
+    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory) {
         super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(STATEMENT, new StatementTransducer(factory));
+        registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(';'));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 
-    public static ProgramMachine create(MathElementResolverFactory factory) {
+    public static ProgramMachine create(ScriptElementExecutorFactory factory) {
         TransitionMatrix<ProgramStates> matrix =
                 TransitionMatrix.<ProgramStates>builder()
                         .withStartState(START)

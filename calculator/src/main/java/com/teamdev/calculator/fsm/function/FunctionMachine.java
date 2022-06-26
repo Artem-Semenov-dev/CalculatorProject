@@ -7,6 +7,8 @@ import com.teamdev.fsm.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.BiConsumer;
+
 import static com.teamdev.calculator.fsm.function.FunctionStates.*;
 
 /**
@@ -14,11 +16,11 @@ import static com.teamdev.calculator.fsm.function.FunctionStates.*;
  * for parsing a function.
  */
 
-public final class FunctionMachine extends FiniteStateMachine<FunctionStates, FunctionHolder> {
+public final class FunctionMachine<O> extends FiniteStateMachine<FunctionStates, O> {
 
     private final FunctionFactory functionFactory = new FunctionFactory();
 
-    public static FunctionMachine create(MathElementResolverFactory factory){
+    public static <O> FunctionMachine<O> create(Transducer<O> expressionFunctionTransducer, BiConsumer<O, String> biConsumer){
 
         TransitionMatrix<FunctionStates> matrix = TransitionMatrix.<FunctionStates>builder()
                 .withStartState(START)
@@ -33,22 +35,24 @@ public final class FunctionMachine extends FiniteStateMachine<FunctionStates, Fu
 
                 .build();
 
-        return new FunctionMachine(matrix, factory);
+        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer);
     }
 
 
-    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, MathElementResolverFactory factory) {
+    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O> expressionFunctionTransducer,
+                            BiConsumer<O, String> biConsumer) {
         super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(FINISH, Transducer.autoTransition());
-        registerTransducer(OPENING_BRACKET, Transducer.<FunctionHolder>checkAndPassChar('('));
+        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
-        registerTransducer(IDENTIFIER, new FunctionNameTransducer());
-        registerTransducer(EXPRESSION, new ExpressionFunctionTransducer(factory.create(MathElement.EXPRESSION)));
+        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer));
+        registerTransducer(EXPRESSION, expressionFunctionTransducer);
     }
 }
+//new ExpressionFunctionTransducer(factory.create(MathElement.EXPRESSION))
 //.and((inputChain, outputChain) -> {
 //
 //        String functionName = outputChain.getFunctionName();

@@ -1,4 +1,4 @@
-module bazascript{
+module bazascript {
     requires fsm;
     requires src;
     requires com.google.common;

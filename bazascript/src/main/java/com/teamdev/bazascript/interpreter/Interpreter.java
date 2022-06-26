@@ -1,9 +1,9 @@
 package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.bazascript.interpreter.util.CalculatorElementResolverFactory;
 import com.teamdev.bazascript.interpreter.execute.InterpreterMachine;
-import com.teamdev.calculator.math.MathElementResolverFactory;
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
 
@@ -12,10 +12,13 @@ import com.teamdev.fsm.ResolvingException;
  * - initializing of variable
  * - operations between variables
  * - function println(variable or expression) which will deducing result of program execution.
- *
  */
 
 public class Interpreter {
+
+    private static void raiseException(CharSequenceReader inputChain) throws IncorrectProgramException {
+        throw new IncorrectProgramException("Syntax error", inputChain.position());
+    }
 
     public ProgramResult interpret(BazaScriptProgram code) throws IncorrectProgramException {
 
@@ -23,14 +26,14 @@ public class Interpreter {
 
         CharSequenceReader inputChain = new CharSequenceReader(code.getValue());
 
-        ProgramMemory outputChain = new ProgramMemory();
+        ScriptContext scriptContext = new ScriptContext();
 
-        MathElementResolverFactory factory = new CalculatorElementResolverFactory();
+        ScriptElementExecutorFactory factory = new ScriptElementExecutorFactoryImpl();
 
         InterpreterMachine interpreterMachine = InterpreterMachine.create(factory);
 
         try {
-            if (!interpreterMachine.run(inputChain, outputChain)) {
+            if (!interpreterMachine.run(inputChain, scriptContext)) {
 
                 raiseException(inputChain);
             }
@@ -38,10 +41,6 @@ public class Interpreter {
             raiseException(inputChain);
         }
 
-        return new ProgramResult(outputChain.getOutput().toString());
-    }
-
-    private static void raiseException(CharSequenceReader inputChain) throws IncorrectProgramException {
-        throw new IncorrectProgramException("Syntax error", inputChain.position());
+        return new ProgramResult(scriptContext.getOutput().content());
     }
 }

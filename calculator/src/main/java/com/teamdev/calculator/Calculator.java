@@ -44,7 +44,7 @@ public class Calculator {
         ShuntingYard outputChain = new ShuntingYard();
 
         try {
-            if (!numberStateMachine.run(inputChain, outputChain) || outputChain.peekResult() == infinity()) {
+            if (!numberStateMachine.run(inputChain, outputChain)) {
 
                 raiseException(inputChain);
             }

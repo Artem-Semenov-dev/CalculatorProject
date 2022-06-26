@@ -1,25 +1,25 @@
 package com.teamdev.bazascript.interpreter.program;
 
-import com.teamdev.bazascript.interpreter.ProgramMemory;
-import com.teamdev.bazascript.interpreter.statement.StatementMachine;
-import com.teamdev.calculator.math.MathElementResolverFactory;
+import com.google.common.base.Preconditions;
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
-public class StatementTransducer implements Transducer<ProgramMemory> {
+class StatementTransducer implements Transducer<ScriptContext> {
 
-    private final MathElementResolverFactory factory;
+    private final ScriptElementExecutor executor;
 
-    public StatementTransducer(MathElementResolverFactory factory) {
-        this.factory = factory;
+    public StatementTransducer(ScriptElementExecutor executor) {
+
+        this.executor = Preconditions.checkNotNull(executor);
     }
 
+
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ProgramMemory outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
 
-        StatementMachine machine = StatementMachine.create(factory);
-
-        return machine.run(inputChain, outputChain);
+        return executor.execute(inputChain, outputChain);
     }
 }

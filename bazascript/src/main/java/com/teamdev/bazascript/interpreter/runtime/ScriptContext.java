@@ -1,12 +1,18 @@
 package com.teamdev.bazascript.interpreter.runtime;
 
-public class ScriptContext {
+import com.teamdev.bazascript.interpreter.util.WithContext;
+
+public class ScriptContext implements WithContext {
 
     private final SystemStack systemStack = new SystemStack();
 
     private final Memory memory = new Memory();
 
     private final Output output = new Output();
+
+    public ScriptContext() {
+        systemStack.create();
+    }
 
     public Memory memory() {
 
@@ -20,5 +26,14 @@ public class ScriptContext {
 
     public Output getOutput() {
         return output;
+    }
+
+    @Override
+    public ScriptContext getContext() {
+        return this;
+    }
+
+    public boolean hasVariable(String variableName) {
+        return memory.hasVariable(variableName);
     }
 }

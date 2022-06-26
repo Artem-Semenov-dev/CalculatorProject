@@ -16,6 +16,7 @@ import java.util.*;
  * <p>
  * Requires a {@link TransitionMatrix} which is a definition of directed graph
  * </p>
+ *
  * @param <S> States for {@link TransitionMatrix}
  * @param <O> Output chain
  */
@@ -23,9 +24,9 @@ import java.util.*;
 public class FiniteStateMachine<S, O> {
 
     @SafeVarargs
-    protected static <O> FiniteStateMachine<Object, O> oneOfMachine(Transducer<O>... transducers) {
+    public static <O> FiniteStateMachine<Object, O> oneOfMachine(Transducer<O>... transducers) {
 
-        Map <Object, Transducer<O>> registers =  new LinkedHashMap<>() ;
+        Map<Object, Transducer<O>> registers = new LinkedHashMap<>();
 
         Object startState = new Object();
         Object finishState = new Object();
@@ -34,7 +35,7 @@ public class FiniteStateMachine<S, O> {
 
         builder.withStartState(startState).withFinishState(finishState);
 
-        for (Transducer<O> transducer: transducers){
+        for (Transducer<O> transducer : transducers) {
 
             Object transducerState = new Object();
 
@@ -46,7 +47,7 @@ public class FiniteStateMachine<S, O> {
 
         FiniteStateMachine<Object, O> machine = new FiniteStateMachine<>(builder.build());
 
-        for (Map.Entry<Object, Transducer<O>> entry : registers.entrySet()){
+        for (Map.Entry<Object, Transducer<O>> entry : registers.entrySet()) {
 
             machine.registerTransducer(entry.getKey(), entry.getValue());
         }
@@ -102,9 +103,9 @@ public class FiniteStateMachine<S, O> {
                     return false;
                 }
 
-                if (matrix.isTemporaryState(currentState)){
+                if (matrix.isTemporaryState(currentState)) {
 
-                    if (logger.isInfoEnabled()){
+                    if (logger.isInfoEnabled()) {
 
                         logger.info("Rejected temporary state -> {}", currentState);
                     }
@@ -124,7 +125,7 @@ public class FiniteStateMachine<S, O> {
     }
 
     private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws ResolvingException {
-        if (allowedSkippingWhitespaces){
+        if (allowedSkippingWhitespaces) {
 
             inputChain.skipWhitespaces();
         }
@@ -147,7 +148,7 @@ public class FiniteStateMachine<S, O> {
         return Optional.empty();
     }
 
-    protected void registerTransducer(S state, Transducer<O> transducer){
+    protected void registerTransducer(S state, Transducer<O> transducer) {
 
         transducers.put(state, transducer);
     }

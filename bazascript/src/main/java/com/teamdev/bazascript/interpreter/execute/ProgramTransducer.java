@@ -1,37 +1,37 @@
 package com.teamdev.bazascript.interpreter.execute;
 
 
-import com.teamdev.bazascript.interpreter.ProgramMemory;
-import com.teamdev.bazascript.interpreter.program.ProgramMachine;
-import com.teamdev.calculator.math.MathElementResolverFactory;
+import com.google.common.base.Preconditions;
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ResolvingException;
 import com.teamdev.fsm.Transducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProgramTransducer implements Transducer<ProgramMemory> {
+public class ProgramTransducer implements Transducer<ScriptContext> {
 
     private static final Logger logger = LoggerFactory.getLogger(ProgramTransducer.class);
 
-    private final MathElementResolverFactory factory;
+    private final ScriptElementExecutor executor;
 
-    public ProgramTransducer(MathElementResolverFactory factory) {
+    ProgramTransducer(ScriptElementExecutor executor) {
 
-        this.factory = factory;
+        this.executor = Preconditions.checkNotNull(executor);
     }
 
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ProgramMemory outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
 
-        ProgramMachine programMachine = ProgramMachine.create(factory);
-
-        if (logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
 
             logger.info("Working with input chain -> {}", inputChain.toString());
+
+            logger.info("OutputChain is null : {}", (outputChain));
         }
 
-        return programMachine.run(inputChain, outputChain);
+        return executor.execute(inputChain, outputChain);
     }
 }

@@ -42,7 +42,9 @@ public class DetachedShuntingYardTransducer<O> implements Transducer<O> {
 
         Optional<Double> resolveResult = resolver.resolve(inputChain);
 
-        resolveResult.ifPresent((Double value) -> resultConsumer.accept(outputChain, value));
+        resolveResult.ifPresent((Double value) -> {
+            resultConsumer.accept(outputChain, value);
+        });
 
         return resolveResult.isPresent();
     }
