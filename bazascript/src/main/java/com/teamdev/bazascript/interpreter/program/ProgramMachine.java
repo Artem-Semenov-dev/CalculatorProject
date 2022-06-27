@@ -1,18 +1,21 @@
 package com.teamdev.bazascript.interpreter.program;
 
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
+import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.program.ProgramStates.*;
 
-public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext> {
+public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext, ExecutionException> {
 
-    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory) {
-        super(matrix, true);
+    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory,
+                           ExceptionThrower<ExecutionException> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
@@ -20,7 +23,7 @@ public final class ProgramMachine extends FiniteStateMachine<ProgramStates, Scri
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 
-    public static ProgramMachine create(ScriptElementExecutorFactory factory) {
+    public static ProgramMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<ProgramStates> matrix =
                 TransitionMatrix.<ProgramStates>builder()
                         .withStartState(START)
@@ -31,6 +34,6 @@ public final class ProgramMachine extends FiniteStateMachine<ProgramStates, Scri
 
                         .build();
 
-        return new ProgramMachine(matrix, factory);
+        return new ProgramMachine(matrix, factory, exceptionThrower);
     }
 }

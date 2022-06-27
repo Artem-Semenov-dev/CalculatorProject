@@ -6,7 +6,7 @@ import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
+import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
 import java.util.Optional;
@@ -20,7 +20,7 @@ import java.util.function.BiConsumer;
  * </p>
  */
 
-public class DetachedShuntingYardTransducer<O> implements Transducer<O> {
+public class DetachedShuntingYardTransducer<O> implements Transducer<O, ResolvingException> {
 
     private final MathElementResolverFactory factory;
 

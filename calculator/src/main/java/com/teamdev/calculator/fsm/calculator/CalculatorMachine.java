@@ -1,12 +1,11 @@
 package com.teamdev.calculator.fsm.calculator;
 
+import com.teamdev.calculator.ResolvingException;
 import com.teamdev.calculator.fsm.expression.ExpressionMachine;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolverFactory;
-import com.teamdev.fsm.FiniteStateMachine;
-import com.teamdev.fsm.Transducer;
-import com.teamdev.fsm.TransitionMatrix;
+import com.teamdev.fsm.*;
 
 import java.util.function.BiConsumer;
 
@@ -15,9 +14,10 @@ import java.util.function.BiConsumer;
  * that used to launch a {@link ExpressionMachine}.
  * */
 
-public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYard> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYard, ResolvingException> {
 
-    public static CalculatorMachine create(MathElementResolverFactory factory) {
+    public static CalculatorMachine create(MathElementResolverFactory factory,
+                                                                    ExceptionThrower<ResolvingException> exceptionThrower) {
         TransitionMatrix<CalculatorStates> matrix =
                 TransitionMatrix.<CalculatorStates>builder()
                         .withStartState(CalculatorStates.START)
@@ -25,11 +25,11 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates
                         .allowTransition(CalculatorStates.START, CalculatorStates.EXPRESSION)
                         .allowTransition(CalculatorStates.EXPRESSION, CalculatorStates.FINISH).build();
 
-        return new CalculatorMachine(matrix, factory);
+        return new CalculatorMachine(matrix, factory, exceptionThrower);
     }
 
-    private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory) {
-        super(matrix, true);
+    private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory, ExceptionThrower<ResolvingException> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 

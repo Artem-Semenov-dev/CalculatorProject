@@ -1,23 +1,33 @@
 package com.teamdev.bazascript.interpreter.initvar;
 
+import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.calculator.fsm.function.FunctionNameTransducer;
+import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.initvar.InitVarStates.*;
 
-public final class InitVarMachine extends FiniteStateMachine<InitVarStates, InitVarContext> {
+public final class InitVarMachine extends FiniteStateMachine<InitVarStates, InitVarContext, ExecutionException> {
 
-    private InitVarMachine(TransitionMatrix<InitVarStates> matrix, ScriptElementExecutorFactory factory) {
-        super(matrix, true);
+    private InitVarMachine(TransitionMatrix<InitVarStates> matrix, ScriptElementExecutorFactory factory,
+                           ExceptionThrower<ExecutionException> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
+
         registerTransducer(ASSIGN, Transducer.checkAndPassChar('='));
-        registerTransducer(NAME, new FunctionNameTransducer<>(InitVarContext::setVariableName));
+
+        registerTransducer(NAME, new FunctionNameTransducer<>(InitVarContext::setVariableName,
+                errorMessage -> {
+                    throw new ExecutionException(errorMessage);
+                }));
+
         registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ScriptElement.EXPRESSION)));
+
         registerTransducer(FINISH, (inputChain, outputChain) -> {
             outputChain.getContext().memory()
                     .setVariable(outputChain.getVariableName(), outputChain.getVariableValue());
@@ -26,7 +36,7 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
         });
     }
 
-    public static InitVarMachine create(ScriptElementExecutorFactory factory) {
+    public static InitVarMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<InitVarStates> matrix = TransitionMatrix.<InitVarStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)
@@ -38,6 +48,6 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
 
                 .build();
 
-        return new InitVarMachine(matrix, factory);
+        return new InitVarMachine(matrix, factory, exceptionThrower);
     }
 }

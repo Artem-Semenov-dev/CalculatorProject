@@ -1,11 +1,6 @@
 package com.teamdev.calculator.fsm.function;
 
-import com.teamdev.calculator.fsm.util.FunctionHolder;
-import com.teamdev.calculator.math.MathElement;
-import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.function.BiConsumer;
 
@@ -16,11 +11,13 @@ import static com.teamdev.calculator.fsm.function.FunctionStates.*;
  * for parsing a function.
  */
 
-public final class FunctionMachine<O> extends FiniteStateMachine<FunctionStates, O> {
+public final class FunctionMachine<O, E extends Exception> extends FiniteStateMachine<FunctionStates, O, E> {
 
     private final FunctionFactory functionFactory = new FunctionFactory();
 
-    public static <O> FunctionMachine<O> create(Transducer<O> expressionFunctionTransducer, BiConsumer<O, String> biConsumer){
+    public static <O, E extends Exception> FunctionMachine<O, E> create(Transducer<O, E> expressionFunctionTransducer,
+                                                                        BiConsumer<O, String> biConsumer,
+                                                                        ExceptionThrower<E> exceptionThrower){
 
         TransitionMatrix<FunctionStates> matrix = TransitionMatrix.<FunctionStates>builder()
                 .withStartState(START)
@@ -35,20 +32,20 @@ public final class FunctionMachine<O> extends FiniteStateMachine<FunctionStates,
 
                 .build();
 
-        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer);
+        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer, exceptionThrower);
     }
 
 
-    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O> expressionFunctionTransducer,
-                            BiConsumer<O, String> biConsumer) {
-        super(matrix, true);
+    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O, E> expressionFunctionTransducer,
+                            BiConsumer<O, String> biConsumer, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(FINISH, Transducer.autoTransition());
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
-        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer));
+        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer, exceptionThrower));
         registerTransducer(EXPRESSION, expressionFunctionTransducer);
     }
 }

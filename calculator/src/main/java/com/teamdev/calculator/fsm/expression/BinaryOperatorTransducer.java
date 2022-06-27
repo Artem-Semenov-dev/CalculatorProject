@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
  * for {@link ExpressionMachine}.
  */
 
-class BinaryOperatorTransducer<O> implements Transducer<O> {
+class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, E> {
 
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();
 

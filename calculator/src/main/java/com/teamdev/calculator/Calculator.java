@@ -5,7 +5,6 @@ import com.teamdev.calculator.fsm.calculator.CalculatorMachine;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
 
 import java.util.function.DoubleBinaryOperator;
 
@@ -38,7 +37,9 @@ public class Calculator {
 
         MathElementResolverFactory factory = new MathElementResolverFactoryImpl();
 
-        CalculatorMachine numberStateMachine = CalculatorMachine.create(factory);
+        CalculatorMachine numberStateMachine = CalculatorMachine.create(factory, errorMessage -> {
+            throw new ResolvingException(errorMessage);
+        });
 
         CharSequenceReader inputChain = new CharSequenceReader(expression.getExpression());
         ShuntingYard outputChain = new ShuntingYard();
@@ -57,11 +58,6 @@ public class Calculator {
 
     private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {
         throw new WrongExpressionException("Wrong mathematical expression", inputChain.position());
-    }
-
-    private static double infinity() {
-        DoubleBinaryOperator divisionByZero = (left, right) -> left / right;
-        return divisionByZero.applyAsDouble(1, 0);
     }
 
 }

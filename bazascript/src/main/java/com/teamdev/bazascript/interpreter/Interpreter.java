@@ -3,9 +3,11 @@ package com.teamdev.bazascript.interpreter;
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.execute.InterpreterMachine;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
+import com.teamdev.calculator.ResolvingException;
+import com.teamdev.fsm.ExceptionThrower;
 
 /**
  * {@code Interpreter} an API for interpreting program on BazaScript language. Program may contain:
@@ -30,14 +32,16 @@ public class Interpreter {
 
         ScriptElementExecutorFactory factory = new ScriptElementExecutorFactoryImpl();
 
-        InterpreterMachine interpreterMachine = InterpreterMachine.create(factory);
+        InterpreterMachine interpreterMachine = InterpreterMachine.create(factory, errorMessage -> {
+            throw new ExecutionException(errorMessage);
+        });
 
         try {
             if (!interpreterMachine.run(inputChain, scriptContext)) {
 
                 raiseException(inputChain);
             }
-        } catch (ResolvingException | IncorrectProgramException e) {
+        } catch (IncorrectProgramException | ExecutionException e) {
             raiseException(inputChain);
         }
 

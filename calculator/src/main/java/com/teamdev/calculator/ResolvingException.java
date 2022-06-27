@@ -1,4 +1,4 @@
-package com.teamdev.fsm;
+package com.teamdev.calculator;
 
 public class ResolvingException extends Exception{
 

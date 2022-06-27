@@ -5,7 +5,7 @@ import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.FiniteStateMachine;
-import com.teamdev.fsm.ResolvingException;
+import com.teamdev.calculator.ResolvingException;
 
 import java.util.Optional;
 
@@ -18,9 +18,9 @@ import java.util.Optional;
 
 public class DetachedShuntingYardResolver<I> implements MathElementResolver {
 
-    private final FiniteStateMachine<I, ShuntingYard> machine;
+    private final FiniteStateMachine<I, ShuntingYard, ResolvingException> machine;
 
-    public DetachedShuntingYardResolver(FiniteStateMachine<I, ShuntingYard> machine) {
+    public DetachedShuntingYardResolver(FiniteStateMachine<I, ShuntingYard, ResolvingException> machine) {
         this.machine = Preconditions.checkNotNull(machine);
     }
 

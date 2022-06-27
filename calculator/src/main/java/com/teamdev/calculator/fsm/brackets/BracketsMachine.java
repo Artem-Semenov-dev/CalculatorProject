@@ -1,10 +1,8 @@
 package com.teamdev.calculator.fsm.brackets;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
-import com.teamdev.calculator.math.MathElement;
-import com.teamdev.calculator.math.MathElementResolverFactory;
+import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
@@ -16,9 +14,9 @@ import java.util.function.BiConsumer;
  * for parsing an expression inside the brackets.
  */
 
-public final class BracketsMachine<O> extends FiniteStateMachine<BracketsStates, O> {
+public final class BracketsMachine<O, E extends Exception> extends FiniteStateMachine<BracketsStates, O, E> {
 
-    public static <O> BracketsMachine<O> create(Transducer<O> transducer) {
+    public static <O, E extends Exception> BracketsMachine<O, E> create(Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
 
         Preconditions.checkNotNull(transducer);
 
@@ -31,11 +29,11 @@ public final class BracketsMachine<O> extends FiniteStateMachine<BracketsStates,
                 .allowTransition(BracketsStates.CLOSING_BRACKET, BracketsStates.FINISH)
                 .build();
 
-        return new BracketsMachine<>(matrix, transducer);
+        return new BracketsMachine<>(matrix, transducer, exceptionThrower);
     }
 
-    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O> transducer) {
-        super(matrix, true);
+    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 

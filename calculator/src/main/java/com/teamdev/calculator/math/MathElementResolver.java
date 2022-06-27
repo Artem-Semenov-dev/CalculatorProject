@@ -1,7 +1,7 @@
 package com.teamdev.calculator.math;
 
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
+import com.teamdev.calculator.ResolvingException;
 
 import java.util.Optional;
 

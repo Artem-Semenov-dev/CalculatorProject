@@ -1,10 +1,10 @@
 package com.teamdev.calculator.fsm.operand;
 
 import com.google.common.base.Preconditions;
+import com.teamdev.calculator.ResolvingException;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import java.util.Optional;
  * to {@link ShuntingYard} output.
  */
 
-public class NumberTransducer implements Transducer<ShuntingYard> {
+public class NumberTransducer implements Transducer<ShuntingYard, ResolvingException> {
 
     private final MathElementResolver resolver;
 

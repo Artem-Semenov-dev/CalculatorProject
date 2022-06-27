@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * that produce a symbol to {@link StringBuilder} output.
  */
 
-public class SymbolTransducer implements Transducer<StringBuilder> {
+public class SymbolTransducer<E extends Exception> implements Transducer<StringBuilder, E> {
 
     private final Predicate<Character> condition;
 

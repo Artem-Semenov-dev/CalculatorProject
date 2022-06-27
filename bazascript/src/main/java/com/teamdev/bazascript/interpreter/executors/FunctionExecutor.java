@@ -1,9 +1,9 @@
 package com.teamdev.bazascript.interpreter.executors;
 
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
 
 public class FunctionExecutor implements ScriptElementExecutor {
 
@@ -14,7 +14,7 @@ public class FunctionExecutor implements ScriptElementExecutor {
     }
 
     @Override
-    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ResolvingException {
+    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
         return factoryExecutor.execute(inputChain, output);
     }

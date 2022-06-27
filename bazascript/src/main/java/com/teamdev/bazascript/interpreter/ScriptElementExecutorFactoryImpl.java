@@ -11,7 +11,6 @@ import com.teamdev.calculator.fsm.expression.ExpressionMachine;
 import com.teamdev.calculator.fsm.function.FunctionMachine;
 import com.teamdev.calculator.fsm.number.NumberStateMachine;
 import com.teamdev.fsm.FiniteStateMachine;
-import com.teamdev.fsm.ResolvingException;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 
 import java.util.EnumMap;
@@ -28,11 +27,16 @@ public class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFa
                 new DetachedShuntingYardExecutor<>(ExpressionMachine.create(
                         (scriptContext, prioritizedBinaryOperator) ->
                                 scriptContext.systemStack().current().pushOperator(prioritizedBinaryOperator),
-                        new ExecutorProgramElementTransducer(ScriptElement.OPERAND, this)));
+                        new ExecutorProgramElementTransducer(ScriptElement.OPERAND, this),
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        }));
 
         executors.put(ScriptElement.NUMBER, () -> (inputChain, output) -> {
 
-            Optional<Double> execute = NumberStateMachine.execute(inputChain);
+            Optional<Double> execute = NumberStateMachine.execute(inputChain, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
 
             if (execute.isPresent()) {
                 output.systemStack().current().pushOperand(execute.get());
@@ -47,25 +51,36 @@ public class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFa
 
         executors.put(ScriptElement.OPERAND, () -> new NoSpecialActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        },
                         new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this),
                         new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this),
                         new ExecutorProgramElementTransducer(ScriptElement.FUNCTION, this),
                         new ExecutorProgramElementTransducer(ScriptElement.READVARIABLE, this))));
 
         executors.put(ScriptElement.BRACKETS, () -> new NoSpecialActionExecutor<>(
-                BracketsMachine.create(new ExecutorProgramElementTransducer(ScriptElement.EXPRESSION, this))));
+                BracketsMachine.create(new ExecutorProgramElementTransducer(ScriptElement.EXPRESSION, this),
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        })));
 
         executors.put(ScriptElement.FUNCTION, () -> new FunctionExecutor(
                 new FunctionFactoryExecutor<>(FunctionMachine.create(
                         new FunctionTransducer<>(FunctionHolderWithContext::setArgument, expressionExecutorCreator.create()),
-                        FunctionHolderWithContext::setFunctionName
+                        FunctionHolderWithContext::setFunctionName,
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        }
                 ))));
 
         executors.put(ScriptElement.INITVAR, () -> (inputChain, output) -> {
 
             InitVarContext initVarContext = new InitVarContext(output);
 
-            InitVarMachine initVarMachine = InitVarMachine.create(this);
+            InitVarMachine initVarMachine = InitVarMachine.create(this, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
 
             return initVarMachine.run(inputChain, initVarContext);
         });
@@ -74,7 +89,9 @@ public class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFa
 
             StringBuilder variableName = new StringBuilder();
 
-            IdentifierMachine nameMachine = IdentifierMachine.create();
+            IdentifierMachine<ExecutionException> nameMachine = IdentifierMachine.create(errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
 
             if (nameMachine.run(inputChain, variableName)) {
 
@@ -84,7 +101,7 @@ public class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFa
 
                     context.systemStack().current().pushOperand(variable);
                     return true;
-                } else throw new ResolvingException("Not existing variable in memory " + variableName);
+                } else throw new ExecutionException("Not existing variable in memory " + variableName);
             }
             return false;
 
@@ -93,16 +110,24 @@ public class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFa
         executors.put(ScriptElement.PROCEDURE, () -> new FunctionExecutor(
                 new ProcedureFactoryExecutor<>(FunctionMachine.create(
                         new FunctionTransducer<>(FunctionHolderWithContext::setArgument, expressionExecutorCreator.create()),
-                        FunctionHolderWithContext::setFunctionName
+                        FunctionHolderWithContext::setFunctionName,
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        }
                 ))));
 
         executors.put(ScriptElement.STATEMENT, () -> new NoSpecialActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        },
                         new ExecutorProgramElementTransducer(ScriptElement.INITVAR, this),
                         new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this))));
 
         executors.put(ScriptElement.PROGRAM, () -> new NoSpecialActionExecutor<>(
-                ProgramMachine.create(this)
+                ProgramMachine.create(this, errorMessage -> {
+                    throw new ExecutionException(errorMessage);
+                })
         ));
     }
 

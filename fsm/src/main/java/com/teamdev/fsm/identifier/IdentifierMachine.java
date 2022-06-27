@@ -1,5 +1,6 @@
 package com.teamdev.fsm.identifier;
 
+import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
@@ -9,9 +10,9 @@ import com.teamdev.fsm.TransitionMatrix;
  * for parsing a name of function.
  */
 
-public final class IdentifierMachine extends FiniteStateMachine<IdentifierStates, StringBuilder> {
+public final class IdentifierMachine<E extends Exception> extends FiniteStateMachine<IdentifierStates, StringBuilder, E> {
 
-    public static IdentifierMachine create() {
+    public static <E extends Exception> IdentifierMachine<E> create(ExceptionThrower<E> exceptionThrower) {
 
         TransitionMatrix<IdentifierStates> matrix = TransitionMatrix.<IdentifierStates>builder()
 
@@ -21,14 +22,14 @@ public final class IdentifierMachine extends FiniteStateMachine<IdentifierStates
                 .allowTransition(IdentifierStates.LETTER, IdentifierStates.LETTER, IdentifierStates.FINISH)
 
                 .build();
-        return new IdentifierMachine(matrix);
+        return new IdentifierMachine<>(matrix, exceptionThrower);
     }
 
-    private IdentifierMachine(TransitionMatrix<IdentifierStates> matrix) {
-        super(matrix);
+    private IdentifierMachine(TransitionMatrix<IdentifierStates> matrix, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower);
 
         registerTransducer(IdentifierStates.START, Transducer.illegalTransition());
-        registerTransducer(IdentifierStates.LETTER, new SymbolTransducer(Character::isLetter));
+        registerTransducer(IdentifierStates.LETTER, new SymbolTransducer<>(Character::isLetter));
         registerTransducer(IdentifierStates.FINISH, Transducer.autoTransition());
     }
 }

@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.brackets.BracketsMachine;
 import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
 import com.teamdev.calculator.fsm.expression.ExpressionMachine;
-import com.teamdev.calculator.fsm.operand.OperandMachine;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
@@ -29,15 +28,20 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
         resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolver<>
                 (ExpressionMachine.create(ShuntingYard::pushOperator,
-                        new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this))));
+                        new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this),
+                        errorMessage -> {throw new ResolvingException(errorMessage);})));
 
         resolvers.put(OPERAND, () -> new DetachedShuntingYardResolver<>(
-                FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this),
+                FiniteStateMachine.oneOfMachine(
+                        errorMessage -> {throw new ResolvingException(errorMessage);},
+                        new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this),
                         new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this),
                         new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this))));
 
         resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(
-                new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this))));
+                new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this), errorMessage -> {
+                    throw new ResolvingException(errorMessage);
+                })));
 
         resolvers.put(FUNCTION, () -> new FunctionResolver(this));
     }

@@ -2,12 +2,13 @@ package com.teamdev.bazascript.interpreter.program;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
+import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
-class StatementTransducer implements Transducer<ScriptContext> {
+class StatementTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     private final ScriptElementExecutor executor;
 
@@ -18,7 +19,7 @@ class StatementTransducer implements Transducer<ScriptContext> {
 
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
 
         return executor.execute(inputChain, outputChain);
     }

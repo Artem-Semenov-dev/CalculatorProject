@@ -7,7 +7,7 @@
 //import com.teamdev.calculator.math.MathElementResolver;
 //import com.teamdev.calculator.math.MathElementResolverFactory;
 //import com.teamdev.fsm.CharSequenceReader;
-//import com.teamdev.fsm.ResolvingException;
+//import com.teamdev.calculator.ResolvingException;
 //
 //import java.util.Optional;
 //

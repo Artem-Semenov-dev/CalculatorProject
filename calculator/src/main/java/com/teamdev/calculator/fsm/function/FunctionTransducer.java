@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.fsm.ResolvingException;
+import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import java.util.Optional;
  * to {@link ShuntingYard} output for {@link FunctionMachine}.
  */
 
-public class FunctionTransducer implements Transducer<ShuntingYard> {
+public class FunctionTransducer implements Transducer<ShuntingYard, ResolvingException> {
 
     private final MathElementResolver resolver;
 

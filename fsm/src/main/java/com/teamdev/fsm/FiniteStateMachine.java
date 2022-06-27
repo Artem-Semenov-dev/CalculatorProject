@@ -21,12 +21,24 @@ import java.util.*;
  * @param <O> Output chain
  */
 
-public class FiniteStateMachine<S, O> {
+public class FiniteStateMachine<S, O, E extends Exception> {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
+
+    private final TransitionMatrix<S> matrix;
+
+    private final Map<S, Transducer<O, E>> transducers = new HashMap<>();
+
+    private final ExceptionThrower<E> exceptionThrower;
+
+    private final boolean allowedSkippingWhitespaces;
 
     @SafeVarargs
-    public static <O> FiniteStateMachine<Object, O> oneOfMachine(Transducer<O>... transducers) {
+    public static <O, E extends Exception> FiniteStateMachine<Object, O, E> oneOfMachine(ExceptionThrower<E> exceptionThrower,
+                                                                                         Transducer<O, E>... transducers) {
 
-        Map<Object, Transducer<O>> registers = new LinkedHashMap<>();
+        Map<Object, Transducer<O, E>> registers = new LinkedHashMap<>();
 
         Object startState = new Object();
         Object finishState = new Object();
@@ -35,7 +47,7 @@ public class FiniteStateMachine<S, O> {
 
         builder.withStartState(startState).withFinishState(finishState);
 
-        for (Transducer<O> transducer : transducers) {
+        for (Transducer<O, E> transducer : transducers) {
 
             Object transducerState = new Object();
 
@@ -45,9 +57,9 @@ public class FiniteStateMachine<S, O> {
             registers.put(transducerState, transducer);
         }
 
-        FiniteStateMachine<Object, O> machine = new FiniteStateMachine<>(builder.build());
+        FiniteStateMachine<Object, O, E> machine = new FiniteStateMachine<>(builder.build(), exceptionThrower);
 
-        for (Map.Entry<Object, Transducer<O>> entry : registers.entrySet()) {
+        for (Map.Entry<Object, Transducer<O, E>> entry : registers.entrySet()) {
 
             machine.registerTransducer(entry.getKey(), entry.getValue());
         }
@@ -58,30 +70,22 @@ public class FiniteStateMachine<S, O> {
 
         return machine;
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
-
-    private TransitionMatrix<S> matrix;
-
-    private final Map<S, Transducer<O>> transducers = new HashMap<>();
-
-    private boolean allowedSkippingWhitespaces;
-
-    public FiniteStateMachine(TransitionMatrix<S> matrix, boolean allowedSkippingWhitespaces) {
+    public FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> exceptionThrower, boolean allowedSkippingWhitespaces) {
 
         this.matrix = Preconditions.checkNotNull(matrix);
+        this.exceptionThrower = exceptionThrower;
         this.allowedSkippingWhitespaces = allowedSkippingWhitespaces;
     }
 
-    public FiniteStateMachine() {
+//    public FiniteStateMachine() {
+//    }
+
+    protected FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> eExceptionThrower) {
+
+        this(matrix, eExceptionThrower, false);
     }
 
-    protected FiniteStateMachine(TransitionMatrix<S> matrix) {
-
-        this(matrix, false);
-    }
-
-    public boolean run(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
+    public boolean run(CharSequenceReader inputChain, O outputChain) throws E {
 
         inputChain.savePosition();
 
@@ -115,7 +119,7 @@ public class FiniteStateMachine<S, O> {
                     return false;
                 }
 
-                throw new ResolvingException("Deadlock at state: " + currentState);
+                exceptionThrower.throwException("Deadlock at state: " + currentState);
             }
 
             currentState = nextState.get();
@@ -124,7 +128,7 @@ public class FiniteStateMachine<S, O> {
         return true;
     }
 
-    private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws ResolvingException {
+    private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws E {
         if (allowedSkippingWhitespaces) {
 
             inputChain.skipWhitespaces();
@@ -133,7 +137,7 @@ public class FiniteStateMachine<S, O> {
 
         for (S potentialState : possibleTransitions) {
 
-            Transducer<O> transducer = transducers.get(potentialState);
+            Transducer<O, E> transducer = transducers.get(potentialState);
 
             if (transducer.doTransition(inputChain, outputChain)) {
 
@@ -148,7 +152,7 @@ public class FiniteStateMachine<S, O> {
         return Optional.empty();
     }
 
-    protected void registerTransducer(S state, Transducer<O> transducer) {
+    protected void registerTransducer(S state, Transducer<O, E> transducer) {
 
         transducers.put(state, transducer);
     }
