@@ -2,7 +2,7 @@ package com.teamdev.calculator.math;
 
 /**
  * {@code MathElementResolverFactory} is a functional interface that
- * represents a factory for creating {@link MathElementResolver}.
+ * represents a factory pattern for creating {@link MathElementResolver}.
  */
 
 @FunctionalInterface

@@ -17,7 +17,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
+class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
     private final Map<ScriptElement, ScriptElementExecutorCreator> executors = new EnumMap<>(ScriptElement.class);
 

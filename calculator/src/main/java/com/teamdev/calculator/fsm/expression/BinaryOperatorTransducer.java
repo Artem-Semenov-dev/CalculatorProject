@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
- * {@code FunctionTransducer} is an implementation of {@link Transducer}
+ * {@code BinaryOperatorTransducer} is an implementation of {@link Transducer}
  * that produce an {@link PrioritizedBinaryOperator} to {@link ShuntingYard} output
  * for {@link ExpressionMachine}.
  */

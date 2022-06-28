@@ -10,10 +10,11 @@ import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.ExceptionThrower;
 
 /**
- * {@code Interpreter} an API for interpreting program on BazaScript language. Program may contain:
- * - initializing of variable
+ * {@code Interpreter} an API for interpreting programs on BazaScript language.Program may contain:
+ * - initializing Double type variables
  * - operations between variables
- * - function println(variable or expression) which will deducing result of program execution.
+ * - procedure print(variable or expression) which will deducing result of program execution.
+ * - procedure clear() which will clear memory of interpreter.
  */
 
 public class Interpreter {

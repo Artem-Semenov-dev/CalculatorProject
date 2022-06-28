@@ -12,10 +12,9 @@
 
 <h3> Universal module that implements the concept of
 <a href = "https://en.wikipedia.org/wiki/Finite-state_machine">Finite state machine.</a></h3>
-<h4> For transitions between states that defined in transition matrix we used transducers.</h4>
+<h4> For transitions between states that define in transition matrix we used transducers.</h4>
 <h4> FSM used a universal mechanism for throwing exceptions.</h4>
 <h5> Also this module has an implementation of Identifier machine. 
-Output chain for this machine is StringBuilder.
 Identifier machine used to read symbols and collect them.
 </h5>
 

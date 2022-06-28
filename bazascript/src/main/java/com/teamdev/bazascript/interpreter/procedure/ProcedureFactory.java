@@ -1,6 +1,9 @@
 package com.teamdev.bazascript.interpreter.procedure;
 
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProcedureFactory {
@@ -10,6 +13,8 @@ public class ProcedureFactory {
     public ProcedureFactory() {
 
         procedures.put("print", (arguments, output) -> output.getOutput().print(arguments.toString()));
+
+        procedures.put("clear", (arguments, output) -> output.memory().clearMemory());
 
     }
 

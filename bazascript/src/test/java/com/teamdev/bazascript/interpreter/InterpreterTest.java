@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 class InterpreterTest extends AbstractTest {
-    static Stream<Arguments> positiveSource() {
+    static Stream<Arguments> positiveInterpreterSource() {
         return Stream.of(
                 of("a=10; print(a);", "[10.0]", "Variable initialization and procedure print test has failed."),
                 of("a = 5;b = 4; print(a + b); print(a)", "[9.0][5.0]", "Two variables initialization and simple " +
@@ -18,7 +18,7 @@ class InterpreterTest extends AbstractTest {
                         "3 variables initialization and calculation of them test has failed"));
     }
 
-    static Stream<Arguments> negativeCases() {
+    static Stream<Arguments> negativeInterpreterCases() {
         return Stream.of(
                 of("print(a);", 7, "Not initialized variable test has not throw exception"),
                 of("a = a; print(a);", 5, "Wrong initialization of variable test has not throw exception"),
@@ -27,7 +27,8 @@ class InterpreterTest extends AbstractTest {
                 of("a = 6 print(a);", 6, "Code without separators test has not throw exception"),
                 of("a; = 6 print(a);", 0, "Separator in wrong place test has not throw exception"),
                 of("a == 6; print(a);", 3, "Not allowed double assign test has not throw exception"),
-                of("a = 6; 7; print(a);", 7, "Number without variable test has not throw exception")
+                of("a = 6; 7; print(a);", 7, "Number without variable test has not throw exception"),
+                of("a = 6; clear(); print(a);", 23, "Clear procedure test has not throw exception")
         );
     }
 }

@@ -9,14 +9,18 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
+/**
+ * `
+ */
+
 public class ExecutorProgramElementTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
     private final ScriptElement scriptElement;
 
-    public ExecutorProgramElementTransducer(ScriptElement resolver,
-                                            ScriptElementExecutorFactory factory) {
+    ExecutorProgramElementTransducer(ScriptElement resolver,
+                                     ScriptElementExecutorFactory factory) {
         this.scriptElement = Preconditions.checkNotNull(resolver);
         this.factory = factory;
     }

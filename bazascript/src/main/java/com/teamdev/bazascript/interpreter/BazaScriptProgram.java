@@ -1,7 +1,7 @@
 package com.teamdev.bazascript.interpreter;
 
 /**
- * {@code BazaScriptProgram} is a tiny type which is used to store code for BazaScript program.
+ * {@code BazaScriptProgram} is a text of program on BazaScript programming language.
  */
 
 public class BazaScriptProgram {

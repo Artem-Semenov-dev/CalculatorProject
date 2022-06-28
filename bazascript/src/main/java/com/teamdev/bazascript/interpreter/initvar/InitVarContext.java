@@ -3,6 +3,10 @@ package com.teamdev.bazascript.interpreter.initvar;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.WithContext;
 
+/**
+ * {@code InitVarContext} is a class that used for variable initialisation, as an output for {@link InitVarMachine}.
+ */
+
 public class InitVarContext implements WithContext {
 
     private final ScriptContext scriptContext;

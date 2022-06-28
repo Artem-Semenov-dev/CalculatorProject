@@ -3,6 +3,10 @@ package com.teamdev.bazascript.interpreter.runtime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *{@code Memory} is a class that used to store Double type variables.
+ */
+
 public class Memory {
 
     private final Map<String, Double> variables = new HashMap<>();
@@ -20,5 +24,9 @@ public class Memory {
     public boolean hasVariable(String variableName) {
 
         return variables.containsKey(variableName);
+    }
+
+    public void clearMemory(){
+        variables.clear();
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * {@code FunctionHolder} is a simple holder class that can be used like an output chain for
  * {@link IdentifierMachine} and {@link ExpressionMachine}.
- * Class can be used for store data to make an instance of {@link com.google.common.base.Function}.
+ * Class can be used for store data to make an instance of {@link com.teamdev.calculator.fsm.function.Function}.
  */
 
 public class FunctionHolder {
