@@ -1,4 +1,4 @@
-package com.teamdev.calculator.fsm.number;
+package com.teamdev.implementations.machines.number;
 
 /**
  * {@code NumberState} is an enumeration of states

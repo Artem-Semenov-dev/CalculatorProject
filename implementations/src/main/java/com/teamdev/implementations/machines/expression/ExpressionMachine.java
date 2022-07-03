@@ -1,10 +1,10 @@
-package com.teamdev.calculator.fsm.expression;
+package com.teamdev.implementations.machines.expression;
 
-import com.teamdev.calculator.fsm.util.PrioritizedBinaryOperator;
 import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
+import com.teamdev.implementations.operators.AbstractBinaryOperator;
 
 import java.util.function.BiConsumer;
 
@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 
 public final class  ExpressionMachine<O, E extends Exception> extends FiniteStateMachine<ExpressionStates, O, E > {
 
-    public static <O, E extends Exception> ExpressionMachine<O, E> create(BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
+    public static <O, E extends Exception> ExpressionMachine<O, E> create(BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
                                                   Transducer<O, E> operandTransducer, ExceptionThrower<E> exceptionThrower) {
 
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
@@ -33,7 +33,7 @@ public final class  ExpressionMachine<O, E extends Exception> extends FiniteStat
     }
 
     private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
-                              BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
+                              BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
                               Transducer<O, E> operandTransducer,
                               ExceptionThrower<E> exceptionThrower) {
         super(matrix, exceptionThrower, true);

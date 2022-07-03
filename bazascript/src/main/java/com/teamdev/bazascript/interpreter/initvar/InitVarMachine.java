@@ -3,13 +3,17 @@ package com.teamdev.bazascript.interpreter.initvar;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
-import com.teamdev.calculator.fsm.function.FunctionNameTransducer;
 import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
+import com.teamdev.implementations.machines.function.FunctionNameTransducer;
 
 import static com.teamdev.bazascript.interpreter.initvar.InitVarStates.*;
+
+/**
+ * {@code InitVarMachine} is a realisation of {@link FiniteStateMachine} that used to variable initialisation.
+ */
 
 public final class InitVarMachine extends FiniteStateMachine<InitVarStates, InitVarContext, ExecutionException> {
 

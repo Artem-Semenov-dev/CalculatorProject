@@ -5,7 +5,6 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.Transducer;
 
 class StatementTransducer implements Transducer<ScriptContext, ExecutionException> {
@@ -20,6 +19,8 @@ class StatementTransducer implements Transducer<ScriptContext, ExecutionExceptio
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, outputChain);
 
         return executor.execute(inputChain, outputChain);
     }

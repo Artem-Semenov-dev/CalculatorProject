@@ -1,12 +1,14 @@
-package com.teamdev.calculator.fsm.number;
+package com.teamdev.implementations.machines.number;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.fsm.*;
 import com.teamdev.fsm.identifier.SymbolTransducer;
+import com.teamdev.implementations.type.DoubleValue;
+import com.teamdev.implementations.type.Value;
 
 import java.util.Optional;
 
-import static com.teamdev.calculator.fsm.number.NumberStates.*;
+import static com.teamdev.implementations.machines.number.NumberStates.*;
 
 /**
  * {@code NumberStateMachine} is a realisation of {@link FiniteStateMachine}
@@ -15,14 +17,16 @@ import static com.teamdev.calculator.fsm.number.NumberStates.*;
 
 public final class NumberStateMachine<E extends Exception> extends FiniteStateMachine<NumberStates, StringBuilder, E> {
 
-    public static <E extends Exception> Optional<Double> execute(CharSequenceReader inputChain, ExceptionThrower<E> exceptionThrower) throws E {
+    public static <E extends Exception> Optional<Value> execute(CharSequenceReader inputChain, ExceptionThrower<E> exceptionThrower) throws E {
         StringBuilder stringBuilder = new StringBuilder();
 
         NumberStateMachine<E> numberMachine = NumberStateMachine.create(exceptionThrower);
 
         if (numberMachine.run(inputChain, stringBuilder)) {
 
-            return Optional.of(Double.parseDouble(stringBuilder.toString()));
+            Value number = new DoubleValue(Double.parseDouble(stringBuilder.toString()));
+
+            return Optional.of(number);
         }
 
         return Optional.empty();

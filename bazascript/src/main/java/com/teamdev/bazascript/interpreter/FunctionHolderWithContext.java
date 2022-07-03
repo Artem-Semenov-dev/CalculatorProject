@@ -3,8 +3,8 @@ package com.teamdev.bazascript.interpreter;
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.WithContext;
-import com.teamdev.calculator.fsm.expression.ExpressionMachine;
 import com.teamdev.fsm.identifier.IdentifierMachine;
+import com.teamdev.implementations.type.Value;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,18 +13,18 @@ import java.util.List;
 /**
  * {@code FunctionHolderWithContext} is a simple holder class that implements interface {@link WithContext}
  * can be used like an output chain for {@link IdentifierMachine}.
- * Class can be used for store data to make an instance of {@link com.teamdev.calculator.fsm.function.Function}.
+ * Class can be used for store data to make an instance of {@link com.teamdev.implementations.machines.function.Function}.
  */
 
 
 public class FunctionHolderWithContext implements WithContext {
 
     private final ScriptContext scriptContext;
-    private final List<Double> arguments;
+    private final List<Value> arguments;
     private String functionName;
 
     public FunctionHolderWithContext(ScriptContext scriptContext) {
-        this.scriptContext = scriptContext;
+        this.scriptContext = Preconditions.checkNotNull(scriptContext);
         arguments = new ArrayList<>();
     }
 
@@ -33,7 +33,7 @@ public class FunctionHolderWithContext implements WithContext {
         return scriptContext;
     }
 
-    void setArgument(Double argument) {
+    void setArgument(Value argument) {
 
         arguments.add(argument);
     }
@@ -47,7 +47,7 @@ public class FunctionHolderWithContext implements WithContext {
         this.functionName = Preconditions.checkNotNull(name);
     }
 
-    public List<Double> getArguments() {
+    public List<Value> getArguments() {
         return Collections.unmodifiableList(arguments);
     }
 

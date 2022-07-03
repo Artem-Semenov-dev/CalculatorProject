@@ -1,22 +1,22 @@
 package com.teamdev.calculator.fsm.calculator;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.Transducer;
+import com.teamdev.implementations.type.Value;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
  * {@code DetachedShuntingYardTransducer} is a universal implementation of {@link Transducer}
- * that can be used for state machines which work based on new instances of {@link ShuntingYard}.
+ * that can be used for state machines which work based on new instances of {@link com.teamdev.implementations.datastructures.ShuntingYard}.
  * <p>
- * New instance of {@link ShuntingYard} is required for all operations with brackets.
+ * New instance of {@link com.teamdev.implementations.datastructures.ShuntingYard} is required for all operations with brackets.
  * </p>
  */
 
@@ -26,9 +26,9 @@ public class DetachedShuntingYardTransducer<O> implements Transducer<O, Resolvin
 
     private final MathElement resolverType;
 
-    private final BiConsumer<O, Double> resultConsumer;
+    private final BiConsumer<O, Value> resultConsumer;
 
-    public DetachedShuntingYardTransducer(MathElement resolver, BiConsumer<O, Double> resultConsumer,
+    public DetachedShuntingYardTransducer(MathElement resolver, BiConsumer<O, Value> resultConsumer,
                                           MathElementResolverFactory factory) {
         this.resolverType =  Preconditions.checkNotNull(resolver);
         this.resultConsumer = Preconditions.checkNotNull(resultConsumer);
@@ -40,11 +40,9 @@ public class DetachedShuntingYardTransducer<O> implements Transducer<O, Resolvin
 
         MathElementResolver resolver = factory.create(resolverType);
 
-        Optional<Double> resolveResult = resolver.resolve(inputChain);
+        Optional<Value> resolveResult = resolver.resolve(inputChain);
 
-        resolveResult.ifPresent((Double value) -> {
-            resultConsumer.accept(outputChain, value);
-        });
+        resolveResult.ifPresent((Value value) -> resultConsumer.accept(outputChain, value));
 
         return resolveResult.isPresent();
     }

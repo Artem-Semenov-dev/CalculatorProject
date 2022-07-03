@@ -6,7 +6,7 @@ import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.FiniteStateMachine;
-import com.teamdev.calculator.ResolvingException;
+import com.teamdev.implementations.type.Value;
 
 public class DetachedShuntingYardExecutor<I> implements ScriptElementExecutor {
 
@@ -23,7 +23,7 @@ public class DetachedShuntingYardExecutor<I> implements ScriptElementExecutor {
 
         if (machine.run(inputChain, output)) {
 
-            double peekResult = output.systemStack().close().peekResult();
+            Value peekResult = output.systemStack().close().peekResult();
 
             output.systemStack().current().pushOperand(peekResult);
 

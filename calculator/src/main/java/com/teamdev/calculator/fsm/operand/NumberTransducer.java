@@ -2,10 +2,11 @@ package com.teamdev.calculator.fsm.operand;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.ResolvingException;
-import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
+import com.teamdev.implementations.datastructures.ShuntingYard;
+import com.teamdev.implementations.type.Value;
 
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class NumberTransducer implements Transducer<ShuntingYard, ResolvingExcep
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ShuntingYard outputChain) throws ResolvingException {
 
-        Optional<Double> resolve = resolver.resolve(inputChain);
+        Optional<Value> resolve = resolver.resolve(inputChain);
         if (resolve.isPresent()){
             outputChain.pushOperand(resolve.get());
 

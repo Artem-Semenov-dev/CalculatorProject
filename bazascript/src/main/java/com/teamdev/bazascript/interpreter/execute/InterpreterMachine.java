@@ -1,5 +1,9 @@
 package com.teamdev.bazascript.interpreter.execute;
 
+/**
+ *
+ */
+
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
@@ -10,6 +14,11 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.execute.InterpreterState.*;
+
+/**
+ * {@code InterpreterMachine} is a realisation of {@link FiniteStateMachine} that used to
+ * launch {@link com.teamdev.bazascript.interpreter.program.ProgramMachine}
+ */
 
 public final class InterpreterMachine extends FiniteStateMachine<InterpreterState, ScriptContext, ExecutionException> {
 

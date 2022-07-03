@@ -1,9 +1,8 @@
-package com.teamdev.calculator.fsm.function;
+package com.teamdev.implementations.machines.function;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.identifier.IdentifierMachine;
-import com.teamdev.calculator.fsm.util.FunctionHolder;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import java.util.function.BiConsumer;
 
 /**
  * {@code FunctionNameTransducer} is an implementation of {@link Transducer}
- * that produce a name of function for {@link FunctionHolder} output.
+ * that produce a name of function for {@link com.teamdev.implementations.datastructures.FunctionHolder} output.
  */
 
 public class FunctionNameTransducer<O, E extends Exception> implements Transducer<O, E> {

@@ -6,7 +6,6 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.calculator.ResolvingException;
 import com.teamdev.fsm.Transducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +24,8 @@ public class ProgramTransducer implements Transducer<ScriptContext, ExecutionExc
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, outputChain);
 
         if (logger.isInfoEnabled()) {
 

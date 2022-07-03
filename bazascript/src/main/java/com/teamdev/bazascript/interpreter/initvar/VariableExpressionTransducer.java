@@ -5,6 +5,7 @@ import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
+import com.teamdev.implementations.type.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +21,8 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
 
     private final ScriptElementExecutor expressionExecutor;
 
-    VariableExpressionTransducer(ScriptElementExecutor executor) {
-        this.expressionExecutor = executor;
+    public VariableExpressionTransducer(ScriptElementExecutor executor) {
+        this.expressionExecutor = Preconditions.checkNotNull(executor);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
 
         if (expressionExecutor.execute(inputChain, outputChain.getContext())) {
 
-            double variableValue = outputChain.getContext().systemStack().current().peekResult();
+            Value variableValue = outputChain.getContext().systemStack().current().peekResult();
 
             outputChain.setVariableValue(variableValue);
 

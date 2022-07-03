@@ -1,5 +1,7 @@
 package com.teamdev.bazascript.interpreter.runtime;
 
+import com.google.common.base.Preconditions;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -23,8 +25,10 @@ public class Output {
         return outputStream.toString();
     }
 
-    public void print(String value) {
+    public void print(String valueToPrint) {
 
-        printStream.print(value);
+        Preconditions.checkNotNull(valueToPrint);
+
+        printStream.print(valueToPrint);
     }
 }

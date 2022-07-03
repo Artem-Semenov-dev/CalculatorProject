@@ -1,4 +1,4 @@
-package com.teamdev.calculator.fsm.function;
+package com.teamdev.implementations.machines.function;
 
 public interface NameChecker {
 

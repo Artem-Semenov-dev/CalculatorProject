@@ -38,7 +38,7 @@ Identifier machine used to read symbols and collect them.
 <h4>Work of interpreter for BazaScript based on Finite state machines.</h4>
 <h4> This language can:</h4>
 <ul>
-<li>Initialize variables of Double type.</li>
+<li>Initialize variables of Double type or with expression that solve double values.</li>
 <li>Resolve math operations between variables like +, -, /, *, ^, etc.</li>
 <li>Print variables</li>
 </ul>

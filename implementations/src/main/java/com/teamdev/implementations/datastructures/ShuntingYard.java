@@ -1,12 +1,13 @@
-package com.teamdev.calculator.fsm.util;
+package com.teamdev.implementations.datastructures;
 
 import com.google.common.base.Preconditions;
+import com.teamdev.implementations.operators.AbstractBinaryOperator;
+import com.teamdev.implementations.type.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.function.DoubleBinaryOperator;
 
 /**
  * {@code ShuntingYardStack} is a data storing class for realization of concept of
@@ -17,11 +18,11 @@ public class ShuntingYard {
 
     private static final Logger logger = LoggerFactory.getLogger(ShuntingYard.class);
 
-    private final Deque<Double> operandStack = new ArrayDeque<>();
+    private final Deque<Value> operandStack = new ArrayDeque<>();
 
-    private final Deque<PrioritizedBinaryOperator> operatorStack = new ArrayDeque<>();
+    private final Deque<AbstractBinaryOperator> operatorStack = new ArrayDeque<>();
 
-    public void pushOperand(double operand) {
+    public void pushOperand(Value operand) {
 
         if (logger.isInfoEnabled()) {
 
@@ -31,7 +32,7 @@ public class ShuntingYard {
         operandStack.push(operand);
     }
 
-    public void pushOperator(PrioritizedBinaryOperator operator) {
+    public void pushOperator(AbstractBinaryOperator operator) {
 
         Preconditions.checkNotNull(operator);
 
@@ -43,7 +44,7 @@ public class ShuntingYard {
         operatorStack.push(operator);
     }
 
-    public double peekResult() {
+    public Value peekResult() {
 
         while (!operatorStack.isEmpty()) {
 
@@ -52,30 +53,28 @@ public class ShuntingYard {
 
         Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
 
-//        assert operandStack.peek() != null;
-//        return Preconditions.checkNotNull(operandStack.peek());
         return operandStack.pop();
     }
 
 
     private void actionTopOperator() {
-        Double rightOperand = operandStack.pop();
+        Value rightOperand = operandStack.pop();
 
-        Double leftOperand = operandStack.pop();
+        Value leftOperand = operandStack.pop();
 
-        DoubleBinaryOperator operator = operatorStack.pop();
+        AbstractBinaryOperator operator = operatorStack.pop();
 
-        double result = operator.applyAsDouble(leftOperand, rightOperand);
+        Value result = operator.apply(leftOperand, rightOperand);
 
         operandStack.push(result);
     }
 
-    public double peekOperand() {
+    public Value peekOperand() {
         assert operandStack.peek() != null;
         return Preconditions.checkNotNull(operandStack.peek());
     }
 
-    public PrioritizedBinaryOperator peekOperator() {
+    public AbstractBinaryOperator peekOperator() {
         assert operatorStack.peek() != null;
         return Preconditions.checkNotNull(operatorStack.peek());
     }

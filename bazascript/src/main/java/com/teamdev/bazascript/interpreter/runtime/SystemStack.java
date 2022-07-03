@@ -1,7 +1,7 @@
 package com.teamdev.bazascript.interpreter.runtime;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.calculator.fsm.util.ShuntingYard;
+import com.teamdev.implementations.datastructures.ShuntingYard;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -32,4 +32,16 @@ public class SystemStack {
 
         return stacks.pop();
     }
+
+//    private final Deque<Value> stack = new ArrayDeque<>();
+//
+//    public void pushValue(Value value){
+//
+//        stack.push(value);
+//    }
+//
+//    public Value popValue(){
+//
+//        return stack.pop();
+//    }
 }

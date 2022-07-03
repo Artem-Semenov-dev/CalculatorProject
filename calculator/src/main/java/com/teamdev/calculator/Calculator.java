@@ -2,11 +2,10 @@ package com.teamdev.calculator;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.calculator.fsm.calculator.CalculatorMachine;
-import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.fsm.CharSequenceReader;
-
-import java.util.function.DoubleBinaryOperator;
+import com.teamdev.implementations.datastructures.ShuntingYard;
+import com.teamdev.implementations.type.DoubleValueVisitor;
 
 /**
  * An API for resolving of math expressions. Math expression may contain:
@@ -53,7 +52,7 @@ public class Calculator {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(outputChain.peekResult());
+        return new CalculationResult(DoubleValueVisitor.read(outputChain.peekResult()));
     }
 
     private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {

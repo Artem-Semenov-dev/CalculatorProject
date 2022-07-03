@@ -1,9 +1,8 @@
 package com.teamdev.bazascript.interpreter.procedure;
 
-import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.google.common.base.Preconditions;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProcedureFactory {
@@ -19,6 +18,8 @@ public class ProcedureFactory {
     }
 
     public Procedure create(String procedureName) {
+
+        Preconditions.checkNotNull(procedureName);
 
         return procedures.get(procedureName);
     }

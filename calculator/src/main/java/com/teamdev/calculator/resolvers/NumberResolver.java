@@ -1,9 +1,11 @@
 package com.teamdev.calculator.resolvers;
 
-import com.teamdev.calculator.fsm.number.NumberStateMachine;
+
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.calculator.ResolvingException;
+import com.teamdev.implementations.machines.number.NumberStateMachine;
+import com.teamdev.implementations.type.Value;
 
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ import java.util.Optional;
 
 public class NumberResolver implements MathElementResolver {
     @Override
-    public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException{
+    public Optional<Value> resolve(CharSequenceReader inputChain) throws ResolvingException{
 
         return NumberStateMachine.execute(inputChain, errorMessage -> {throw new ResolvingException(errorMessage);});
     }

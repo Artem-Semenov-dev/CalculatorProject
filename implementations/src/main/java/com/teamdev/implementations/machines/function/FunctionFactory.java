@@ -1,7 +1,12 @@
-package com.teamdev.calculator.fsm.function;
+package com.teamdev.implementations.machines.function;
 
 import com.google.common.base.Preconditions;
+import com.teamdev.implementations.type.DoubleValue;
+import com.teamdev.implementations.type.DoubleValueVisitor;
+import com.teamdev.implementations.type.Value;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -20,29 +25,43 @@ public class FunctionFactory {
         functions.put("min", arguments -> {
             Preconditions.checkState(arguments.size()>1, "Not enough arguments in min function");
 
-            return arguments.stream().min(Double::compare).get();
+            List<Double> doubles = toDouble(arguments);
+
+            return new DoubleValue(doubles.stream().min(Double::compare).get());
         });
 
         functions.put("max", arguments -> {
             Preconditions.checkState(arguments.size()>1, "Not enough arguments in max function");
 
-            return arguments.stream().max(Double::compare).get();
+            List<Double> doubles = toDouble(arguments);
+
+            return new DoubleValue(doubles.stream().max(Double::compare).get());
         });
 
         functions.put("avg", arguments -> {
             Preconditions.checkState(arguments.size()>1, "Not enough arguments in avg function");
 
-            return arguments.stream().collect(Collectors.averagingDouble((a) -> a));
+            List<Double> doubles = toDouble(arguments);
+
+            return new DoubleValue(doubles.stream().collect(Collectors.averagingDouble((a) -> a)));
+
         });
         functions.put("sqrt", arguments -> {
             Preconditions.checkState(arguments.size() == 1);
 
-            return StrictMath.sqrt(arguments.get(0));
+            List<Double> doubles = toDouble(arguments);
+
+            return new DoubleValue(StrictMath.sqrt(doubles.get(0)));
         });
         functions.put("pi", arguments -> {
             Preconditions.checkState(arguments.isEmpty());
-            return Math.PI;
+
+            return new DoubleValue(Math.PI);
         });
+    }
+
+    private static List<Double> toDouble(Collection<Value> values){
+        return values.stream().mapToDouble(DoubleValueVisitor::read).boxed().collect(Collectors.toList());
     }
 
     public Function create(String functionName){

@@ -1,6 +1,10 @@
 package com.teamdev.bazascript.interpreter.program;
 
-public enum ProgramStates {
+/**
+ * {@code ProgramStates} is an enumeration of states that used in {@link ProgramMachine}.
+ */
+
+enum ProgramStates {
 
     START,
     STATEMENT,

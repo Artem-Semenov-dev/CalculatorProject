@@ -1,6 +1,10 @@
 package com.teamdev.bazascript.interpreter.initvar;
 
-public enum InitVarStates {
+/**
+ * {@code InitVarStates} is an enumeration of states that used in {@link InitVarMachine}
+ */
+
+enum InitVarStates {
 
     START,
     ASSIGN,

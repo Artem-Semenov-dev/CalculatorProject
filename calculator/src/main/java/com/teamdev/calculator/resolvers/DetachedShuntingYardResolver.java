@@ -1,11 +1,12 @@
 package com.teamdev.calculator.resolvers;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.calculator.fsm.util.ShuntingYard;
 import com.teamdev.calculator.math.MathElementResolver;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.calculator.ResolvingException;
+import com.teamdev.implementations.datastructures.ShuntingYard;
+import com.teamdev.implementations.type.Value;
 
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class DetachedShuntingYardResolver<I> implements MathElementResolver {
 
 
     @Override
-    public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {
+    public Optional<Value> resolve(CharSequenceReader inputChain) throws ResolvingException {
 
         ShuntingYard nestingShuntingYardStack = new ShuntingYard();
 

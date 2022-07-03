@@ -2,6 +2,7 @@ package com.teamdev.calculator.math;
 
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.calculator.ResolvingException;
+import com.teamdev.implementations.type.Value;
 
 import java.util.Optional;
 
@@ -14,5 +15,5 @@ import java.util.Optional;
 @FunctionalInterface
 public interface MathElementResolver {
 
-    Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException;
+    Optional<Value> resolve(CharSequenceReader inputChain) throws ResolvingException;
 }

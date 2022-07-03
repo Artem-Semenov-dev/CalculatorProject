@@ -1,7 +1,9 @@
 package com.teamdev.bazascript.interpreter.initvar;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.WithContext;
+import com.teamdev.implementations.type.Value;
 
 /**
  * {@code InitVarContext} is a class that used for variable initialisation, as an output for {@link InitVarMachine}.
@@ -13,27 +15,27 @@ public class InitVarContext implements WithContext {
 
     private String variableName;
 
-    private Double variableValue;
+    private Value variableValue;
 
     public InitVarContext(ScriptContext scriptContext) {
 
         this.scriptContext = scriptContext;
     }
 
-    String getVariableName() {
+    public String getVariableName() {
         return variableName;
     }
 
-    void setVariableName(String variableName) {
-        this.variableName = variableName;
+    public void setVariableName(String variableName) {
+        this.variableName = Preconditions.checkNotNull(variableName);
     }
 
-    Double getVariableValue() {
+    public Value getVariableValue() {
         return variableValue;
     }
 
-    void setVariableValue(Double variableValue) {
-        this.variableValue = variableValue;
+    void setVariableValue(Value variableValue) {
+        this.variableValue = Preconditions.checkNotNull(variableValue);
     }
 
     @Override

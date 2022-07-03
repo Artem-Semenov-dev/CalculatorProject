@@ -6,8 +6,6 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
-import com.teamdev.calculator.ResolvingException;
-import com.teamdev.fsm.ExceptionThrower;
 
 /**
  * {@code Interpreter} an API for interpreting programs on BazaScript language.Program may contain:
@@ -33,7 +31,7 @@ public class Interpreter {
 
         ScriptElementExecutorFactory factory = new ScriptElementExecutorFactoryImpl();
 
-        InterpreterMachine interpreterMachine = InterpreterMachine.create(factory, errorMessage -> {
+        InterpreterMachine interpreterMachine = InterpreterMachine.create(Preconditions.checkNotNull(factory), errorMessage -> {
             throw new ExecutionException(errorMessage);
         });
 

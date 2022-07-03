@@ -1,4 +1,6 @@
-package com.teamdev.calculator.fsm.function;
+package com.teamdev.implementations.machines.function;
+
+import com.teamdev.implementations.type.Value;
 
 import java.util.List;
 
@@ -10,5 +12,5 @@ import java.util.List;
 
 public interface Function{
 
-    Double evaluate(List<Double> arguments);
+    Value evaluate(List<Value> arguments);
 }

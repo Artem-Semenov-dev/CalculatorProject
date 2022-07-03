@@ -1,4 +1,4 @@
-package com.teamdev.calculator.fsm.expression;
+package com.teamdev.implementations.machines.expression;
 
 /**
  * {@code ExpressionState} is an enumeration of states

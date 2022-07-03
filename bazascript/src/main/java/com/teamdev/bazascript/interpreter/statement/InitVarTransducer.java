@@ -1,5 +1,6 @@
 package com.teamdev.bazascript.interpreter.statement;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.initvar.InitVarContext;
 import com.teamdev.bazascript.interpreter.initvar.InitVarMachine;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
@@ -13,12 +14,14 @@ public class InitVarTransducer implements Transducer<ScriptContext, ExecutionExc
     private final ScriptElementExecutorFactory factory;
 
     InitVarTransducer(ScriptElementExecutorFactory factory) {
-        this.factory = factory;
+        this.factory = Preconditions.checkNotNull(factory);
     }
 
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, outputChain);
 
         InitVarMachine variableInitMachine = InitVarMachine.create(factory,
                 errorMessage -> {

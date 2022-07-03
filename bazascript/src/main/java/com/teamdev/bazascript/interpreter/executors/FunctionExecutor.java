@@ -1,5 +1,6 @@
 package com.teamdev.bazascript.interpreter.executors;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
@@ -15,6 +16,8 @@ public class FunctionExecutor implements ScriptElementExecutor {
 
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, output);
 
         return factoryExecutor.execute(inputChain, output);
     }

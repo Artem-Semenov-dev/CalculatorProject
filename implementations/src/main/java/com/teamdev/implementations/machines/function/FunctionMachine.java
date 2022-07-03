@@ -1,10 +1,10 @@
-package com.teamdev.calculator.fsm.function;
+package com.teamdev.implementations.machines.function;
 
 import com.teamdev.fsm.*;
 
 import java.util.function.BiConsumer;
 
-import static com.teamdev.calculator.fsm.function.FunctionStates.*;
+import static com.teamdev.implementations.machines.function.FunctionStates.*;
 
 /**
  * {@code FunctionMachine} is a realisation of {@link FiniteStateMachine}
@@ -12,8 +12,6 @@ import static com.teamdev.calculator.fsm.function.FunctionStates.*;
  */
 
 public final class FunctionMachine<O, E extends Exception> extends FiniteStateMachine<FunctionStates, O, E> {
-
-    private final FunctionFactory functionFactory = new FunctionFactory();
 
     public static <O, E extends Exception> FunctionMachine<O, E> create(Transducer<O, E> expressionFunctionTransducer,
                                                                         BiConsumer<O, String> biConsumer,

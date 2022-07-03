@@ -1,4 +1,4 @@
-package com.teamdev.calculator.fsm.brackets;
+package com.teamdev.implementations.machines.brackets;
 
 /**
  * {@code BracketsStates} is an enumeration of states

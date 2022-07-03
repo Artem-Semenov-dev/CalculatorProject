@@ -3,7 +3,7 @@ package com.teamdev.fsm;
 /**
  * {@code Transducer} is a functional interface that can be used to
  * produce {@param <O>} output based on a given input
- * and potentially throws a {@link ResolvingException}.
+ * and potentially throws a generic exception.
  */
 
 @FunctionalInterface

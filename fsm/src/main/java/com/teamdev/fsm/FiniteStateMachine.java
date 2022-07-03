@@ -70,6 +70,68 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         return machine;
     }
+
+    @SafeVarargs
+    public static <O, E extends Exception>
+    FiniteStateMachine<Object, O, E> chainMachine(ExceptionThrower<E> exceptionThrower,
+                                                  Transducer<O, E>... transducers){
+
+        Map <Object, Transducer<O, E>> registers =  new LinkedHashMap<>() ;
+
+
+        Object startState = new Object();
+        Object finishState = new Object();
+
+        MatrixBuilder<Object> builder = new MatrixBuilder<>();
+
+        builder.withStartState(startState).withFinishState(finishState);
+
+
+        int i = 0;
+        long count = Arrays.stream(transducers).count();
+        Object temp = new Object();
+        for (Transducer<O, E> transducer: transducers){
+
+            Object transducerState = new Object(){
+                @Override
+                public String toString() {
+                    return transducer.toString();
+                }
+            };
+
+            if (i == 0){
+                builder.allowTransition(startState, transducerState);
+
+                temp = transducerState;
+                i++;
+            }
+            else {
+                builder.allowTransition(temp, transducerState);
+
+                temp = transducerState;
+                i++;
+            }
+            if( i == count ){
+                builder.allowTransition(transducerState, finishState);
+            }
+
+
+            registers.put(transducerState, transducer);
+
+
+        }
+
+        FiniteStateMachine<Object, O, E> objectOFiniteStateMachine = new FiniteStateMachine<>(builder.build(), exceptionThrower);
+
+        for (Map.Entry<Object, Transducer<O, E>> entry : registers.entrySet()){
+            objectOFiniteStateMachine.registerTransducer(entry.getKey(), entry.getValue());
+        }
+        objectOFiniteStateMachine.registerTransducer(startState, Transducer.illegalTransition());
+        objectOFiniteStateMachine.registerTransducer(finishState, Transducer.autoTransition());
+
+        return objectOFiniteStateMachine;
+    }
+
     public FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> exceptionThrower, boolean allowedSkippingWhitespaces) {
 
         this.matrix = Preconditions.checkNotNull(matrix);
