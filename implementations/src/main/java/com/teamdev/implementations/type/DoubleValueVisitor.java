@@ -9,6 +9,12 @@ public class DoubleValueVisitor implements ValueVisitor{
         doubleValue = value.getValue();
     }
 
+    @Override
+    public void visit(BooleanValue value) {
+
+        throw new IllegalArgumentException("Type mismatch: expected double but boolean provided");
+    }
+
     public double getDoubleValue() {
         return doubleValue;
     }

@@ -14,6 +14,7 @@ import com.teamdev.implementations.datastructures.ShuntingYard;
 import com.teamdev.implementations.machines.expression.ExpressionMachine;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.teamdev.calculator.math.MathElement.*;
@@ -38,9 +39,9 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
                         errorMessage -> {
                             throw new ResolvingException(errorMessage);
                         },
-                        new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this),
-                        new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this),
-                        new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this))));
+                        new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this).named("Number"),
+                        new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this).named("Brackets"),
+                        new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this).named("Function"))));
 
 //        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(
 //                new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this), errorMessage -> {
@@ -50,9 +51,9 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
         resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(
                 FiniteStateMachine.chainMachine(errorMessage -> {
                             throw new ResolvingException(errorMessage);
-                        },
+                        }, List.of(),
                         Transducer.checkAndPassChar('('),
-                        new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this),
+                        new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this).named("Expression"),
                         Transducer.checkAndPassChar(')')
                 )
         ));

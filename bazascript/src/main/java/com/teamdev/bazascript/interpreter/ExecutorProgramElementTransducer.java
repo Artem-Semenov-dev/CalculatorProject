@@ -19,8 +19,8 @@ public class ExecutorProgramElementTransducer implements Transducer<ScriptContex
 
     private final ScriptElement scriptElement;
 
-    ExecutorProgramElementTransducer(ScriptElement resolver,
-                                     ScriptElementExecutorFactory factory) {
+    public ExecutorProgramElementTransducer(ScriptElement resolver,
+                                            ScriptElementExecutorFactory factory) {
         this.scriptElement = Preconditions.checkNotNull(resolver);
         this.factory = factory;
     }

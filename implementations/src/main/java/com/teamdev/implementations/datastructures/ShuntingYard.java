@@ -51,7 +51,7 @@ public class ShuntingYard {
             actionTopOperator();
         }
 
-        Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
+//        Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
 
         return operandStack.pop();
     }

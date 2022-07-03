@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.operators.BinaryOperatorFactory;
+import com.teamdev.implementations.operators.DoubleBinaryOperatorFactory;
 import com.teamdev.implementations.operators.AbstractBinaryOperator;
 
 import java.util.Optional;
@@ -15,15 +16,15 @@ import java.util.function.BiConsumer;
  * for {@link ExpressionMachine}.
  */
 
-class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, E> {
+public class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, E> {
 
-    private final BinaryOperatorFactory factory = new BinaryOperatorFactory();
+    private final BinaryOperatorFactory factory;
 
     private final BiConsumer<O, AbstractBinaryOperator> operatorConsumer;
 
-    BinaryOperatorTransducer(BiConsumer<O, AbstractBinaryOperator> operatorConsumer) {
-
-        this.operatorConsumer = Preconditions.checkNotNull(operatorConsumer);
+    public BinaryOperatorTransducer(BinaryOperatorFactory factory, BiConsumer<O, AbstractBinaryOperator> operatorConsumer) {
+        this.factory = factory;
+        this.operatorConsumer = operatorConsumer;
     }
 
     @Override
@@ -35,7 +36,7 @@ class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, 
             return false;
         }
 
-        Optional<AbstractBinaryOperator> operator = factory.create(inputChain.read());
+        Optional<AbstractBinaryOperator> operator = factory.create(inputChain.readOperator());
 
         if (operator.isPresent()) {
 
@@ -44,6 +45,9 @@ class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, 
             inputChain.incrementPosition();
 
             return true;
+        }
+        if(inputChain.previous() == '>' || inputChain.previous() == '<'){
+            inputChain.decrementPosition();
         }
         return false;
     }

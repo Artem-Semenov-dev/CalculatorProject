@@ -11,6 +11,20 @@ public interface Transducer<O, E extends Exception> {
 
     boolean doTransition(CharSequenceReader inputChain, O outputChain) throws E;
 
+    default Transducer<O, E> named(String name) {
+        return new Transducer<>() {
+            @Override
+            public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws E {
+                return Transducer.this.doTransition(inputChain, outputChain);
+            }
+
+            @Override
+            public String toString() {
+                return name;
+            }
+        };
+    }
+
     static <O, E extends Exception> Transducer<O, E> autoTransition() {
 
         return (inputChain, outputChain) -> true;

@@ -9,7 +9,9 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 class InterpreterTest extends AbstractTest {
     static Stream<Arguments> positiveInterpreterSource() {
         return Stream.of(
-                of("a=10; print(a);", "[10.0]", "Variable initialization and procedure print test has failed."),
+                of("a = 7; print(a<=2);", "[false]", "Boolean expression inside procedure test has failed"),
+                of("a = 5 > 2; print(a);", "[true]", "Boolean variable initialization test has failed"),
+                of("a=10;print(a);", "[10.0]", "Variable initialization and procedure print test has failed."),
                 of("a=(2*(7+3/(2+3)^4)); print(a);", "[14.0096]", "Variable initialization with complex expression " +
                         "and procedure print test has failed."),
                 of("a = 5;b = 4; print(a + b); print(a)", "[9.0][5.0]", "Two variables initialization and simple " +

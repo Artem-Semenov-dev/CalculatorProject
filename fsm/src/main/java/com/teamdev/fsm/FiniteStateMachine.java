@@ -40,8 +40,18 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         Map<Object, Transducer<O, E>> registers = new LinkedHashMap<>();
 
-        Object startState = new Object();
-        Object finishState = new Object();
+        Object startState = new Object(){
+            @Override
+            public String toString() {
+                return "START";
+            }
+        };
+        Object finishState = new Object(){
+            @Override
+            public String toString() {
+                return "FINISH";
+            }
+        };
 
         MatrixBuilder<Object> builder = new MatrixBuilder<>();
 
@@ -49,7 +59,12 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         for (Transducer<O, E> transducer : transducers) {
 
-            Object transducerState = new Object();
+            Object transducerState = new Object(){
+                @Override
+                public String toString() {
+                    return transducer.toString();
+                }
+            };
 
             builder.allowTransition(startState, transducerState)
                     .allowTransition(transducerState, finishState);
@@ -74,13 +89,24 @@ public class FiniteStateMachine<S, O, E extends Exception> {
     @SafeVarargs
     public static <O, E extends Exception>
     FiniteStateMachine<Object, O, E> chainMachine(ExceptionThrower<E> exceptionThrower,
+                                                  List<Transducer<O, E>> temporaryTransducers,
                                                   Transducer<O, E>... transducers){
 
         Map <Object, Transducer<O, E>> registers =  new LinkedHashMap<>() ;
 
 
-        Object startState = new Object();
-        Object finishState = new Object();
+        Object startState = new Object(){
+            @Override
+            public String toString() {
+                return "START";
+            }
+        };
+        Object finishState = new Object(){
+            @Override
+            public String toString() {
+                return "FINISH";
+            }
+        };
 
         MatrixBuilder<Object> builder = new MatrixBuilder<>();
 
@@ -102,24 +128,28 @@ public class FiniteStateMachine<S, O, E extends Exception> {
             if (i == 0){
                 builder.allowTransition(startState, transducerState);
 
-                temp = transducerState;
-                i++;
             }
             else {
                 builder.allowTransition(temp, transducerState);
 
-                temp = transducerState;
-                i++;
             }
+            temp = transducerState;
+            i++;
             if( i == count ){
                 builder.allowTransition(transducerState, finishState);
             }
 
-
+            if (temporaryTransducers.contains(transducer)){
+                builder.withTemporaryState(transducerState);
+            }
             registers.put(transducerState, transducer);
-
-
         }
+
+//        for (Transducer<O, E> transducer : temporaryTransducers){
+//
+//            Object transducerState = new Object();
+//
+//        }
 
         FiniteStateMachine<Object, O, E> objectOFiniteStateMachine = new FiniteStateMachine<>(builder.build(), exceptionThrower);
 
@@ -131,6 +161,8 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         return objectOFiniteStateMachine;
     }
+
+
 
     public FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> exceptionThrower, boolean allowedSkippingWhitespaces) {
 
@@ -149,7 +181,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
     public boolean run(CharSequenceReader inputChain, O outputChain) throws E {
 
-        inputChain.savePosition();
+        int startPosition = inputChain.position();
 
         if (logger.isInfoEnabled()) {
 
@@ -176,7 +208,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
                         logger.info("Rejected temporary state -> {}", currentState);
                     }
 
-                    inputChain.restorePosition();
+                    inputChain.setPosition(startPosition);
 
                     return false;
                 }

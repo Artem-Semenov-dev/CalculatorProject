@@ -5,6 +5,8 @@ import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 import com.teamdev.implementations.operators.AbstractBinaryOperator;
+import com.teamdev.implementations.operators.BinaryOperatorFactory;
+import com.teamdev.implementations.operators.DoubleBinaryOperatorFactory;
 
 import java.util.function.BiConsumer;
 
@@ -38,9 +40,11 @@ public final class  ExpressionMachine<O, E extends Exception> extends FiniteStat
                               ExceptionThrower<E> exceptionThrower) {
         super(matrix, exceptionThrower, true);
 
+        BinaryOperatorFactory doubleBinaryOperatorFactory = new DoubleBinaryOperatorFactory();
+
         registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
         registerTransducer(ExpressionStates.OPERAND, operandTransducer);
-        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(binaryConsumer));
+        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(doubleBinaryOperatorFactory, binaryConsumer));
         registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
     }
 }

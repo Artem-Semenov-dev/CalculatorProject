@@ -25,13 +25,49 @@ public final class CharSequenceReader {
         return source[readingPosition];
     }
 
+    public String readOperator(){
+
+        StringBuilder operator = new StringBuilder();
+
+//        while(canRead() && !(Character.isDigit(read()) || Character.isLetter(read()) || Character.isWhitespace(read()))){
+//            operator.append(read());
+//            incrementPosition();
+//        }
+
+        if (read() == '>' || read() == '<'){
+            operator.append(read());
+            incrementPosition();
+            if (read() == '='){
+                operator.append(read());
+            }
+            else decrementPosition();
+
+        }
+        else operator.append(read());
+
+        return operator.toString();
+    }
+
     public void incrementPosition() {
 
         readingPosition++;
     }
 
+    public char previous(){
+        return source[readingPosition-1];
+    }
+
+    public void decrementPosition() {
+
+        readingPosition--;
+    }
+
     public int position() {
         return readingPosition;
+    }
+
+    public void setPosition(int newPosition){
+        readingPosition = newPosition;
     }
 
     public boolean canRead() {

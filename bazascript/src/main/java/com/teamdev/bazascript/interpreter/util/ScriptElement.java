@@ -7,13 +7,15 @@ package com.teamdev.bazascript.interpreter.util;
 
 public enum ScriptElement {
     NUMBER,
+    NUMERIC_EXPRESSION,
+    RELATIONAL_EXPRESSION,
     EXPRESSION,
     OPERAND,
     BRACKETS,
     FUNCTION,
     STATEMENT,
-    INITVAR,
+    INIT_VAR,
     PROGRAM,
     PROCEDURE,
-    READVARIABLE
+    READ_VARIABLE
 }
