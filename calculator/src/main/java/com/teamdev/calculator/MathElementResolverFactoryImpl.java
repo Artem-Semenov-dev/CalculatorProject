@@ -51,10 +51,10 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
         resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(
                 FiniteStateMachine.chainMachine(errorMessage -> {
                             throw new ResolvingException(errorMessage);
-                        }, List.of(),
-                        Transducer.checkAndPassChar('('),
+                        }, List.of(), List.of(Transducer.checkAndPassChar('('),
                         new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this).named("Expression"),
-                        Transducer.checkAndPassChar(')')
+                        Transducer.checkAndPassChar(')'))
+
                 )
         ));
 

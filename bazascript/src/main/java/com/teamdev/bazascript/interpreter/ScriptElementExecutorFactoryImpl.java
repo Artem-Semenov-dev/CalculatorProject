@@ -6,6 +6,7 @@ import com.teamdev.bazascript.interpreter.initvar.InitVarContext;
 import com.teamdev.bazascript.interpreter.initvar.InitVarMachine;
 import com.teamdev.bazascript.interpreter.program.ProgramMachine;
 import com.teamdev.bazascript.interpreter.util.*;
+import com.teamdev.bazascript.interpreter.whileoperator.WhileOperatorExecutor;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.machines.brackets.BracketsMachine;
@@ -31,6 +32,11 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
             });
 
             if (execute.isPresent()) {
+
+                if(output.isParseonly()){
+                    return true;
+                }
+
                 output.systemStack().current().pushOperand(execute.get());
 
                 return true;
@@ -41,12 +47,16 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
         executors.put(ScriptElement.NUMERIC_EXPRESSION, () ->
                 new DetachedShuntingYardExecutor<>(ExpressionMachine.create(
-                        (scriptContext, prioritizedBinaryOperator) ->
-                                scriptContext.systemStack().current().pushOperator(prioritizedBinaryOperator),
+                        (scriptContext, abstractBinaryOperator) -> {
+                            if(!scriptContext.isParseonly()){
+                                scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
+                            }
+                        },
                         new ExecutorProgramElementTransducer(ScriptElement.OPERAND, this),
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         })));
+
 
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
@@ -103,9 +113,17 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                 throw new ExecutionException(errorMessage);
             });
 
+//            if (context.isParseonly()){
+//                return true;
+//            }
+
             if (nameMachine.run(inputChain, variableName)) {
 
                 if (context.hasVariable(variableName.toString())) {
+
+                    if(context.isParseonly()){
+                        return true;
+                    }
 
                     Value variable = context.memory().getVariable(variableName.toString());
 
@@ -132,6 +150,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         },
                         new ExecutorProgramElementTransducer(ScriptElement.INIT_VAR, this),
+                        new ExecutorProgramElementTransducer(ScriptElement.WHILE_OPERATOR, this),
                         new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this))));
 
         executors.put(ScriptElement.PROGRAM, () -> new NoSpecialActionExecutor<>(
@@ -139,6 +158,8 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                     throw new ExecutionException(errorMessage);
                 })
         ));
+
+        executors.put(ScriptElement.WHILE_OPERATOR, () -> new WhileOperatorExecutor(this));
     }
 
     @Override

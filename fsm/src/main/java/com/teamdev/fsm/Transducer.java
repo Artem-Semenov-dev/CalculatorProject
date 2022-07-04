@@ -1,5 +1,9 @@
 package com.teamdev.fsm;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * {@code Transducer} is a functional interface that can be used to
  * produce {@param <O>} output based on a given input
@@ -36,6 +40,13 @@ public interface Transducer<O, E extends Exception> {
 
             throw new IllegalStateException("Transition to START make no sense");
         };
+    }
+
+    static <O, E extends Exception> List<Transducer<O, E>> keyword(String keyword) {
+
+        Stream<Transducer<O, E>> stream = keyword.chars().mapToObj(value -> checkAndPassChar((char) value));
+
+        return stream.collect(Collectors.toList());
     }
 
     static <O, E extends Exception> Transducer<O, E> checkAndPassChar(char character) {

@@ -28,6 +28,10 @@ public class FunctionFactoryExecutor<I> implements ScriptElementExecutor {
 
         if (machine.run(inputChain, functionHolder)) {
 
+            if(output.isParseonly()){
+                return true;
+            }
+
             Value evaluateFunctionResult = functionFactory.
                     create(functionHolder.getFunctionName()).evaluate(functionHolder.getArguments());
 

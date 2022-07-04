@@ -29,14 +29,20 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
 
         var partOfExpression = new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory)
                 .named("Part Of Relational Expression");
+
         var relationalMachine = FiniteStateMachine.chainMachine(errorMessage -> {
                     throw new ExecutionException(errorMessage);
-                }, List.of(partOfExpression),
-                partOfExpression,
-                new BinaryOperatorTransducer<>(relationalOperatorFactory,
-                        (scriptContext, abstractBinaryOperator) ->
-                                scriptContext.systemStack().current().pushOperator(abstractBinaryOperator)),
-                partOfExpression);
+                },
+                List.of(partOfExpression),
+
+                List.of(partOfExpression,
+                        new BinaryOperatorTransducer<>(relationalOperatorFactory,
+                                (scriptContext, abstractBinaryOperator) -> {
+                                    if (!scriptContext.isParseonly()) {
+                                        scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
+                                    }
+                                }),
+                        partOfExpression));
 
         return relationalMachine.run(inputChain, output);
     }

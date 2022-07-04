@@ -86,11 +86,10 @@ public class FiniteStateMachine<S, O, E extends Exception> {
         return machine;
     }
 
-    @SafeVarargs
     public static <O, E extends Exception>
     FiniteStateMachine<Object, O, E> chainMachine(ExceptionThrower<E> exceptionThrower,
                                                   List<Transducer<O, E>> temporaryTransducers,
-                                                  Transducer<O, E>... transducers){
+                                                  List<Transducer<O, E>> transducers){
 
         Map <Object, Transducer<O, E>> registers =  new LinkedHashMap<>() ;
 
@@ -114,7 +113,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
 
         int i = 0;
-        long count = Arrays.stream(transducers).count();
+        long count = transducers.size();
         Object temp = new Object();
         for (Transducer<O, E> transducer: transducers){
 
@@ -144,12 +143,6 @@ public class FiniteStateMachine<S, O, E extends Exception> {
             }
             registers.put(transducerState, transducer);
         }
-
-//        for (Transducer<O, E> transducer : temporaryTransducers){
-//
-//            Object transducerState = new Object();
-//
-//        }
 
         FiniteStateMachine<Object, O, E> objectOFiniteStateMachine = new FiniteStateMachine<>(builder.build(), exceptionThrower);
 

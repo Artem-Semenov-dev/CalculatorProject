@@ -30,7 +30,7 @@ public class ProcedureFactoryExecutor<I> implements ScriptElementExecutor {
         if (machine.run(inputChain, functionHolder)) {
 
             procedureFactory.create(functionHolder.getFunctionName())
-                    .execute(functionHolder.getArguments(), functionHolder.getContext());
+                    .execute(functionHolder.getArguments(), functionHolder.getScriptContext());
 
             return true;
         }

@@ -23,6 +23,10 @@ public class DetachedShuntingYardExecutor<I> implements ScriptElementExecutor {
 
         if (machine.run(inputChain, output)) {
 
+            if(output.isParseonly()){
+                return true;
+            }
+
             Value peekResult = output.systemStack().close().peekResult();
 
             output.systemStack().current().pushOperand(peekResult);

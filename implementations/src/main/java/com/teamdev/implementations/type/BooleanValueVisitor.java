@@ -18,4 +18,12 @@ public class BooleanValueVisitor implements ValueVisitor{
     public boolean getBooleanValue(){
         return booleanValue;
     }
+
+    public static Boolean read(Value value){
+        BooleanValueVisitor booleanValueVisitor = new BooleanValueVisitor();
+
+        value.accept(booleanValueVisitor);
+
+        return booleanValueVisitor.getBooleanValue();
+    }
 }

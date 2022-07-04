@@ -28,11 +28,16 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, InitVarContext outputChain) throws ExecutionException {
 
-        Preconditions.checkNotNull(outputChain.getContext(), "output is null");
 
-        if (expressionExecutor.execute(inputChain, outputChain.getContext())) {
+        Preconditions.checkNotNull(outputChain.getScriptContext(), "output is null");
 
-            Value variableValue = outputChain.getContext().systemStack().current().peekResult();
+        if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
+
+            if(outputChain.isParseonly()){
+                return true;
+            }
+
+            Value variableValue = outputChain.getScriptContext().systemStack().current().peekResult();
 
             outputChain.setVariableValue(variableValue);
 

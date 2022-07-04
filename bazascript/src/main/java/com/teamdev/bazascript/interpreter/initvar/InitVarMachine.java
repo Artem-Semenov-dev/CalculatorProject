@@ -33,7 +33,12 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
         registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ScriptElement.EXPRESSION)));
 
         registerTransducer(FINISH, (inputChain, outputChain) -> {
-            outputChain.getContext().memory()
+
+            if(outputChain.isParseonly()){
+                return true;
+            }
+
+            outputChain.getScriptContext().memory()
                     .setVariable(outputChain.getVariableName(), outputChain.getVariableValue());
 
             return true;

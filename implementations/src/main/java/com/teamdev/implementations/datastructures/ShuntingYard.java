@@ -36,7 +36,7 @@ public class ShuntingYard {
 
         Preconditions.checkNotNull(operator);
 
-        while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) {
+        while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) { //
 
             actionTopOperator();
         }

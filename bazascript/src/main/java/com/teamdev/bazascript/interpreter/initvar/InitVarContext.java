@@ -39,7 +39,12 @@ public class InitVarContext implements WithContext {
     }
 
     @Override
-    public ScriptContext getContext() {
+    public ScriptContext getScriptContext() {
         return scriptContext;
+    }
+
+    @Override
+    public boolean isParseonly() {
+        return scriptContext.isParseonly();
     }
 }

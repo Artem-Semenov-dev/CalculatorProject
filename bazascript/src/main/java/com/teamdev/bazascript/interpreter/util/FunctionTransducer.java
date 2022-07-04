@@ -27,9 +27,13 @@ public class FunctionTransducer<O extends WithContext> implements Transducer<O, 
 
         ScriptElementExecutor expressionExecutor = factory.create(scriptElement);
 
-        if (expressionExecutor.execute(inputChain, outputChain.getContext())) {
+        if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            Value result = outputChain.getContext().systemStack().current().peekResult();
+            if (outputChain.getScriptContext().isParseonly()){
+                return true;
+            }
+
+            Value result = outputChain.getScriptContext().systemStack().current().peekResult();
 
             consumer.accept(outputChain, result);
 

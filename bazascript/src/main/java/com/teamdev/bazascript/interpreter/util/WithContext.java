@@ -7,8 +7,9 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
  * implementations of output chain that needs access to {@link ScriptContext}.
  */
 
-@FunctionalInterface
 public interface WithContext {
 
-    ScriptContext getContext();
+    ScriptContext getScriptContext();
+
+    boolean isParseonly();
 }

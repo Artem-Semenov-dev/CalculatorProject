@@ -13,7 +13,7 @@ import static com.teamdev.bazascript.interpreter.program.ProgramStates.*;
 
 /**
  * {@code ProgramMachine} is a realisation of {@link FiniteStateMachine} that used to
- * separate statement and launch machine for them
+ * separate statement and launch machine for them.
  */
 
 public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext, ExecutionException> {

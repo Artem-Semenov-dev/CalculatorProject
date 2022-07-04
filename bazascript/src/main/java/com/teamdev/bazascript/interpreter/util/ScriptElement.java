@@ -17,5 +17,6 @@ public enum ScriptElement {
     INIT_VAR,
     PROGRAM,
     PROCEDURE,
-    READ_VARIABLE
+    READ_VARIABLE,
+    WHILE_OPERATOR
 }

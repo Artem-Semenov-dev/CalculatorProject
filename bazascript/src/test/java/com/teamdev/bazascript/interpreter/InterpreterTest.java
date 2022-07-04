@@ -9,6 +9,10 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 class InterpreterTest extends AbstractTest {
     static Stream<Arguments> positiveInterpreterSource() {
         return Stream.of(
+                of("a = 0; while(a<4){a = a+1; print(a);};", "[1.0][2.0][3.0][4.0]",
+                        "While loop test has failed"),
+                of("a = 2; while(a<4){a = a+1;}; print(a);", "[4.0]",
+                        "While loop test with code after loop has failed"),
                 of("a = 7; print(a<=2);", "[false]", "Boolean expression inside procedure test has failed"),
                 of("a = 5 > 2; print(a);", "[true]", "Boolean variable initialization test has failed"),
                 of("a=10;print(a);", "[10.0]", "Variable initialization and procedure print test has failed."),
