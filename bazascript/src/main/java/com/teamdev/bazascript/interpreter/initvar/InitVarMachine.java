@@ -28,7 +28,7 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
         registerTransducer(NAME, new FunctionNameTransducer<>(InitVarContext::setVariableName,
                 errorMessage -> {
                     throw new ExecutionException(errorMessage);
-                }));
+                }).named("Function name"));
 
         registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ScriptElement.EXPRESSION)));
 

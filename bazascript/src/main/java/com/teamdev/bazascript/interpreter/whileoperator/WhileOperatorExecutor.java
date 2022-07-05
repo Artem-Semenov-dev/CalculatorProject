@@ -21,23 +21,20 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
-        Transducer<WhileOperatorContext, ExecutionException> keyword = new Transducer<>() {
-            @Override
-            public boolean doTransition(CharSequenceReader inputChain, WhileOperatorContext outputChain) throws ExecutionException {
+        Transducer<WhileOperatorContext, ExecutionException> keyword = (inputChain14, outputChain) -> {
 
-                outputChain.setPosition(inputChain.position());
+            outputChain.setPosition(inputChain14.position());
 
-                List<Transducer<WhileOperatorContext, ExecutionException>> keyword = Transducer.keyword("while");
+            List<Transducer<WhileOperatorContext, ExecutionException>> keyword1 = Transducer.keyword("while");
 
-                for (Transducer<WhileOperatorContext, ExecutionException> transducer : keyword) {
+            for (Transducer<WhileOperatorContext, ExecutionException> transducer : keyword1) {
 
-                    if (!transducer.doTransition(inputChain, outputChain)) {
-                        return false;
-                    }
+                if (!transducer.doTransition(inputChain14, outputChain)) {
+                    return false;
                 }
-
-                return true;
             }
+
+            return true;
         };
 
         Transducer<WhileOperatorContext, ExecutionException> relationTransducer =
@@ -58,43 +55,37 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                     return executor.execute(inputChain1, outputChain.getScriptContext());
                 };
 
-        List<Transducer<WhileOperatorContext, ExecutionException>> transducers = List.of(keyword,
-                Transducer.checkAndPassChar('('),
-                relationTransducer,
-                Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar(')')
-                        .and(new Transducer<WhileOperatorContext, ExecutionException>() {
-                            @Override
-                            public boolean doTransition(CharSequenceReader inputChain, WhileOperatorContext outputChain) throws ExecutionException {
+        List<Transducer<WhileOperatorContext, ExecutionException>> transducers = List.of(keyword.named("While keyword"),
+                Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('(').named("("),
+                relationTransducer.named("Relational expression"),
+                Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar(')').named(")")
+                        .and((inputChain13, outputChain) -> {
 
-                                if (!outputChain.isCondition()) {
+                            if (!outputChain.isCondition()) {
 
-                                    outputChain.getScriptContext().setParsingPermission(true);
-                                }
-
-                                return true;
+                                outputChain.getScriptContext().setParsingPermission(true);
                             }
-                        }),
-                Transducer.checkAndPassChar('{'),
-                programTransducer,
+
+                            return true;
+                        }).named("Check condition of while loop"),
+                Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('{').named("Opening brace"),
+                programTransducer.named("Program state"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('}')
-                        .and(new Transducer<WhileOperatorContext, ExecutionException>() {
-                            @Override
-                            public boolean doTransition(CharSequenceReader inputChain, WhileOperatorContext outputChain) throws ExecutionException {
+                        .and((inputChain12, outputChain) -> {
 
-                                if (outputChain.isCondition()) {
+                            if (outputChain.isCondition()) {
 
-                                    inputChain.setPosition(outputChain.getPosition());
+                                inputChain12.setPosition(outputChain.getPosition());
 
-                                    ScriptElementExecutor executor = factory.create(ScriptElement.WHILE_OPERATOR);
+                                ScriptElementExecutor executor = factory.create(ScriptElement.WHILE_OPERATOR);
 
-                                    executor.execute(inputChain, outputChain.getScriptContext());
-                                }
-
-                                outputChain.getScriptContext().setParsingPermission(false);
-
-                                return true;
+                                executor.execute(inputChain12, outputChain.getScriptContext());
                             }
-                        }));
+
+                            outputChain.getScriptContext().setParsingPermission(false);
+
+                            return true;
+                        }).named("Closing brace"));
 
 
         var machine = FiniteStateMachine.chainMachine(errorMessage -> {

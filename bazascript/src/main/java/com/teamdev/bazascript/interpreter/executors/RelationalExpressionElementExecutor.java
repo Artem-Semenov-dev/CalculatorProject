@@ -36,12 +36,13 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
                 List.of(partOfExpression),
 
                 List.of(partOfExpression,
-                        new BinaryOperatorTransducer<>(relationalOperatorFactory,
+                        new BinaryOperatorTransducer<ScriptContext, ExecutionException>(
+                                relationalOperatorFactory,
                                 (scriptContext, abstractBinaryOperator) -> {
                                     if (!scriptContext.isParseonly()) {
                                         scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                                     }
-                                }),
+                                }).named("Binary operator"),
                         partOfExpression));
 
         return relationalMachine.run(inputChain, output);
