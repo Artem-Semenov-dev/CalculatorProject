@@ -15,10 +15,10 @@ import java.util.function.BiConsumer;
 /**
  * {@code VariableExpressionTransducer} is an implementation of {@link Transducer}
  * that call execute method of {@link ScriptElementExecutor}, take and put result of execution
- * to {@link InitVarContext}.
+ * to any output chain that implements {@link WithContext}.
  */
 
-public class VariableExpressionTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
+class VariableExpressionTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
 
     private static final Logger logger = LoggerFactory.getLogger(VariableExpressionTransducer.class);
 
@@ -26,7 +26,7 @@ public class VariableExpressionTransducer<O extends WithContext> implements Tran
 
     private final BiConsumer<O, Value> setVariableValue;
 
-    public VariableExpressionTransducer(ScriptElementExecutor executor, BiConsumer<O, Value> setVariableValue) {
+    VariableExpressionTransducer(ScriptElementExecutor executor, BiConsumer<O, Value> setVariableValue) {
         this.expressionExecutor = Preconditions.checkNotNull(executor);
         this.setVariableValue = setVariableValue;
     }

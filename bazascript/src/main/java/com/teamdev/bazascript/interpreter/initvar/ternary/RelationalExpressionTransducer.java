@@ -8,11 +8,16 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.type.BooleanValueVisitor;
 import com.teamdev.implementations.type.Value;
 
-public class RelationalExpressionTransducer implements Transducer<TernaryOperatorContext, ExecutionException> {
+/**
+ * {@code RelationalExpressionTransducer} is an implementation of {@link Transducer}
+ * that used for producing result of relational expression to {@link TernaryOperatorContext}.
+ */
+
+class RelationalExpressionTransducer implements Transducer<TernaryOperatorContext, ExecutionException> {
 
     private final ScriptElementExecutor relationalExpressionExecutor;
 
-    public RelationalExpressionTransducer(ScriptElementExecutor relationalExpressionExecutor) {
+    RelationalExpressionTransducer(ScriptElementExecutor relationalExpressionExecutor) {
         this.relationalExpressionExecutor = relationalExpressionExecutor;
     }
 

@@ -6,11 +6,17 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
-public class ExpressionInTernaryOperatorTransducer implements Transducer<TernaryOperatorContext, ExecutionException> {
+/**
+ * {@code ExpressionInTernaryOperatorTransducer} is an implementation of {@link Transducer}
+ * that call execute method of {@link ScriptElementExecutor}. That transducer used to execute
+ * expression inside {@link TernaryOperatorMachine}.
+ */
+
+class ExpressionInTernaryOperatorTransducer implements Transducer<TernaryOperatorContext, ExecutionException> {
 
     private final ScriptElementExecutor executor;
 
-    public ExpressionInTernaryOperatorTransducer(ScriptElementExecutor executor) {
+    ExpressionInTernaryOperatorTransducer(ScriptElementExecutor executor) {
         this.executor = executor;
     }
 

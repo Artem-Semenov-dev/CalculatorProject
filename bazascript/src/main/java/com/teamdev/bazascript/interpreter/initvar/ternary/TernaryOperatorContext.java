@@ -3,6 +3,11 @@ package com.teamdev.bazascript.interpreter.initvar.ternary;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.runtime.WithContext;
 
+/**
+ * {@code TernaryOperatorContext} is an implementation of {@link WithContext}.
+ * {@code TernaryOperatorContext} ia a simple holder class that can be used like an output chain for {@link TernaryOperatorMachine}.
+ */
+
 public class TernaryOperatorContext implements WithContext {
 
     private final ScriptContext scriptContext;
@@ -14,11 +19,11 @@ public class TernaryOperatorContext implements WithContext {
         this.scriptContext = scriptContext;
     }
 
-    public boolean ternaryOperatorCondition() {
+    boolean ternaryOperatorCondition() {
         return ternaryOperatorCondition;
     }
 
-    public void setTernaryOperatorCondition(boolean ternaryOperatorCondition) {
+    void setTernaryOperatorCondition(boolean ternaryOperatorCondition) {
         this.ternaryOperatorCondition = ternaryOperatorCondition;
     }
 

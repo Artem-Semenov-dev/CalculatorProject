@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import static com.teamdev.bazascript.interpreter.initvar.ternary.TernaryStates.*;
 
+/**
+ * {@code TernaryOperatorMachine} is a realisation of {@link FiniteStateMachine} that used for parsing and executing ternary operator.
+ */
 
 public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStates, TernaryOperatorContext, ExecutionException> {
 
