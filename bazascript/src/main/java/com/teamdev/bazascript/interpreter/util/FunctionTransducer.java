@@ -30,11 +30,11 @@ public class FunctionTransducer<O extends WithContext> implements Transducer<O, 
 
         if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            if (outputChain.getScriptContext().isParseonly()){
+            if (outputChain.getScriptContext().isParseonly()) {
                 return true;
             }
 
-            Value result = outputChain.getScriptContext().systemStack().current().peekResult();
+            Value result = outputChain.getScriptContext().systemStack().current().popResult();
 
             consumer.accept(outputChain, result);
 

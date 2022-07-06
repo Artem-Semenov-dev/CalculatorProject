@@ -12,13 +12,13 @@ public class ProcedureFactory {
     public ProcedureFactory() {
 
         procedures.put("print", (arguments, output) -> {
-            if (!output.isParseonly()){
+            if (!output.isParseonly()) {
                 output.getOutput().print(arguments.toString());
             }
         });
 
         procedures.put("clear", (arguments, output) -> {
-            if (!output.isParseonly()){
+            if (!output.isParseonly()) {
                 output.memory().clearMemory();
             }
         });

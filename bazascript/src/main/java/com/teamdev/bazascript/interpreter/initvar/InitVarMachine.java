@@ -28,13 +28,27 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
         registerTransducer(NAME, new FunctionNameTransducer<>(InitVarContext::setVariableName,
                 errorMessage -> {
                     throw new ExecutionException(errorMessage);
-                }).named("Function name"));
+                }).named("Variable name"));
 
-        registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ScriptElement.EXPRESSION)));
+        registerTransducer(EXPRESSION, new VariableExpressionTransducer<>(factory.create(ScriptElement.EXPRESSION),
+                InitVarContext::setVariableValue));
+
+        registerTransducer(TERNARY_OPERATOR, new TernaryOperatorTransducer(factory.create(ScriptElement.TERNARY_OPERATOR)));
+
+        registerTransducer(SET_VARIABLE_VALUE, (inputChain, outputChain) -> {
+
+            if (outputChain.isParseonly()) {
+                return true;
+            }
+
+            outputChain.setVariableValue(outputChain.getScriptContext().systemStack().current().popResult());
+
+            return true;
+        });
 
         registerTransducer(FINISH, (inputChain, outputChain) -> {
 
-            if(outputChain.isParseonly()){
+            if (outputChain.isParseonly()) {
                 return true;
             }
 
@@ -50,10 +64,13 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
                 .withStartState(START)
                 .withFinishState(FINISH)
                 .withTemporaryState(NAME)
+                .withTemporaryState(TERNARY_OPERATOR)
                 .allowTransition(START, NAME)
                 .allowTransition(NAME, ASSIGN)
-                .allowTransition(ASSIGN, EXPRESSION)
+                .allowTransition(ASSIGN, TERNARY_OPERATOR, EXPRESSION)
                 .allowTransition(EXPRESSION, FINISH)
+                .allowTransition(TERNARY_OPERATOR, SET_VARIABLE_VALUE)
+                .allowTransition(SET_VARIABLE_VALUE, FINISH)
 
                 .build();
 

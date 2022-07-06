@@ -36,7 +36,7 @@ public class ShuntingYard {
 
         Preconditions.checkNotNull(operator);
 
-        while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) { //
+        while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) {
 
             actionTopOperator();
         }
@@ -44,14 +44,12 @@ public class ShuntingYard {
         operatorStack.push(operator);
     }
 
-    public Value peekResult() {
+    public Value popResult() {
 
         while (!operatorStack.isEmpty()) {
 
             actionTopOperator();
         }
-
-//        Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
 
         return operandStack.pop();
     }
@@ -69,13 +67,4 @@ public class ShuntingYard {
         operandStack.push(result);
     }
 
-    public Value peekOperand() {
-        assert operandStack.peek() != null;
-        return Preconditions.checkNotNull(operandStack.peek());
-    }
-
-    public AbstractBinaryOperator peekOperator() {
-        assert operatorStack.peek() != null;
-        return Preconditions.checkNotNull(operatorStack.peek());
-    }
 }
