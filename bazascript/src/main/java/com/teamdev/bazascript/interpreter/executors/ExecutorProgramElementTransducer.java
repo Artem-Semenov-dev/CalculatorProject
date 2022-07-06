@@ -1,4 +1,4 @@
-package com.teamdev.bazascript.interpreter;
+package com.teamdev.bazascript.interpreter.executors;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;

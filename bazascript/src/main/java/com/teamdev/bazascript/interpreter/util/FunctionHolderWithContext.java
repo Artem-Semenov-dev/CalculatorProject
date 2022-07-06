@@ -1,8 +1,8 @@
-package com.teamdev.bazascript.interpreter;
+package com.teamdev.bazascript.interpreter.util;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
-import com.teamdev.bazascript.interpreter.util.WithContext;
+import com.teamdev.bazascript.interpreter.runtime.WithContext;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.Value;
 
@@ -38,7 +38,7 @@ public class FunctionHolderWithContext implements WithContext {
         return scriptContext.isParseonly();
     }
 
-    void setArgument(Value argument) {
+    public void setArgument(Value argument) {
 
         arguments.add(argument);
     }
@@ -47,7 +47,7 @@ public class FunctionHolderWithContext implements WithContext {
         return functionName;
     }
 
-    void setFunctionName(String name) {
+    public void setFunctionName(String name) {
 
         this.functionName = Preconditions.checkNotNull(name);
     }

@@ -1,5 +1,6 @@
 package com.teamdev.bazascript.interpreter.util;
 
+import com.teamdev.bazascript.interpreter.runtime.WithContext;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.type.Value;

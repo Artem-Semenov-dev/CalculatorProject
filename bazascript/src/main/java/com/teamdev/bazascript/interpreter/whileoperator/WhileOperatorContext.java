@@ -1,7 +1,7 @@
 package com.teamdev.bazascript.interpreter.whileoperator;
 
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
-import com.teamdev.bazascript.interpreter.util.WithContext;
+import com.teamdev.bazascript.interpreter.runtime.WithContext;
 
 public class WhileOperatorContext implements WithContext {
 

@@ -1,6 +1,5 @@
 package com.teamdev.bazascript.interpreter.executors;
 
-import com.teamdev.bazascript.interpreter.ExecutorProgramElementTransducer;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
