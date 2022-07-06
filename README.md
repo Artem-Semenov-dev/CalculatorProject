@@ -39,6 +39,8 @@ Identifier machine used to read symbols and collect them.
 <h4> This language can:</h4>
 <ul>
 <li>Initialize variables of Double type or with expression that solve double values.</li>
+<li>Initialize variables with help of ternary operator.</li>
+<li>Support while loop.</li>
 <li>Resolve math operations between variables like +, -, /, *, ^, etc.</li>
 <li>Print variables</li>
 </ul>

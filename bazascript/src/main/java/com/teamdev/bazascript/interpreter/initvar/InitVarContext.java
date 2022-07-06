@@ -22,15 +22,15 @@ public class InitVarContext implements WithContext {
         this.scriptContext = scriptContext;
     }
 
-    public String getVariableName() {
+    String getVariableName() {
         return variableName;
     }
 
-    public void setVariableName(String variableName) {
+    void setVariableName(String variableName) {
         this.variableName = Preconditions.checkNotNull(variableName);
     }
 
-    public Value getVariableValue() {
+    Value getVariableValue() {
         return variableValue;
     }
 
