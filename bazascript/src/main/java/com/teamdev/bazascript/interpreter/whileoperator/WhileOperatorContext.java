@@ -11,23 +11,23 @@ public class WhileOperatorContext implements WithContext {
 
     private int position;
 
-    public WhileOperatorContext(ScriptContext context) {
+    WhileOperatorContext(ScriptContext context) {
         this.scriptContext = context;
     }
 
-    public int getPosition() {
+    int getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    void setPosition(int position) {
         this.position = position;
     }
 
-    public boolean isCondition() {
+    boolean getConditionValue() {
         return condition;
     }
 
-    public void setCondition(boolean condition) {
+    void setConditionValue(boolean condition) {
         this.condition = condition;
     }
 
@@ -37,7 +37,7 @@ public class WhileOperatorContext implements WithContext {
     }
 
     @Override
-    public boolean isParseonly() {
-        return scriptContext.isParseonly();
+    public boolean isParseOnly() {
+        return scriptContext.isParseOnly();
     }
 }

@@ -29,11 +29,6 @@ public final class CharSequenceReader {
 
         StringBuilder operator = new StringBuilder();
 
-//        while(canRead() && !(Character.isDigit(read()) || Character.isLetter(read()) || Character.isWhitespace(read()))){
-//            operator.append(read());
-//            incrementPosition();
-//        }
-
         if (read() == '>' || read() == '<'){
             operator.append(read());
             incrementPosition();
@@ -86,17 +81,5 @@ public final class CharSequenceReader {
 
                 incrementPosition();
         }
-    }
-
-    void savePosition() {
-
-        savedPosition = readingPosition;
-    }
-
-    void restorePosition() {
-
-        readingPosition = savedPosition;
-
-        savedPosition = -1;
     }
 }

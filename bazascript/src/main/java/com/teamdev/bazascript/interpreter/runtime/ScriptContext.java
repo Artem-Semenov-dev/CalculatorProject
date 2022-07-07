@@ -42,7 +42,7 @@ public class ScriptContext implements WithContext {
     }
 
     @Override
-    public boolean isParseonly() {
+    public boolean isParseOnly() {
         return parsingPermission;
     }
 

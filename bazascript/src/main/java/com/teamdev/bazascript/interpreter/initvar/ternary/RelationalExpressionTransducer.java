@@ -28,11 +28,11 @@ class RelationalExpressionTransducer implements Transducer<TernaryOperatorContex
 
         if (relationalExpressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            if (outputChain.isParseonly()) {
+            if (outputChain.isParseOnly()) {
                 return true;
             }
 
-            Value ternaryOperatorCondition = outputChain.getScriptContext().systemStack().current().popResult();
+            Value ternaryOperatorCondition = outputChain.getScriptContext().systemStack().current().result();
 
             outputChain.setTernaryOperatorCondition(BooleanValueVisitor.read(ternaryOperatorCondition));
 

@@ -38,7 +38,7 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
                         new BinaryOperatorTransducer<ScriptContext, ExecutionException>(
                                 relationalOperatorFactory,
                                 (scriptContext, abstractBinaryOperator) -> {
-                                    if (!scriptContext.isParseonly()) {
+                                    if (!scriptContext.isParseOnly()) {
                                         scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                                     }
                                 }).named("Binary operator"),

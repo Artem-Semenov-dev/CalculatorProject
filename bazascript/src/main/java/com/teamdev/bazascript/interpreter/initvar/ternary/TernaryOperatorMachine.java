@@ -29,7 +29,7 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
         registerTransducer(FINISH, Transducer.<TernaryOperatorContext, ExecutionException>autoTransition()
                 .and((inputChain, outputChain) -> {
 
-                    if (outputChain.isParseonly()) {
+                    if (outputChain.isParseOnly()) {
 
                         outputChain.getScriptContext().setParsingPermission(false);
                     }
@@ -37,11 +37,7 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
                     return true;
                 }));
 
-        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
-
         registerTransducer(RELATIONAL_EXPRESSION, new RelationalExpressionTransducer(factory.create(ScriptElement.RELATIONAL_EXPRESSION)));
-
-        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
 
         registerTransducer(QUESTION_MARK, Transducer.<TernaryOperatorContext, ExecutionException>checkAndPassChar('?').and(
                 (inputChain, outputChain) -> {
@@ -50,7 +46,7 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
 
                         if (logger.isInfoEnabled()) {
 
-                            logger.info("Set parse permission in ? to - > {}", outputChain.isParseonly());
+                            logger.info("Set parse permission in ? to - > {}", outputChain.isParseOnly());
                         }
                     }
 
@@ -60,7 +56,7 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
 
         registerTransducer(EXPRESSION, new ExpressionInTernaryOperatorTransducer(factory.create(ScriptElement.EXPRESSION)));
 
-        registerTransducer(DOUBLE_FLOW, Transducer.<TernaryOperatorContext, ExecutionException>checkAndPassChar(':').and(
+        registerTransducer(COLON, Transducer.<TernaryOperatorContext, ExecutionException>checkAndPassChar(':').and(
                 (inputChain, outputChain) -> {
 
                     if (outputChain.ternaryOperatorCondition()) {
@@ -69,7 +65,7 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
 
                         if (logger.isInfoEnabled()) {
 
-                            logger.info("Set parse permission in : to - > {}", outputChain.isParseonly());
+                            logger.info("Set parse permission in : to - > {}", outputChain.isParseOnly());
                         }
                     } else {
 
@@ -85,18 +81,17 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
         TransitionMatrix<TernaryStates> matrix = TransitionMatrix.<TernaryStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)
-                .withTemporaryState(OPENING_BRACKET)
-                .allowTransition(START, OPENING_BRACKET)
-                .allowTransition(OPENING_BRACKET, RELATIONAL_EXPRESSION)
-                .allowTransition(RELATIONAL_EXPRESSION, CLOSING_BRACKET)
-                .allowTransition(CLOSING_BRACKET, QUESTION_MARK)
-                .allowTransition(QUESTION_MARK, OPENING_BRACKET, EXPRESSION)
-                .allowTransition(EXPRESSION, DOUBLE_FLOW)
-                .allowTransition(DOUBLE_FLOW, OPENING_BRACKET, EXPRESSION)
+                .withTemporaryState(RELATIONAL_EXPRESSION)
+                .allowTransition(START, RELATIONAL_EXPRESSION)
+                .allowTransition(RELATIONAL_EXPRESSION, QUESTION_MARK)
+                .allowTransition(QUESTION_MARK, EXPRESSION)
+                .allowTransition(EXPRESSION, COLON)
+                .allowTransition(COLON, EXPRESSION)
                 .allowTransition(EXPRESSION, FINISH)
 
                 .build();
 
         return new TernaryOperatorMachine(matrix, factory, exceptionThrower);
+
     }
 }

@@ -20,17 +20,17 @@ public class DetachedShuntingYardExecutor<I> implements ScriptElementExecutor {
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
 
-        if (!output.isParseonly()) {
+        if (!output.isParseOnly()) {
             output.systemStack().create();
         }
 
         if (machine.run(inputChain, output)) {
 
-            if (output.isParseonly()) {
+            if (output.isParseOnly()) {
                 return true;
             }
 
-            Value peekResult = output.systemStack().close().popResult();
+            Value peekResult = output.systemStack().close().result();
 
             output.systemStack().current().pushOperand(peekResult);
 

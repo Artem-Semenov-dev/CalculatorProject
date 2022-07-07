@@ -10,7 +10,5 @@ public enum InitVarStates {
     ASSIGN,
     NAME,
     EXPRESSION,
-    TERNARY_OPERATOR,
-    SET_VARIABLE_VALUE,
     FINISH
 }

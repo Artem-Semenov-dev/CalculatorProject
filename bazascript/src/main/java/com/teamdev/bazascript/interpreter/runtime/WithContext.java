@@ -9,5 +9,5 @@ public interface WithContext {
 
     ScriptContext getScriptContext();
 
-    boolean isParseonly();
+    boolean isParseOnly();
 }

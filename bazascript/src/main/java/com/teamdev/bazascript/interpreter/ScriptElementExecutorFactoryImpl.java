@@ -35,7 +35,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
             if (execute.isPresent()) {
 
-                if (output.isParseonly()) {
+                if (output.isParseOnly()) {
                     return true;
                 }
 
@@ -50,7 +50,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
         executors.put(ScriptElement.NUMERIC_EXPRESSION, () ->
                 new DetachedShuntingYardExecutor<>(ExpressionMachine.create(
                         (scriptContext, abstractBinaryOperator) -> {
-                            if (!scriptContext.isParseonly()) {
+                            if (!scriptContext.isParseOnly()) {
                                 scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                             }
                         },
@@ -68,6 +68,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
+                        new ExecutorProgramElementTransducer(ScriptElement.TERNARY_OPERATOR, this).named("Ternary operator"),
                         new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, this).named("Relational expression"),
                         new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("Numeric expression"))));
 
@@ -89,7 +90,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
         executors.put(ScriptElement.FUNCTION, () -> new FunctionExecutor(
                 new FunctionFactoryExecutor<>(FunctionMachine.create(
-                        new FunctionTransducer<>(FunctionHolderWithContext::setArgument, this, ScriptElement.NUMERIC_EXPRESSION)
+                        new FunctionTransducer<>(FunctionHolderWithContext::addArgument, this, ScriptElement.NUMERIC_EXPRESSION)
                                 .named("Expression inside function"),
                         FunctionHolderWithContext::setFunctionName,
                         errorMessage -> {
@@ -120,7 +121,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
                 if (context.hasVariable(variableName.toString())) {
 
-                    if (context.isParseonly()) {
+                    if (context.isParseOnly()) {
                         return true;
                     }
 
@@ -136,7 +137,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
         executors.put(ScriptElement.PROCEDURE, () -> new FunctionExecutor(
                 new ProcedureFactoryExecutor<>(FunctionMachine.create(
-                        new FunctionTransducer<>(FunctionHolderWithContext::setArgument, this, ScriptElement.EXPRESSION),
+                        new FunctionTransducer<>(FunctionHolderWithContext::addArgument, this, ScriptElement.EXPRESSION),
                         FunctionHolderWithContext::setFunctionName,
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
@@ -160,7 +161,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
         executors.put(ScriptElement.WHILE_OPERATOR, () -> new WhileOperatorExecutor(this));
 
-        executors.put(ScriptElement.TERNARY_OPERATOR, () -> (ScriptElementExecutor) (inputChain, output) -> {
+        executors.put(ScriptElement.TERNARY_OPERATOR, () -> (inputChain, output) -> {
 
             TernaryOperatorMachine ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
                 throw new ExecutionException(errorMessage);

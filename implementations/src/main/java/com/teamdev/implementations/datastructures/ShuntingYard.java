@@ -38,24 +38,24 @@ public class ShuntingYard {
 
         while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) {
 
-            actionTopOperator();
+            applyTopOperator();
         }
 
         operatorStack.push(operator);
     }
 
-    public Value popResult() {
+    public Value result() {
 
         while (!operatorStack.isEmpty()) {
 
-            actionTopOperator();
+            applyTopOperator();
         }
 
         return operandStack.pop();
     }
 
 
-    private void actionTopOperator() {
+    private void applyTopOperator() {
         Value rightOperand = operandStack.pop();
 
         Value leftOperand = operandStack.pop();

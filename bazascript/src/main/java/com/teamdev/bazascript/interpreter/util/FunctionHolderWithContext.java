@@ -34,11 +34,11 @@ public class FunctionHolderWithContext implements WithContext {
     }
 
     @Override
-    public boolean isParseonly() {
-        return scriptContext.isParseonly();
+    public boolean isParseOnly() {
+        return scriptContext.isParseOnly();
     }
 
-    public void setArgument(Value argument) {
+    public void addArgument(Value argument) {
 
         arguments.add(argument);
     }
