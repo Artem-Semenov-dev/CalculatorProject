@@ -21,12 +21,12 @@ public class Memory {
         variables.put(identifier, value);
     }
 
-    public Value getVariable(String identifier) {
+    public Value getVariableValue(String identifier) {
 
         return variables.get(Preconditions.checkNotNull(identifier));
     }
 
-    public boolean hasVariable(String variableName) {
+    boolean hasVariable(String variableName) {
 
         return variables.containsKey(Preconditions.checkNotNull(variableName));
     }

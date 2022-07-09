@@ -43,7 +43,7 @@ public final class CharSequenceReader {
         return operator.toString();
     }
 
-    private static boolean isOperator(char sign){
+    public boolean isOperator(char sign){
 
         List<Character> operators = List.of('+', '-', '>', '<', '=', '%', '^', '*', '/');
 

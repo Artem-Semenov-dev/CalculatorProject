@@ -33,11 +33,11 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
 
         if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            if(outputChain.isParseonly()){
+            if (outputChain.isParseOnly()) {
                 return true;
             }
 
-            Value variableValue = outputChain.getScriptContext().systemStack().current().peekResult();
+            Value variableValue = outputChain.getScriptContext().systemStack().current().result();
 
             outputChain.setVariableValue(variableValue);
 
