@@ -11,7 +11,7 @@ import java.util.function.UnaryOperator;
  * {@code UnaryPrefixOperatorContext} can be used like an output chain for machine that execute expressions with unary prefix operator.
  */
 
-public class UnaryPrefixOperatorContext implements WithContext {
+class UnaryPrefixOperatorContext implements WithContext {
 
     private final ScriptContext scriptContext;
 

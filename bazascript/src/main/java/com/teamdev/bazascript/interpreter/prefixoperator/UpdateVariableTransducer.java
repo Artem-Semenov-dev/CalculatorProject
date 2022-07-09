@@ -11,7 +11,7 @@ import com.teamdev.implementations.type.Value;
  * that can be used to read variable inside expression with unary prefix operator and calculate result of that expression.
  */
 
-public class UpdateVariableTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
+class UpdateVariableTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, UnaryPrefixOperatorContext outputChain) throws ExecutionException {
