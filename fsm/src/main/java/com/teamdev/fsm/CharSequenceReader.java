@@ -3,6 +3,7 @@ package com.teamdev.fsm;
 import com.google.common.base.Preconditions;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * {@code CharSequenceReader} is a class which can be used to
@@ -29,23 +30,24 @@ public final class CharSequenceReader {
 
         StringBuilder operator = new StringBuilder();
 
-//        while(canRead() && !(Character.isDigit(read()) || Character.isLetter(read()) || Character.isWhitespace(read()))){
-//            operator.append(read());
-//            incrementPosition();
-//        }
+        int startPosition = position();
 
-        if (read() == '>' || read() == '<'){
+        while(canRead() && isOperator(read())){
             operator.append(read());
             incrementPosition();
-            if (read() == '='){
-                operator.append(read());
-            }
-            else decrementPosition();
-
         }
-        else operator.append(read());
+
+        if (startPosition != position())
+            decrementPosition();
 
         return operator.toString();
+    }
+
+    private static boolean isOperator(char sign){
+
+        List<Character> operators = List.of('+', '-', '>', '<', '=', '%', '^', '*', '/');
+
+        return operators.contains(sign);
     }
 
     public void incrementPosition() {
