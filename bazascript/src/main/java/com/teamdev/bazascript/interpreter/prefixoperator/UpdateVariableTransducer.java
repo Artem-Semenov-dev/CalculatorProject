@@ -6,6 +6,11 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.Value;
 
+/**
+ * {@code UpdateVariableTransducer} is an implementation of {@link Transducer}
+ * that can be used to read variable inside expression with unary prefix operator and calculate result of that expression.
+ */
+
 public class UpdateVariableTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
 
     @Override

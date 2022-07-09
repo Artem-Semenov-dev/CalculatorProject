@@ -7,6 +7,12 @@ import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.Value;
 
+/**
+ * {@code ReadVariableExecutor} is an implementation of {@link ScriptElementExecutor}.
+ * {@code ReadVariableExecutor} is used to create and run {@link IdentifierMachine}
+ * read variable and pushed result to output.
+ */
+
 public class ReadVariableExecutor implements ScriptElementExecutor {
 
     @Override

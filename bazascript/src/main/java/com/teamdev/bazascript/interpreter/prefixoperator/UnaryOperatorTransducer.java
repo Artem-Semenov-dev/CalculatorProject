@@ -11,7 +11,12 @@ import com.teamdev.implementations.type.Value;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 
-public class UnaryOperatorTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
+/**
+ * {@code UnaryOperatorTransducer} is an implementation of {@link Transducer}
+ * that used to produce and create unary operator to {@link UnaryPrefixOperatorContext}.
+ */
+
+class UnaryOperatorTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
 
     private final UnaryOperatorFactory factory = new PrefixUnaryOperatorFactory();
 

@@ -9,6 +9,12 @@ import com.teamdev.fsm.Transducer;
 
 import java.util.List;
 
+/**
+ * {@code UnaryPrefixOperatorExecutor} is an implementation of {@link ScriptElementExecutor}.
+ * {@code UnaryPrefixOperatorExecutor} is used to create and run {@link FiniteStateMachine}
+ * for executing expression with unary prefix operator.
+ */
+
 public class UnaryPrefixOperatorExecutor implements ScriptElementExecutor {
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
