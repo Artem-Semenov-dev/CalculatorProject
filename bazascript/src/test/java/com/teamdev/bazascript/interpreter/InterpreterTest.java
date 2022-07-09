@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 class InterpreterTest extends AbstractTest {
-    static Stream<Arguments> positiveInterpreterSource() {
+    static Stream<Arguments> positiveCases() {
         return Stream.of(
                 of("a = 0; while(a<4){a = a+1; print(a);};", "[1.0][2.0][3.0][4.0]",
                         "While loop test has failed"),
@@ -28,7 +28,7 @@ class InterpreterTest extends AbstractTest {
                         "3 variables initialization and calculation of them test has failed"));
     }
 
-    static Stream<Arguments> negativeInterpreterCases() {
+    static Stream<Arguments> negativeCases() {
         return Stream.of(
                 of("print(a);", 7, "Not initialized variable test has not throw exception"),
                 of("a = a; print(a);", 5, "Wrong initialization of variable test has not throw exception"),
