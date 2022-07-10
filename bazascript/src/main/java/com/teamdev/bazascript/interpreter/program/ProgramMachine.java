@@ -4,10 +4,7 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
-import com.teamdev.fsm.ExceptionThrower;
-import com.teamdev.fsm.FiniteStateMachine;
-import com.teamdev.fsm.Transducer;
-import com.teamdev.fsm.TransitionMatrix;
+import com.teamdev.fsm.*;
 
 import static com.teamdev.bazascript.interpreter.program.ProgramStates.*;
 
@@ -24,7 +21,14 @@ public final class ProgramMachine extends FiniteStateMachine<ProgramStates, Scri
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
-        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(';'));
+        registerTransducer(SEPARATOR, Transducer.<ScriptContext, ExecutionException>checkAndPassChar(';').and(
+                (inputChain, outputChain) -> {
+
+                    outputChain.memory().updateVariables();
+
+                    return true;
+                }
+        ));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 

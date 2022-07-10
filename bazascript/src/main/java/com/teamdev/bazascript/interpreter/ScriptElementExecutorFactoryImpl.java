@@ -57,7 +57,6 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         })));
 
-
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
 
@@ -66,7 +65,6 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
-                        new ExecutorProgramElementTransducer(ScriptElement.UNARY_PREFIX_OPERATOR, this).named("Unary Prefix Operator"),
                         new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, this).named("Relational expression"),
                         new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("Numeric expression"))));
 
@@ -75,6 +73,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
+                        new ExecutorProgramElementTransducer(ScriptElement.UNARY_PREFIX_OPERATOR, this).named("Unary Prefix Operator"),
                         new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this).named("Number"),
                         new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this).named("Brackets"),
                         new ExecutorProgramElementTransducer(ScriptElement.FUNCTION, this).named("Function"),

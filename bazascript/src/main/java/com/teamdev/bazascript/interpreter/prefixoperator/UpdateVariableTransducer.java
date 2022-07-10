@@ -29,9 +29,9 @@ class UpdateVariableTransducer implements Transducer<UnaryPrefixOperatorContext,
                     return true;
                 }
 
-                Value variableValue = outputChain.getScriptContext().memory().getVariableValue(variableName.toString());
+                Value variableValue = outputChain.getScriptContext().memory().getVariableValueFromCache(variableName.toString());
 
-                outputChain.getScriptContext().memory().setVariable(variableName.toString(), outputChain.applyOperator(variableValue));
+                outputChain.getScriptContext().memory().setVariableToCache(variableName.toString(), outputChain.applyOperator(variableValue));
 
                 outputChain.getScriptContext().systemStack().current().pushOperand(outputChain.applyOperator(variableValue));
 
