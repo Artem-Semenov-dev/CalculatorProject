@@ -1,26 +1,26 @@
 package com.teamdev.implementations.operators;
 
 import com.teamdev.implementations.type.BooleanValue;
-import com.teamdev.implementations.type.DoubleValue;
+import com.teamdev.implementations.type.BooleanValueVisitor;
 import com.teamdev.implementations.type.DoubleValueVisitor;
 import com.teamdev.implementations.type.Value;
 
 import java.util.function.BiFunction;
 
-public class RelationalBinaryOperator extends AbstractBinaryOperator{
+class LogicalBinaryOperator extends AbstractBinaryOperator{
 
-    private final BiFunction<Double, Double, Boolean> origin;
+    private final BiFunction<Boolean, Boolean, Boolean> origin;
 
-    RelationalBinaryOperator(Priority priority, BiFunction<Double, Double, Boolean> origin) {
+    LogicalBinaryOperator(Priority priority, BiFunction<Boolean, Boolean, Boolean> origin) {
         super(priority);
         this.origin = origin;
     }
 
     @Override
     public Value apply(Value left, Value right) {
-        double leftOperand = DoubleValueVisitor.read(left);
+        Boolean leftOperand = BooleanValueVisitor.read(left);
 
-        double rightOperand = DoubleValueVisitor.read(right);
+        Boolean rightOperand = BooleanValueVisitor.read(right);
 
         Boolean result = origin.apply(leftOperand, rightOperand);
 
