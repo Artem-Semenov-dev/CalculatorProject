@@ -31,4 +31,11 @@ public class ProcedureFactory {
 
         return procedures.get(procedureName);
     }
+
+    public boolean hasProcedure(String procedureName) {
+
+        Preconditions.checkNotNull(procedureName);
+
+        return procedures.containsKey(procedureName);
+    }
 }

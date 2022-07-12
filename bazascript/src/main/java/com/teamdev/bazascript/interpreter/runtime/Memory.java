@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * {@code Memory} is a class that used to store Double type variables.
+ * Memory has cache that store variables in cases of finite state machine rollback.
  */
 
 public class Memory {
@@ -30,24 +31,19 @@ public class Memory {
         cache.put(identifier, value);
     }
 
-    public void updateVariables(){
+    public void updateVariables() {
 
         variables.putAll(cache);
     }
 
-    public void updateCache(){
+    public void updateCache() {
 
         cache.putAll(variables);
     }
 
-    public void clearCache(){
+    public void clearCache() {
 
         cache.clear();
-    }
-
-    public Value getVariableValue(String identifier) {
-
-        return variables.get(Preconditions.checkNotNull(identifier));
     }
 
     public Value getVariableValueFromCache(String identifier) {
@@ -64,7 +60,7 @@ public class Memory {
 
         Preconditions.checkNotNull(identifier, value);
 
-        if (logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
 
             logger.info("Set variable to cache -> {}", DoubleValueVisitor.read(value));
         }

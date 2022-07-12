@@ -46,14 +46,13 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
                                 }).named("Binary operator"),
                         partOfExpression));
 
-        if (!relationalExpressionMachine.run(inputChain, output)){
+        if (!relationalExpressionMachine.run(inputChain, output)) {
 
             output.memory().clearCache();
             output.memory().updateCache();
             return false;
         }
 
-        output.memory().updateVariables();
         return true;
     }
 }

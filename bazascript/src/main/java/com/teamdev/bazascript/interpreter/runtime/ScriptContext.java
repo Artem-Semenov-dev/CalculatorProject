@@ -1,11 +1,5 @@
 package com.teamdev.bazascript.interpreter.runtime;
 
-import com.teamdev.bazascript.interpreter.util.WithContext;
-import com.teamdev.implementations.type.Value;
-
-import java.util.ArrayDeque;
-import java.util.HashMap;
-
 /**
  * {@code ScriptContext} is a class that used as a memory for interpreting BazaScript program code.
  */

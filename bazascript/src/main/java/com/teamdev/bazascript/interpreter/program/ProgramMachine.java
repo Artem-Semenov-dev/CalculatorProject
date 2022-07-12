@@ -4,7 +4,10 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
-import com.teamdev.fsm.*;
+import com.teamdev.fsm.ExceptionThrower;
+import com.teamdev.fsm.FiniteStateMachine;
+import com.teamdev.fsm.Transducer;
+import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.program.ProgramStates.*;
 

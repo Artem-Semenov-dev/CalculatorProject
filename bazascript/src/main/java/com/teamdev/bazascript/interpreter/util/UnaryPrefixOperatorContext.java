@@ -1,7 +1,7 @@
-package com.teamdev.bazascript.interpreter.prefixoperator;
+package com.teamdev.bazascript.interpreter.util;
 
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
-import com.teamdev.bazascript.interpreter.util.WithContext;
+import com.teamdev.bazascript.interpreter.runtime.WithContext;
 import com.teamdev.implementations.type.Value;
 
 import java.util.function.UnaryOperator;
@@ -11,21 +11,31 @@ import java.util.function.UnaryOperator;
  * {@code UnaryPrefixOperatorContext} can be used like an output chain for machine that execute expressions with unary prefix operator.
  */
 
-class UnaryPrefixOperatorContext implements WithContext {
+public class UnaryPrefixOperatorContext implements WithContext {
 
     private final ScriptContext scriptContext;
 
+    private boolean readVariableOnly;
+
     private UnaryOperator<Value> unaryOperator;
 
-    UnaryPrefixOperatorContext(ScriptContext scriptContext) {
+    public UnaryPrefixOperatorContext(ScriptContext scriptContext) {
         this.scriptContext = scriptContext;
     }
 
-    void setUnaryOperator(UnaryOperator<Value> unaryOperator) {
+    public void setUnaryOperator(UnaryOperator<Value> unaryOperator) {
         this.unaryOperator = unaryOperator;
     }
 
-    Value applyOperator(Value operand) {
+    public void setReadVariableOnlyValue(boolean readVariableOnly) {
+        this.readVariableOnly = readVariableOnly;
+    }
+
+    public boolean readVariableOnly() {
+        return readVariableOnly;
+    }
+
+    public Value applyOperator(Value operand) {
 
         return unaryOperator.apply(operand);
     }

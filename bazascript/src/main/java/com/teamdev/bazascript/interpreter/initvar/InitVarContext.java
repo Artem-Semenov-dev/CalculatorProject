@@ -2,7 +2,7 @@ package com.teamdev.bazascript.interpreter.initvar;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
-import com.teamdev.bazascript.interpreter.util.WithContext;
+import com.teamdev.bazascript.interpreter.runtime.WithContext;
 import com.teamdev.implementations.type.Value;
 
 /**

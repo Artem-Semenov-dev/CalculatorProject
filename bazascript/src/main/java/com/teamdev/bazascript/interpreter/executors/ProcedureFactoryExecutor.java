@@ -29,8 +29,11 @@ public class ProcedureFactoryExecutor<I> implements ScriptElementExecutor {
 
         if (machine.run(inputChain, functionHolder)) {
 
-            procedureFactory.create(functionHolder.getFunctionName())
-                    .execute(functionHolder.getArguments(), functionHolder.getScriptContext());
+            if (procedureFactory.hasProcedure(functionHolder.getFunctionName())) {
+
+                procedureFactory.create(functionHolder.getFunctionName())
+                        .execute(functionHolder.getArguments(), functionHolder.getScriptContext());
+            } else throw new ExecutionException("Not supported procedure " + functionHolder.getFunctionName());
 
             return true;
         }

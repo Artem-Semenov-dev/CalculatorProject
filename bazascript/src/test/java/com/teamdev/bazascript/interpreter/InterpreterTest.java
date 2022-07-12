@@ -34,9 +34,9 @@ class InterpreterTest extends AbstractTest {
                 of("print(a);", 7, "Not initialized variable test has not throw exception"),
                 of("a = a; print(a);", 5, "Wrong initialization of variable test has not throw exception"),
                 of("a = 6; print(a;", 14, "Not closed brackets inside procedure test has not throw exception"),
-                of("a = 6; printa);", 7, "Not opened brackets inside procedure test has not throw exception"),
+                of("a = 6; printa);", 13, "Not opened brackets inside procedure test has not throw exception"),
                 of("a = 6 print(a);", 6, "Code without separators test has not throw exception"),
-                of("a; = 6 print(a);", 0, "Separator in wrong place test has not throw exception"),
+                of("a; = 6 print(a);", 1, "Separator in wrong place test has not throw exception"),
                 of("a == 6; print(a);", 3, "Not allowed double assign test has not throw exception"),
                 of("a = 6; 7; print(a);", 7, "Number without variable test has not throw exception"),
                 of("a = 6; clear(); print(a);", 23, "Clear procedure test has not throw exception")

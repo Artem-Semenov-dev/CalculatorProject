@@ -10,7 +10,7 @@ import java.util.Deque;
  * {@code SystemStack} is a stack of {@link ShuntingYard} it is used to store results of calculations and value of variables.
  */
 
-public class SystemStack{
+public class SystemStack {
 
     private final Deque<ShuntingYard> stacks = new ArrayDeque<>();
 

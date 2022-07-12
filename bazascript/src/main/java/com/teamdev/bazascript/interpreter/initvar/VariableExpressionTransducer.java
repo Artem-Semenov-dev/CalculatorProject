@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
 
 public class VariableExpressionTransducer implements Transducer<InitVarContext, ExecutionException> {
 
-    private static final Logger logger = LoggerFactory.getLogger(VariableExpressionTransducer.class);
-
     private final ScriptElementExecutor expressionExecutor;
 
     public VariableExpressionTransducer(ScriptElementExecutor executor) {

@@ -20,4 +20,5 @@ public enum ScriptElement {
     READ_VARIABLE,
     WHILE_OPERATOR,
     UNARY_PREFIX_OPERATOR,
+    PRODUCE_VARIABLE
 }

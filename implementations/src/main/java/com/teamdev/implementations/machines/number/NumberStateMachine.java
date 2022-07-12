@@ -36,6 +36,7 @@ public final class NumberStateMachine<E extends Exception> extends FiniteStateMa
         TransitionMatrix<NumberStates> matrix = TransitionMatrix.<NumberStates>builder().
                 withStartState(START)
                 .withFinishState(FINISH)
+                .withTemporaryState(NEGATIVE_SIGN)
                 .allowTransition(START, NEGATIVE_SIGN, INTEGER_DIGIT)
                 .allowTransition(NEGATIVE_SIGN, INTEGER_DIGIT)
                 .allowTransition(INTEGER_DIGIT, INTEGER_DIGIT, DOT, FINISH)

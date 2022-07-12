@@ -1,18 +1,13 @@
-package com.teamdev.bazascript.interpreter.prefixoperator;
+package com.teamdev.bazascript.interpreter.variable;
 
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
+import com.teamdev.bazascript.interpreter.util.UnaryPrefixOperatorContext;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.Value;
 
-/**
- * {@code UpdateVariableTransducer} is an implementation of {@link Transducer}
- * that can be used to read variable inside expression with unary prefix operator and calculate result of that expression.
- */
-
-class UpdateVariableTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
-
+public class ProduceVariableTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
     @Override
     public boolean doTransition(CharSequenceReader inputChain, UnaryPrefixOperatorContext outputChain) throws ExecutionException {
         StringBuilder variableName = new StringBuilder();
@@ -31,9 +26,17 @@ class UpdateVariableTransducer implements Transducer<UnaryPrefixOperatorContext,
 
                 Value variableValue = outputChain.getScriptContext().memory().getVariableValueFromCache(variableName.toString());
 
-                outputChain.getScriptContext().memory().setVariableToCache(variableName.toString(), outputChain.applyOperator(variableValue));
+                if (outputChain.readVariableOnly()) {
 
-                outputChain.getScriptContext().systemStack().current().pushOperand(outputChain.applyOperator(variableValue));
+                    outputChain.getScriptContext().systemStack().current().pushOperand(variableValue);
+                } else {
+
+                    Value variableUpdateResult = outputChain.applyOperator(variableValue);
+
+                    outputChain.getScriptContext().memory().setVariableToCache(variableName.toString(), variableUpdateResult);
+
+                    outputChain.getScriptContext().systemStack().current().pushOperand(variableUpdateResult);
+                }
 
                 return true;
 
