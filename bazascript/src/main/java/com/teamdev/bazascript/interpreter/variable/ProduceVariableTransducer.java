@@ -7,6 +7,11 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.Value;
 
+/**
+ * {@code ProduceVariableTransducer} is an implementation of {@link Transducer}
+ * that can be used to read variable inside expression with unary prefix operator or without it and calculate result of that expression.
+ */
+
 public class ProduceVariableTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
     @Override
     public boolean doTransition(CharSequenceReader inputChain, UnaryPrefixOperatorContext outputChain) throws ExecutionException {

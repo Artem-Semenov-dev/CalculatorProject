@@ -12,6 +12,11 @@ import com.teamdev.implementations.type.Value;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 
+/**
+ * {@code UnaryPrefixOperatorTransducer} is an implementation of {@link Transducer}
+ * that used to produce and create unary operator to {@link UnaryPrefixOperatorContext}.
+ */
+
 public class UnaryPrefixOperatorTransducer implements Transducer<UnaryPrefixOperatorContext, ExecutionException> {
 
     private final UnaryOperatorFactory factory = new PrefixUnaryOperatorFactory();
