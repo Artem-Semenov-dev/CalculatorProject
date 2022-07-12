@@ -28,7 +28,7 @@ public class FunctionFactoryExecutor<I> implements ScriptElementExecutor {
 
         if (machine.run(inputChain, functionHolder)) {
 
-            if(output.isParseonly()){
+            if (output.isParseOnly()) {
                 return true;
             }
 

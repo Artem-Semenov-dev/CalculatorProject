@@ -39,6 +39,7 @@ Identifier machine used to read symbols and collect them.
 <h4> This language can:</h4>
 <ul>
 <li>Initialize variables of Double type or with expression that solve double values.</li>
+<li>Resolve expressions with prefix unary operators before variables like ++, --.</li>
 <li>Resolve math operations between variables like +, -, /, *, ^, etc.</li>
 <li>Print variables</li>
 </ul>

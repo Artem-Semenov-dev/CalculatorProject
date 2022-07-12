@@ -32,16 +32,4 @@ public class SystemStack {
 
         return stacks.pop();
     }
-
-//    private final Deque<Value> stack = new ArrayDeque<>();
-//
-//    public void pushValue(Value value){
-//
-//        stack.push(value);
-//    }
-//
-//    public Value popValue(){
-//
-//        return stack.pop();
-//    }
 }

@@ -18,13 +18,7 @@ public class DoubleBinaryOperator extends AbstractBinaryOperator{
     @Override
     public Value apply(Value left, Value right) {
 
-//        DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
-//
-//        left.accept(doubleVisitor);
-
         double leftOperand = DoubleValueVisitor.read(left);
-
-//        right.accept(doubleVisitor);
 
         double rightOperand = DoubleValueVisitor.read(right);
 

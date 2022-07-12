@@ -30,7 +30,7 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
         var partOfExpression = new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory)
                 .named("Part Of Relational Expression");
 
-        var relationalMachine = FiniteStateMachine.chainMachine(errorMessage -> {
+        var relationalExpressionMachine = FiniteStateMachine.chainMachine(errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 },
                 List.of(partOfExpression),
@@ -39,12 +39,20 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
                         new BinaryOperatorTransducer<ScriptContext, ExecutionException>(
                                 relationalOperatorFactory,
                                 (scriptContext, abstractBinaryOperator) -> {
-                                    if (!scriptContext.isParseonly()) {
+                                    if (!scriptContext.isParseOnly()) {
+                                        output.memory().updateVariables();
                                         scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                                     }
                                 }).named("Binary operator"),
                         partOfExpression));
 
-        return relationalMachine.run(inputChain, output);
+        if (!relationalExpressionMachine.run(inputChain, output)) {
+
+            output.memory().clearCache();
+            output.memory().updateCache();
+            return false;
+        }
+
+        return true;
     }
 }

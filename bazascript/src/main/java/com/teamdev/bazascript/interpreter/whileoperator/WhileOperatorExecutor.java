@@ -39,7 +39,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
 
         Transducer<WhileOperatorContext, ExecutionException> relationTransducer =
                 new FunctionTransducer<>((whileOperatorContext, value) -> {
-                    whileOperatorContext.setCondition(BooleanValueVisitor.read(value));
+                    whileOperatorContext.setConditionValue(BooleanValueVisitor.read(value));
                 },
                         factory, ScriptElement.RELATIONAL_EXPRESSION);
 
@@ -61,7 +61,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar(')').named(")")
                         .and((inputChain13, outputChain) -> {
 
-                            if (!outputChain.isCondition()) {
+                            if (!outputChain.getConditionValue()) {
 
                                 outputChain.getScriptContext().setParsingPermission(true);
                             }
@@ -73,7 +73,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('}')
                         .and((inputChain12, outputChain) -> {
 
-                            if (outputChain.isCondition()) {
+                            if (outputChain.getConditionValue()) {
 
                                 inputChain12.setPosition(outputChain.getPosition());
 

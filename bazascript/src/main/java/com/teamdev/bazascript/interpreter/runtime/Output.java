@@ -16,10 +16,6 @@ public class Output {
 
     private final PrintStream printStream = new PrintStream(outputStream);
 
-    public PrintStream output() {
-        return printStream;
-    }
-
     public String content() {
 
         return outputStream.toString();

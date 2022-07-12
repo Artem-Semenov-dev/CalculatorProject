@@ -2,7 +2,7 @@ package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
-import com.teamdev.bazascript.interpreter.util.WithContext;
+import com.teamdev.bazascript.interpreter.runtime.WithContext;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.Value;
 
@@ -34,11 +34,11 @@ public class FunctionHolderWithContext implements WithContext {
     }
 
     @Override
-    public boolean isParseonly() {
-        return scriptContext.isParseonly();
+    public boolean isParseOnly() {
+        return scriptContext.isParseOnly();
     }
 
-    void setArgument(Value argument) {
+    void addArgument(Value argument) {
 
         arguments.add(argument);
     }

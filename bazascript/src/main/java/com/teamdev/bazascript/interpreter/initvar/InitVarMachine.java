@@ -34,7 +34,7 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
 
         registerTransducer(FINISH, (inputChain, outputChain) -> {
 
-            if(outputChain.isParseonly()){
+            if (outputChain.isParseOnly()) {
                 return true;
             }
 

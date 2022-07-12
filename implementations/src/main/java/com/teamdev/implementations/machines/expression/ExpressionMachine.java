@@ -25,6 +25,7 @@ public final class  ExpressionMachine<O, E extends Exception> extends FiniteStat
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(ExpressionStates.START)
                 .withFinishState(ExpressionStates.FINISH)
+                .withTemporaryState(ExpressionStates.OPERAND)
                 .allowTransition(ExpressionStates.START, ExpressionStates.OPERAND)
                 .allowTransition(ExpressionStates.OPERAND, ExpressionStates.BINARY_OPERATOR, ExpressionStates.FINISH)
                 .allowTransition(ExpressionStates.BINARY_OPERATOR, ExpressionStates.OPERAND)
@@ -48,6 +49,5 @@ public final class  ExpressionMachine<O, E extends Exception> extends FiniteStat
         registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
     }
 }
-//new DetachedShuntingYardTransducer<O>(MathElement.OPERAND, consumer, factory)
 
 

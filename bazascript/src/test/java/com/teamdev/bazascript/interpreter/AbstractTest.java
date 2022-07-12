@@ -11,7 +11,7 @@ abstract class AbstractTest {
     private final Interpreter interpreter = new Interpreter();
 
     @ParameterizedTest
-    @MethodSource("positiveInterpreterSource")
+    @MethodSource("positiveCases")
     void testPositiveCases(String programCode, String expected, String assertMsg) throws IncorrectProgramException {
         BazaScriptProgram script = new BazaScriptProgram(programCode);
         ProgramResult output = interpreter.interpret(script);
@@ -20,7 +20,7 @@ abstract class AbstractTest {
     }
 
     @ParameterizedTest
-    @MethodSource("negativeInterpreterCases")
+    @MethodSource("negativeCases")
     void negativeCase(String programCode, int expectedErrorPosition, String errorMessage) {
 
         BazaScriptProgram script = new BazaScriptProgram(programCode);

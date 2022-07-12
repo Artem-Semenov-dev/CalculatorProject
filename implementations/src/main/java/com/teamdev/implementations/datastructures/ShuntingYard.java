@@ -38,17 +38,17 @@ public class ShuntingYard {
 
         while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) { //
 
-            actionTopOperator();
+            applyTopOperator();
         }
 
         operatorStack.push(operator);
     }
 
-    public Value peekResult() {
+    public Value result() {
 
         while (!operatorStack.isEmpty()) {
 
-            actionTopOperator();
+            applyTopOperator();
         }
 
 //        Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
@@ -57,7 +57,7 @@ public class ShuntingYard {
     }
 
 
-    private void actionTopOperator() {
+    private void applyTopOperator() {
         Value rightOperand = operandStack.pop();
 
         Value leftOperand = operandStack.pop();

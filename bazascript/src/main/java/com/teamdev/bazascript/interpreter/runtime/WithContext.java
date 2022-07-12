@@ -1,4 +1,4 @@
-package com.teamdev.bazascript.interpreter.util;
+package com.teamdev.bazascript.interpreter.runtime;
 
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 
@@ -11,5 +11,5 @@ public interface WithContext {
 
     ScriptContext getScriptContext();
 
-    boolean isParseonly();
+    boolean isParseOnly();
 }

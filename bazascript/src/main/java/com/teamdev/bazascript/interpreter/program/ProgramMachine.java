@@ -24,7 +24,14 @@ public final class ProgramMachine extends FiniteStateMachine<ProgramStates, Scri
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
-        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(';'));
+        registerTransducer(SEPARATOR, Transducer.<ScriptContext, ExecutionException>checkAndPassChar(';').and(
+                (inputChain, outputChain) -> {
+
+                    outputChain.memory().updateVariables();
+
+                    return true;
+                }
+        ));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 

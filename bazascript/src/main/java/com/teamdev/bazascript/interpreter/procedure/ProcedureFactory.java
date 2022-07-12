@@ -12,13 +12,13 @@ public class ProcedureFactory {
     public ProcedureFactory() {
 
         procedures.put("print", (arguments, output) -> {
-            if (!output.isParseonly()){
+            if (!output.isParseOnly()) {
                 output.getOutput().print(arguments.toString());
             }
         });
 
         procedures.put("clear", (arguments, output) -> {
-            if (!output.isParseonly()){
+            if (!output.isParseOnly()) {
                 output.memory().clearMemory();
             }
         });
@@ -30,5 +30,12 @@ public class ProcedureFactory {
         Preconditions.checkNotNull(procedureName);
 
         return procedures.get(procedureName);
+    }
+
+    public boolean hasProcedure(String procedureName) {
+
+        Preconditions.checkNotNull(procedureName);
+
+        return procedures.containsKey(procedureName);
     }
 }
