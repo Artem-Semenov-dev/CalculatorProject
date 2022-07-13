@@ -1,5 +1,8 @@
 package com.teamdev.implementations.type;
 
+import java.util.Optional;
+import java.util.OptionalDouble;
+
 public class DoubleValueVisitor implements ValueVisitor{
     private double doubleValue;
 

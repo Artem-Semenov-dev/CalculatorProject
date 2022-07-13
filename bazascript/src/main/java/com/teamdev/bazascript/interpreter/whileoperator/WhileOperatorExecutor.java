@@ -39,18 +39,13 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
 
         Transducer<WhileOperatorContext, ExecutionException> relationTransducer =
                 new FunctionTransducer<>((whileOperatorContext, value) -> {
-                    whileOperatorContext.setCondition(BooleanValueVisitor.read(value));
-                },
-                        factory, ScriptElement.RELATIONAL_EXPRESSION);
+                    whileOperatorContext.setConditionValue(BooleanValueVisitor.read(value));
+                }, factory, ScriptElement.LOGICAL_EXPRESSION);
 
         Transducer<WhileOperatorContext, ExecutionException> programTransducer =
                 (inputChain1, outputChain) -> {
 
                     ScriptElementExecutor executor = factory.create(ScriptElement.PROGRAM);
-
-//                    ProgramMachine programMachine = ProgramMachine.create(factory, errorMessage -> {
-//                        throw new ExecutionException(errorMessage);
-//                    });
 
                     return executor.execute(inputChain1, outputChain.getScriptContext());
                 };
@@ -61,7 +56,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar(')').named(")")
                         .and((inputChain13, outputChain) -> {
 
-                            if (!outputChain.isCondition()) {
+                            if (!outputChain.getConditionValue()) {
 
                                 outputChain.getScriptContext().setParsingPermission(true);
                             }
@@ -73,7 +68,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('}')
                         .and((inputChain12, outputChain) -> {
 
-                            if (outputChain.isCondition()) {
+                            if (outputChain.getConditionValue()) {
 
                                 inputChain12.setPosition(outputChain.getPosition());
 

@@ -1,6 +1,6 @@
 package com.teamdev.bazascript.interpreter.executors;
 
-import com.teamdev.bazascript.interpreter.ExecutorProgramElementTransducer;
+import com.teamdev.bazascript.interpreter.util.ExecutorProgramElementTransducer;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
@@ -39,11 +39,11 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
                         new BinaryOperatorTransducer<ScriptContext, ExecutionException>(
                                 relationalOperatorFactory,
                                 (scriptContext, abstractBinaryOperator) -> {
-                                    if (!scriptContext.isParseonly()) {
+                                    if (!scriptContext.isParseOnly()) {
                                         scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                                     }
                                 }).named("Binary operator"),
-                        partOfExpression));
+                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory)));
 
         return relationalMachine.run(inputChain, output);
     }

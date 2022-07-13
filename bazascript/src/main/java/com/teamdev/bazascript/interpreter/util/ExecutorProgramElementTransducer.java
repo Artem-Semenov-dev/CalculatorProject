@@ -1,11 +1,7 @@
-package com.teamdev.bazascript.interpreter;
+package com.teamdev.bazascript.interpreter.util;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
-import com.teamdev.bazascript.interpreter.util.ExecutionException;
-import com.teamdev.bazascript.interpreter.util.ScriptElement;
-import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
-import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
