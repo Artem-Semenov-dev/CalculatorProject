@@ -10,19 +10,23 @@ import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 
+/**
+ * {@code ScriptExpressionMachine} is an implementation of {@link FiniteStateMachine}.
+ * {@code ScriptExpressionMachine} is a one of machine that intended to choose between logical and numeric expression.
+ */
 
-public final class ScriptExpressionMachine extends FiniteStateMachine<ExpressionStates, ScriptContext, ExecutionException> {
+public final class ScriptExpressionMachine extends FiniteStateMachine<ScriptExpressionStates, ScriptContext, ExecutionException> {
 
     public static ScriptExpressionMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower){
 
-        TransitionMatrix<ExpressionStates> matrix =
-                TransitionMatrix.<ExpressionStates>builder()
-                        .withStartState(ExpressionStates.START)
-                        .withFinishState(ExpressionStates.FINISH)
-                        .withTemporaryState(ExpressionStates.LOGICAL_EXPRESSION)
-                        .allowTransition(ExpressionStates.START, ExpressionStates.LOGICAL_EXPRESSION, ExpressionStates.NUMERIC_EXPRESSION)
-                        .allowTransition(ExpressionStates.LOGICAL_EXPRESSION, ExpressionStates.FINISH)
-                        .allowTransition(ExpressionStates.NUMERIC_EXPRESSION, ExpressionStates.FINISH)
+        TransitionMatrix<ScriptExpressionStates> matrix =
+                TransitionMatrix.<ScriptExpressionStates>builder()
+                        .withStartState(ScriptExpressionStates.START)
+                        .withFinishState(ScriptExpressionStates.FINISH)
+                        .withTemporaryState(ScriptExpressionStates.LOGICAL_EXPRESSION)
+                        .allowTransition(ScriptExpressionStates.START, ScriptExpressionStates.LOGICAL_EXPRESSION, ScriptExpressionStates.NUMERIC_EXPRESSION)
+                        .allowTransition(ScriptExpressionStates.LOGICAL_EXPRESSION, ScriptExpressionStates.FINISH)
+                        .allowTransition(ScriptExpressionStates.NUMERIC_EXPRESSION, ScriptExpressionStates.FINISH)
 
                         .build();
 
@@ -30,17 +34,17 @@ public final class ScriptExpressionMachine extends FiniteStateMachine<Expression
     }
 
 
-    private ScriptExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
+    private ScriptExpressionMachine(TransitionMatrix<ScriptExpressionStates> matrix,
                                     ExceptionThrower<ExecutionException> exceptionThrower,
                                     ScriptElementExecutorFactory factory) {
 
         super(matrix, exceptionThrower, true);
 
-        registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
-        registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
-        registerTransducer(ExpressionStates.LOGICAL_EXPRESSION,
+        registerTransducer(ScriptExpressionStates.START, Transducer.illegalTransition());
+        registerTransducer(ScriptExpressionStates.FINISH, Transducer.autoTransition());
+        registerTransducer(ScriptExpressionStates.LOGICAL_EXPRESSION,
                 new ExecutorProgramElementTransducer(ScriptElement.LOGICAL_EXPRESSION, factory));
-        registerTransducer(ExpressionStates.NUMERIC_EXPRESSION,
+        registerTransducer(ScriptExpressionStates.NUMERIC_EXPRESSION,
                 new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory));
     }
 }

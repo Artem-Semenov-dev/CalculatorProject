@@ -10,6 +10,11 @@ import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
 
+/**
+ * {@code LogicalOperandMachine} is an implementation of {@link FiniteStateMachine}.
+ * {@code LogicalOperandMachine} is a one of machine that intended to choose between possible operands of logical expression.
+ */
+
 import static com.teamdev.bazascript.interpreter.logicaloperand.LogicalOperandStates.*;
 
 public final class LogicalOperandMachine extends FiniteStateMachine<LogicalOperandStates, ScriptContext, ExecutionException> {

@@ -1,6 +1,10 @@
 package com.teamdev.bazascript.interpreter.logicaloperand;
 
-public enum LogicalOperandStates {
+/**
+ * {@code LogicalOperandStates} is an enumeration of states that used in {@link LogicalOperandMachine}
+ */
+
+enum LogicalOperandStates {
     START,
     FINISH,
     RELATIONAL_EXPRESSION,

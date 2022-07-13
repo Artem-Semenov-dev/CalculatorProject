@@ -10,7 +10,13 @@ import com.teamdev.implementations.type.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReadBooleanVariableTransducer implements Transducer<ScriptContext, ExecutionException> {
+/**
+ * {@code ReadBooleanVariableTransducer} is an implementation of {@link Transducer}
+ * that produce a boolean variable to {@link ScriptContext} output
+ * for {@link LogicalOperandMachine}.
+ */
+
+class ReadBooleanVariableTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     private static final Logger logger = LoggerFactory.getLogger(ReadBooleanVariableTransducer.class);
 
