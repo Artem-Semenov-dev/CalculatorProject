@@ -8,10 +8,13 @@ import com.teamdev.calculator.math.MathElementResolverFactory;
 import com.teamdev.calculator.resolvers.DetachedShuntingYardResolver;
 import com.teamdev.calculator.resolvers.FunctionResolver;
 import com.teamdev.calculator.resolvers.NumberResolver;
+import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.datastructures.ShuntingYard;
 import com.teamdev.implementations.machines.expression.ExpressionMachine;
+import com.teamdev.implementations.operators.BinaryOperatorFactory;
+import com.teamdev.implementations.operators.DoubleBinaryOperatorFactory;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -25,10 +28,12 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
     MathElementResolverFactoryImpl() {
 
+        BinaryOperatorFactory doubleOperatorFactory = new DoubleBinaryOperatorFactory();
+
         resolvers.put(NUMBER, NumberResolver::new);
 
         resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolver<>
-                (ExpressionMachine.create(ShuntingYard::pushOperator,
+                (ExpressionMachine.create(ShuntingYard::pushOperator, doubleOperatorFactory,
                         new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this),
                         errorMessage -> {
                             throw new ResolvingException(errorMessage);

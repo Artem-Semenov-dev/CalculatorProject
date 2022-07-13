@@ -1,7 +1,6 @@
 package com.teamdev.implementations.operators;
 
 import com.teamdev.implementations.type.BooleanValue;
-import com.teamdev.implementations.type.DoubleValue;
 import com.teamdev.implementations.type.DoubleValueVisitor;
 import com.teamdev.implementations.type.Value;
 

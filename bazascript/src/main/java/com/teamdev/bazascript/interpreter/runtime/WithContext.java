@@ -1,6 +1,4 @@
-package com.teamdev.bazascript.interpreter.util;
-
-import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+package com.teamdev.bazascript.interpreter.runtime;
 
 /**
  * {@code WithContext} is a functional interface that can be used for
@@ -11,5 +9,5 @@ public interface WithContext {
 
     ScriptContext getScriptContext();
 
-    boolean isParseonly();
+    boolean isParseOnly();
 }

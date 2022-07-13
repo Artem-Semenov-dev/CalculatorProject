@@ -33,7 +33,7 @@ public class DetachedShuntingYardResolver<I> implements MathElementResolver {
 
         if (machine.run(inputChain, nestingShuntingYardStack)) {
 
-            return Optional.of(nestingShuntingYardStack.peekResult());
+            return Optional.of(nestingShuntingYardStack.popResult());
         }
 
         return Optional.empty();

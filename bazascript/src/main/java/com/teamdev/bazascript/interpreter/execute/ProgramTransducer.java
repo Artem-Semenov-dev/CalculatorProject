@@ -27,13 +27,6 @@ public class ProgramTransducer implements Transducer<ScriptContext, ExecutionExc
 
         Preconditions.checkNotNull(inputChain, outputChain);
 
-        if (logger.isInfoEnabled()) {
-
-            logger.info("Working with input chain -> {}", inputChain.toString());
-
-            logger.info("OutputChain is null : {}", (outputChain));
-        }
-
         return executor.execute(inputChain, outputChain);
     }
 }

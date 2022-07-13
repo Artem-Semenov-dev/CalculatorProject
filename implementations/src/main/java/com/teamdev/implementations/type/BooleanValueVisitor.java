@@ -26,4 +26,15 @@ public class BooleanValueVisitor implements ValueVisitor{
 
         return booleanValueVisitor.getBooleanValue();
     }
+
+    public static Boolean isBoolean(Value value){
+
+        try {
+            read(value);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        return true;
+    }
 }

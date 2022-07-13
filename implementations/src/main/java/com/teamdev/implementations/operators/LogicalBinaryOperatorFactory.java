@@ -15,10 +15,10 @@ public class LogicalBinaryOperatorFactory implements BinaryOperatorFactory{
 
     public LogicalBinaryOperatorFactory() {
 
-        logicalOperators.put("&&", new LogicalBinaryOperator(AbstractBinaryOperator.Priority.HIGH,
+        logicalOperators.put("&&", new LogicalBinaryOperator(AbstractBinaryOperator.Priority.MEDIUM,
                 (left, right) -> left && right));
 
-        logicalOperators.put("||", new LogicalBinaryOperator(AbstractBinaryOperator.Priority.MEDIUM,
+        logicalOperators.put("||", new LogicalBinaryOperator(AbstractBinaryOperator.Priority.LOW,
                 (left, right) -> left || right));
     }
 

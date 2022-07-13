@@ -21,9 +21,9 @@ class ExpressionCalculationTest extends AbstractCalculatorTest {
 
     static Stream<Arguments> negativeCases(){
         return Stream.of(
-                of("1**2", 2, "Double minus action test has failed"),
-                of("1-+2", 2, "Several operators test has failed"),
-                of("2//2", 2, "Double division action test has failed"),
+                of("1**2", 1, "Double minus action test has failed"),
+                of("1-+2", 1, "Several operators test has failed"),
+                of("2//2", 1, "Double division action test has failed"),
                 of("2.22.2/5", 4, "Error in number test has failed")
         );
     }

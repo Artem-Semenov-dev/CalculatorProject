@@ -174,7 +174,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
     public boolean run(CharSequenceReader inputChain, O outputChain) throws E {
 
-        int startPosition = inputChain.position();
+//        int startPosition = inputChain.position();
 
         if (logger.isInfoEnabled()) {
 
@@ -201,7 +201,12 @@ public class FiniteStateMachine<S, O, E extends Exception> {
                         logger.info("Rejected temporary state -> {}", currentState);
                     }
 
-                    inputChain.setPosition(startPosition);
+                    inputChain.restorePosition();
+
+                    if (logger.isInfoEnabled()) {
+
+                        logger.info("Restore position to : {} on index {}", currentState, inputChain.position());
+                    }
 
                     return false;
                 }
@@ -226,6 +231,15 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
             Transducer<O, E> transducer = transducers.get(potentialState);
 
+            if (matrix.isTemporaryState(potentialState)) {
+                inputChain.savePosition();
+
+                if (logger.isInfoEnabled()) {
+
+                    logger.info("Save position on : {} on index {}", potentialState, inputChain.position());
+                }
+            }
+
             if (transducer.doTransition(inputChain, outputChain)) {
 
                 if (logger.isInfoEnabled()) {
@@ -234,6 +248,16 @@ public class FiniteStateMachine<S, O, E extends Exception> {
                 }
 
                 return Optional.of(potentialState);
+            }
+
+            if (matrix.isTemporaryState(potentialState)) {
+
+                inputChain.restorePosition();
+
+                if (logger.isInfoEnabled()) {
+
+                    logger.info("RESTORE POSITION : {} on index {}", potentialState, inputChain.position());
+                }
             }
         }
         return Optional.empty();

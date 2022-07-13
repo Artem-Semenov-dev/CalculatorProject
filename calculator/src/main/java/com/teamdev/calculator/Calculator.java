@@ -52,7 +52,10 @@ public class Calculator {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(DoubleValueVisitor.read(outputChain.peekResult()));
+        Double result = DoubleValueVisitor.read(outputChain.popResult());
+
+        return new CalculationResult(result);
+
     }
 
     private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {

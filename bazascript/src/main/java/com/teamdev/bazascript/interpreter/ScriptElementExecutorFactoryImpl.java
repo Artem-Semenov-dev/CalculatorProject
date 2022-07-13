@@ -2,8 +2,10 @@ package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.executors.*;
+import com.teamdev.bazascript.interpreter.expression.ScriptExpressionMachine;
 import com.teamdev.bazascript.interpreter.initvar.InitVarContext;
 import com.teamdev.bazascript.interpreter.initvar.InitVarMachine;
+import com.teamdev.bazascript.interpreter.logicaloperand.LogicalOperandMachine;
 import com.teamdev.bazascript.interpreter.program.ProgramMachine;
 import com.teamdev.bazascript.interpreter.util.*;
 import com.teamdev.bazascript.interpreter.whileoperator.WhileOperatorExecutor;
@@ -13,6 +15,9 @@ import com.teamdev.implementations.machines.brackets.BracketsMachine;
 import com.teamdev.implementations.machines.expression.ExpressionMachine;
 import com.teamdev.implementations.machines.function.FunctionMachine;
 import com.teamdev.implementations.machines.number.NumberStateMachine;
+import com.teamdev.implementations.operators.BinaryOperatorFactory;
+import com.teamdev.implementations.operators.DoubleBinaryOperatorFactory;
+import com.teamdev.implementations.operators.LogicalBinaryOperatorFactory;
 import com.teamdev.implementations.type.Value;
 
 import java.util.EnumMap;
@@ -33,7 +38,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
             if (execute.isPresent()) {
 
-                if (output.isParseonly()) {
+                if (output.isParseOnly()) {
                     return true;
                 }
 
@@ -45,38 +50,61 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
             return false;
         });
 
+        BinaryOperatorFactory doubleOperatorFactory = new DoubleBinaryOperatorFactory();
+
         executors.put(ScriptElement.NUMERIC_EXPRESSION, () ->
+
                 new DetachedShuntingYardExecutor<>(ExpressionMachine.create(
                         (scriptContext, abstractBinaryOperator) -> {
-                            if (!scriptContext.isParseonly()) {
+                            if (!scriptContext.isParseOnly()) {
                                 scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                             }
-                        },
+                        }, doubleOperatorFactory,
                         new ExecutorProgramElementTransducer(ScriptElement.OPERAND, this).named("Operand"),
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         })));
 
+        BinaryOperatorFactory logicalOperatorFactory = new LogicalBinaryOperatorFactory();
+
+        executors.put(ScriptElement.LOGICAL_EXPRESSION, () ->
+                new NoSpecialActionExecutor<>(
+                        ExpressionMachine.create(
+                                (scriptContext, abstractBinaryOperator) -> {
+                                    if (!scriptContext.isParseOnly()) {
+                                        scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
+                                    }
+                                }, logicalOperatorFactory,
+                                new ExecutorProgramElementTransducer(ScriptElement.LOGICAL_EXPRESSION_OPERAND, this)
+                                        .named("Operand in logical expression"),
+                                errorMessage -> {
+                                    throw new ExecutionException(errorMessage);
+                                }
+                        )));
+
+        executors.put(ScriptElement.LOGICAL_EXPRESSION_OPERAND, () -> new NoSpecialActionExecutor<>(
+                LogicalOperandMachine.create(this, errorMessage -> {
+                    throw new ExecutionException(errorMessage);
+                })
+        ));
 
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
 
         executors.put(ScriptElement.EXPRESSION, () -> new NoSpecialActionExecutor<>(
-                FiniteStateMachine.oneOfMachine(
-                        errorMessage -> {
-                            throw new ExecutionException(errorMessage);
-                        },
-                        new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, this).named("Relational expression"),
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("Numeric expression"))));
+                ScriptExpressionMachine.create(this, errorMessage -> {
+                    throw new ExecutionException(errorMessage);
+                })
+        ));
 
         executors.put(ScriptElement.OPERAND, () -> new NoSpecialActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this).named("Number"),
-                        new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this).named("Brackets"),
                         new ExecutorProgramElementTransducer(ScriptElement.FUNCTION, this).named("Function"),
+                        new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this).named("Brackets"),
+                        new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this).named("Number"),
                         new ExecutorProgramElementTransducer(ScriptElement.READ_VARIABLE, this).named("Read variable"))));
 
         executors.put(ScriptElement.BRACKETS, () -> new NoSpecialActionExecutor<>(
@@ -119,7 +147,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
                 if (context.hasVariable(variableName.toString())) {
 
-                    if (context.isParseonly()) {
+                    if (context.isParseOnly()) {
                         return true;
                     }
 

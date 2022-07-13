@@ -2,9 +2,9 @@ package com.teamdev.implementations.operators;
 
 import com.teamdev.implementations.type.BooleanValue;
 import com.teamdev.implementations.type.BooleanValueVisitor;
-import com.teamdev.implementations.type.DoubleValueVisitor;
 import com.teamdev.implementations.type.Value;
 
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 class LogicalBinaryOperator extends AbstractBinaryOperator{
