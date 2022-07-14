@@ -15,6 +15,11 @@ public class BooleanValueVisitor implements ValueVisitor{
         booleanValue = value.getBooleanValue();
     }
 
+    @Override
+    public void visit(StringValue value) {
+        throw new IllegalArgumentException("Type mismatch: expected boolean but String provided");
+    }
+
     public boolean getBooleanValue(){
         return booleanValue;
     }
