@@ -11,7 +11,7 @@ import java.util.Deque;
 
 /**
  * {@code ShuntingYardStack} is a data storing class for realization of concept of
- *  * <a href = "https://en.wikipedia.org/wiki/Shunting_yard_algorithm"> Shunting yard algorithm </a>
+ * * <a href = "https://en.wikipedia.org/wiki/Shunting_yard_algorithm"> Shunting yard algorithm </a>
  */
 
 public class ShuntingYard {
@@ -65,6 +65,11 @@ public class ShuntingYard {
         Value result = operator.apply(leftOperand, rightOperand);
 
         operandStack.push(result);
+    }
+
+    public Value peekOperand() {
+
+        return operandStack.peek();
     }
 
 }

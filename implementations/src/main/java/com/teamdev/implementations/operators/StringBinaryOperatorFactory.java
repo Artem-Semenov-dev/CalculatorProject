@@ -9,15 +9,15 @@ import java.util.Optional;
 
 import static com.teamdev.implementations.operators.AbstractBinaryOperator.Priority;
 
-class StringBinaryOperatorFactory implements BinaryOperatorFactory{
+public class StringBinaryOperatorFactory implements BinaryOperatorFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(StringBinaryOperatorFactory.class);
 
     private final Map<String, AbstractBinaryOperator> stringOperators = new HashMap<>();
 
-    StringBinaryOperatorFactory() {
+    public StringBinaryOperatorFactory() {
 
-        stringOperators.put("+", new StringBinaryOperator(Priority.MEDIUM, (left, right) -> left+right));
+        stringOperators.put("+", new StringBinaryOperator(Priority.MEDIUM, (left, right) -> left + right));
     }
 
     @Override

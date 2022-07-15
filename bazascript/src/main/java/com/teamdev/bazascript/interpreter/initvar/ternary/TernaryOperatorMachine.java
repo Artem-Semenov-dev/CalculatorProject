@@ -23,7 +23,6 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
     private TernaryOperatorMachine(TransitionMatrix<TernaryStates> matrix, ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         super(matrix, exceptionThrower, true);
 
-
         registerTransducer(START, Transducer.illegalTransition());
 
         registerTransducer(FINISH, Transducer.<TernaryOperatorContext, ExecutionException>autoTransition()

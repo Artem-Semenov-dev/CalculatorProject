@@ -1,6 +1,6 @@
 package com.teamdev.implementations.type;
 
-public class StringValue implements Value{
+public class StringValue implements Value {
 
     private final String value;
 
@@ -14,8 +14,12 @@ public class StringValue implements Value{
         visitor.visit(this);
     }
 
-    public String getStringValue() {
+    String getStringValue() {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return getStringValue();
+    }
 }

@@ -40,13 +40,13 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         Map<Object, Transducer<O, E>> registers = new LinkedHashMap<>();
 
-        Object startState = new Object(){
+        Object startState = new Object() {
             @Override
             public String toString() {
                 return "START";
             }
         };
-        Object finishState = new Object(){
+        Object finishState = new Object() {
             @Override
             public String toString() {
                 return "FINISH";
@@ -59,7 +59,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         for (Transducer<O, E> transducer : transducers) {
 
-            Object transducerState = new Object(){
+            Object transducerState = new Object() {
                 @Override
                 public String toString() {
                     return transducer.toString();
@@ -89,18 +89,18 @@ public class FiniteStateMachine<S, O, E extends Exception> {
     public static <O, E extends Exception>
     FiniteStateMachine<Object, O, E> chainMachine(ExceptionThrower<E> exceptionThrower,
                                                   List<Transducer<O, E>> temporaryTransducers,
-                                                  List<Transducer<O, E>> transducers){
+                                                  List<Transducer<O, E>> transducers) {
 
-        Map <Object, Transducer<O, E>> registers =  new LinkedHashMap<>() ;
+        Map<Object, Transducer<O, E>> registers = new LinkedHashMap<>();
 
 
-        Object startState = new Object(){
+        Object startState = new Object() {
             @Override
             public String toString() {
                 return "START";
             }
         };
-        Object finishState = new Object(){
+        Object finishState = new Object() {
             @Override
             public String toString() {
                 return "FINISH";
@@ -115,30 +115,29 @@ public class FiniteStateMachine<S, O, E extends Exception> {
         int i = 0;
         long count = transducers.size();
         Object temp = new Object();
-        for (Transducer<O, E> transducer: transducers){
+        for (Transducer<O, E> transducer : transducers) {
 
-            Object transducerState = new Object(){
+            Object transducerState = new Object() {
                 @Override
                 public String toString() {
                     return transducer.toString();
                 }
             };
 
-            if (i == 0){
+            if (i == 0) {
                 builder.allowTransition(startState, transducerState);
 
-            }
-            else {
+            } else {
                 builder.allowTransition(temp, transducerState);
 
             }
             temp = transducerState;
             i++;
-            if( i == count ){
+            if (i == count) {
                 builder.allowTransition(transducerState, finishState);
             }
 
-            if (temporaryTransducers.contains(transducer)){
+            if (temporaryTransducers.contains(transducer)) {
                 builder.withTemporaryState(transducerState);
             }
             registers.put(transducerState, transducer);
@@ -146,7 +145,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
         FiniteStateMachine<Object, O, E> objectOFiniteStateMachine = new FiniteStateMachine<>(builder.build(), exceptionThrower);
 
-        for (Map.Entry<Object, Transducer<O, E>> entry : registers.entrySet()){
+        for (Map.Entry<Object, Transducer<O, E>> entry : registers.entrySet()) {
             objectOFiniteStateMachine.registerTransducer(entry.getKey(), entry.getValue());
         }
         objectOFiniteStateMachine.registerTransducer(startState, Transducer.illegalTransition());
@@ -156,16 +155,12 @@ public class FiniteStateMachine<S, O, E extends Exception> {
     }
 
 
-
     public FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> exceptionThrower, boolean allowedSkippingWhitespaces) {
 
         this.matrix = Preconditions.checkNotNull(matrix);
         this.exceptionThrower = exceptionThrower;
         this.allowedSkippingWhitespaces = allowedSkippingWhitespaces;
     }
-
-//    public FiniteStateMachine() {
-//    }
 
     protected FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> eExceptionThrower) {
 
@@ -189,11 +184,6 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
             if (nextState.isEmpty()) {
 
-                if (matrix.getStartState().equals(currentState)) {
-
-                    return false;
-                }
-
                 if (matrix.isTemporaryState(currentState)) {
 
                     if (logger.isInfoEnabled()) {
@@ -202,6 +192,11 @@ public class FiniteStateMachine<S, O, E extends Exception> {
                     }
 
                     inputChain.setPosition(startPosition);
+
+                    return false;
+                }
+
+                if (matrix.getStartState().equals(currentState)) {
 
                     return false;
                 }

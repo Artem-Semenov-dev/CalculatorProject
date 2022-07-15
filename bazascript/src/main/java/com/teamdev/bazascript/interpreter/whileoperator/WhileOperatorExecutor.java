@@ -48,16 +48,12 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
 
                     ScriptElementExecutor executor = factory.create(ScriptElement.PROGRAM);
 
-//                    ProgramMachine programMachine = ProgramMachine.create(factory, errorMessage -> {
-//                        throw new ExecutionException(errorMessage);
-//                    });
-
                     return executor.execute(inputChain1, outputChain.getScriptContext());
                 };
 
         List<Transducer<WhileOperatorContext, ExecutionException>> transducers = List.of(keyword.named("While keyword"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('(').named("("),
-                relationTransducer.named("Relational expression"),
+                relationTransducer.named("Relational expression in while loop"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar(')').named(")")
                         .and((inputChain13, outputChain) -> {
 

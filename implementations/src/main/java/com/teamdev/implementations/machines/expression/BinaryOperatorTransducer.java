@@ -3,9 +3,8 @@ package com.teamdev.implementations.machines.expression;
 import com.google.common.base.Preconditions;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
-import com.teamdev.implementations.operators.BinaryOperatorFactory;
-import com.teamdev.implementations.operators.DoubleBinaryOperatorFactory;
 import com.teamdev.implementations.operators.AbstractBinaryOperator;
+import com.teamdev.implementations.operators.BinaryOperatorFactory;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -46,7 +45,7 @@ public class BinaryOperatorTransducer<O, E extends Exception> implements Transdu
 
             return true;
         }
-        if(inputChain.previous() == '>' || inputChain.previous() == '<'){
+        if (inputChain.isOperator(inputChain.previous())) {
             inputChain.decrementPosition();
         }
         return false;

@@ -1,10 +1,10 @@
 package com.teamdev.implementations.machines.function;
 
 import com.google.common.base.Preconditions;
-import com.teamdev.fsm.ExceptionThrower;
-import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.fsm.CharSequenceReader;
+import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.Transducer;
+import com.teamdev.fsm.identifier.IdentifierMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +35,11 @@ public class FunctionNameTransducer<O, E extends Exception> implements Transduce
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        IdentifierMachine<E> identifierMachine = IdentifierMachine.create(exceptionThrower);
+        IdentifierMachine<E> identifierMachine = IdentifierMachine.create(exceptionThrower, Character::isLetter);
 
-        if (identifierMachine.run(inputChain, stringBuilder)){
+        if (identifierMachine.run(inputChain, stringBuilder)) {
 
-            if (logger.isInfoEnabled()){
+            if (logger.isInfoEnabled()) {
 
                 logger.info("Function name - {}", stringBuilder);
             }

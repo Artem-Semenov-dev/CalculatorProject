@@ -12,6 +12,7 @@ import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.datastructures.ShuntingYard;
 import com.teamdev.implementations.machines.expression.ExpressionMachine;
+import com.teamdev.implementations.operators.DoubleBinaryOperatorFactory;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -25,10 +26,12 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
     MathElementResolverFactoryImpl() {
 
+        DoubleBinaryOperatorFactory doubleBinaryOperatorFactory = new DoubleBinaryOperatorFactory();
+
         resolvers.put(NUMBER, NumberResolver::new);
 
         resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolver<>
-                (ExpressionMachine.create(ShuntingYard::pushOperator,
+                (ExpressionMachine.create(ShuntingYard::pushOperator, doubleBinaryOperatorFactory,
                         new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this),
                         errorMessage -> {
                             throw new ResolvingException(errorMessage);
@@ -42,11 +45,6 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
                         new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this).named("Number"),
                         new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this).named("Brackets"),
                         new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this).named("Function"))));
-
-//        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(
-//                new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this), errorMessage -> {
-//                    throw new ResolvingException(errorMessage);
-//                })));
 
         resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(
                 FiniteStateMachine.chainMachine(errorMessage -> {

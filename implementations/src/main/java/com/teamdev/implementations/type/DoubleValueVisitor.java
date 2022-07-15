@@ -1,6 +1,6 @@
 package com.teamdev.implementations.type;
 
-public class DoubleValueVisitor implements ValueVisitor{
+public class DoubleValueVisitor implements ValueVisitor {
     private double doubleValue;
 
     @Override
@@ -20,15 +20,26 @@ public class DoubleValueVisitor implements ValueVisitor{
         throw new IllegalArgumentException("Type mismatch: expected double but String provided");
     }
 
-    public double getDoubleValue() {
+    private double getDoubleValue() {
         return doubleValue;
     }
 
-    public static Double read(Value value){
+    public static Double read(Value value) {
         DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
 
         value.accept(doubleVisitor);
 
         return doubleVisitor.getDoubleValue();
+    }
+
+    public static Boolean isDouble(Value value) {
+
+        try {
+            read(value);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        return true;
     }
 }
