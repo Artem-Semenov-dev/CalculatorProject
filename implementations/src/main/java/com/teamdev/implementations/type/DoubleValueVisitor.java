@@ -1,23 +1,43 @@
 package com.teamdev.implementations.type;
 
+import java.util.Optional;
+
 public class DoubleValueVisitor implements ValueVisitor {
-    private double doubleValue;
+    private Double doubleValue;
+
+    private boolean isDouble;
+
+    private final boolean throwExceptionPermission;
+
+    private DoubleValueVisitor(boolean throwExceptionPermission) {
+        this.throwExceptionPermission = throwExceptionPermission;
+    }
 
     @Override
     public void visit(DoubleValue value) {
 
         doubleValue = value.getValue();
+
+        isDouble = true;
     }
 
     @Override
     public void visit(BooleanValue value) {
 
-        throw new IllegalArgumentException("Type mismatch: expected double but boolean provided");
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected double but boolean provided");
+        }
+
+        isDouble = false;
     }
 
     @Override
     public void visit(StringValue value) {
-        throw new IllegalArgumentException("Type mismatch: expected double but String provided");
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected double but String provided");
+        }
+
+        isDouble = false;
     }
 
     private double getDoubleValue() {
@@ -25,7 +45,7 @@ public class DoubleValueVisitor implements ValueVisitor {
     }
 
     public static Double read(Value value) {
-        DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
+        DoubleValueVisitor doubleVisitor = new DoubleValueVisitor(true);
 
         value.accept(doubleVisitor);
 
@@ -34,12 +54,11 @@ public class DoubleValueVisitor implements ValueVisitor {
 
     public static Boolean isDouble(Value value) {
 
-        try {
-            read(value);
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        DoubleValueVisitor visitor = new DoubleValueVisitor(false);
 
-        return true;
+        value.accept(visitor);
+
+        return visitor.isDouble;
+
     }
 }
