@@ -9,6 +9,11 @@ import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 
+/**
+ * {@code StringOperandTransducer} is an implementation of {@link Transducer} that create and run
+ * one of operand machine for possible operands in string expression.
+ */
+
 public class StringOperandTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;

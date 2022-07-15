@@ -1,5 +1,10 @@
 package com.teamdev.implementations.type;
 
+/**
+ * {@code StringValueVisitor} is an implementation of {@link ValueVisitor} that
+ * implement opportunity of read and use {@link StringValue}.
+ */
+
 public class StringValueVisitor implements ValueVisitor{
 
     private String stringValue;
@@ -19,7 +24,7 @@ public class StringValueVisitor implements ValueVisitor{
         stringValue = value.getStringValue();
     }
 
-    public String getStringValue() {
+    private String getStringValue() {
         return stringValue;
     }
 

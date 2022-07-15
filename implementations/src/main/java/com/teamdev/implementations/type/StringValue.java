@@ -1,5 +1,9 @@
 package com.teamdev.implementations.type;
 
+/**
+ * {@code String Value} is an implementation of {@link Value} that define string type to BazaScript.
+ */
+
 public class StringValue implements Value {
 
     private final String value;

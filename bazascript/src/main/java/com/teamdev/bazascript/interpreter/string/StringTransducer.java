@@ -8,7 +8,12 @@ import com.teamdev.fsm.Transducer;
 
 import java.util.List;
 
-public class StringTransducer implements Transducer<ScriptContext, ExecutionException> {
+/**
+ * {@code StringTransducer} ia an implementation of {@link Transducer} that create and string machine
+ * that parse input chain in case of string exist in it.
+ */
+
+class StringTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {

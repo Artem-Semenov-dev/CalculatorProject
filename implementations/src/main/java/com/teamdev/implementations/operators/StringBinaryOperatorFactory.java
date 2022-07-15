@@ -9,6 +9,11 @@ import java.util.Optional;
 
 import static com.teamdev.implementations.operators.AbstractBinaryOperator.Priority;
 
+/**
+ * {@code StringBinaryOperatorFactory} is an implementation of {@link BinaryOperatorFactory}
+ * that create an {@link StringBinaryOperator}.
+ */
+
 public class StringBinaryOperatorFactory implements BinaryOperatorFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(StringBinaryOperatorFactory.class);

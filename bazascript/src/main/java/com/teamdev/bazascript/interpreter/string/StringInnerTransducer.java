@@ -7,7 +7,11 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.StringValue;
 
-public class StringInnerTransducer implements Transducer<ScriptContext, ExecutionException> {
+/**
+ * {@code StringInnerTransducer} is an implementation of {@link Transducer} that produce string value.
+ */
+
+class StringInnerTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
