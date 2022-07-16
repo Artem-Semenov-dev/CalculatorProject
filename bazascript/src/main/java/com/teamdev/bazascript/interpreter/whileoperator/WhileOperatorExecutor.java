@@ -43,21 +43,11 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                 },
                         factory, ScriptElement.RELATIONAL_EXPRESSION);
 
-        Transducer<WhileOperatorContext, ExecutionException> programTransducer =
-                (inputChain1, outputChain) -> {
-
-                    ScriptElementExecutor executor = factory.create(ScriptElement.PROGRAM);
-
-//                    ProgramMachine programMachine = ProgramMachine.create(factory, errorMessage -> {
-//                        throw new ExecutionException(errorMessage);
-//                    });
-
-                    return executor.execute(inputChain1, outputChain.getScriptContext());
-                };
+        Transducer<WhileOperatorContext, ExecutionException> statementListTransducer = new StatementListTransducer<>(factory);
 
         List<Transducer<WhileOperatorContext, ExecutionException>> transducers = List.of(keyword.named("While keyword"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('(').named("("),
-                relationTransducer.named("Relational expression"),
+                relationTransducer.named("Condition in while loop"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar(')').named(")")
                         .and((inputChain13, outputChain) -> {
 
@@ -69,7 +59,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
                             return true;
                         }).named("Check condition of while loop"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('{').named("Opening brace"),
-                programTransducer.named("Program state"),
+                statementListTransducer.named("Statement list"),
                 Transducer.<WhileOperatorContext, ExecutionException>checkAndPassChar('}')
                         .and((inputChain12, outputChain) -> {
 
