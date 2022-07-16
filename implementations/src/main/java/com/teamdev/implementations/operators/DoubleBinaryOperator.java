@@ -10,7 +10,7 @@ public class DoubleBinaryOperator extends AbstractBinaryOperator{
 
     private final BiFunction<Double, Double, Double> origin;
 
-    public DoubleBinaryOperator(Priority priority, BiFunction<Double, Double, Double> origin) {
+    DoubleBinaryOperator(Priority priority, BiFunction<Double, Double, Double> origin) {
         super(priority);
         this.origin = origin;
     }
@@ -18,13 +18,7 @@ public class DoubleBinaryOperator extends AbstractBinaryOperator{
     @Override
     public Value apply(Value left, Value right) {
 
-//        DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
-//
-//        left.accept(doubleVisitor);
-
         double leftOperand = DoubleValueVisitor.read(left);
-
-//        right.accept(doubleVisitor);
 
         double rightOperand = DoubleValueVisitor.read(right);
 

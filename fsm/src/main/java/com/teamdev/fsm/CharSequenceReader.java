@@ -3,7 +3,9 @@ package com.teamdev.fsm;
 import com.google.common.base.Preconditions;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@code CharSequenceReader} is a class which can be used to
@@ -16,7 +18,7 @@ public final class CharSequenceReader {
 
     private int readingPosition;
 
-    private int savedPosition = -1;
+    private final int savedPosition = -1;
 
     public CharSequenceReader(String source) {
         this.source = Preconditions.checkNotNull(source).toCharArray();
@@ -26,13 +28,13 @@ public final class CharSequenceReader {
         return source[readingPosition];
     }
 
-    public String readOperator(){
+    public String readOperator(Collection<Character> operators){
 
         StringBuilder operator = new StringBuilder();
 
         int startPosition = position();
 
-        while(canRead() && isOperator(read())){
+        while(canRead() && operators.contains(read())){
             operator.append(read());
             incrementPosition();
         }
@@ -41,13 +43,6 @@ public final class CharSequenceReader {
             decrementPosition();
 
         return operator.toString();
-    }
-
-    private static boolean isOperator(char sign){
-
-        List<Character> operators = List.of('+', '-', '>', '<', '=', '%', '^', '*', '/');
-
-        return operators.contains(sign);
     }
 
     public void incrementPosition() {

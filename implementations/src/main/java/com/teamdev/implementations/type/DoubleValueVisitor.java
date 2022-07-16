@@ -15,7 +15,7 @@ public class DoubleValueVisitor implements ValueVisitor{
         throw new IllegalArgumentException("Type mismatch: expected double but boolean provided");
     }
 
-    public double getDoubleValue() {
+    private double getDoubleValue() {
         return doubleValue;
     }
 

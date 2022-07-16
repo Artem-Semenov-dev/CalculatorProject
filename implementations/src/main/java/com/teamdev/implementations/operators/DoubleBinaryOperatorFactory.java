@@ -3,9 +3,7 @@ package com.teamdev.implementations.operators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * {@code BinaryOperatorFactory} is a realization of factory pattern
@@ -38,5 +36,11 @@ public class DoubleBinaryOperatorFactory implements BinaryOperatorFactory{
         }
 
         return Optional.ofNullable(binaryOperators.get(operatorSign));
+    }
+
+    @Override
+    public Set<Character> getOperators() {
+
+        return StringSetConverter.toCharacterSet(binaryOperators);
     }
 }

@@ -15,7 +15,7 @@ public class BooleanValueVisitor implements ValueVisitor{
         booleanValue = value.getBooleanValue();
     }
 
-    public boolean getBooleanValue(){
+    private boolean getBooleanValue(){
         return booleanValue;
     }
 

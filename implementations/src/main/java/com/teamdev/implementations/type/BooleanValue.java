@@ -13,7 +13,7 @@ public class BooleanValue implements Value{
         visitor.visit(this);
     }
 
-    public boolean getBooleanValue() {
+    boolean getBooleanValue() {
         return value;
     }
 

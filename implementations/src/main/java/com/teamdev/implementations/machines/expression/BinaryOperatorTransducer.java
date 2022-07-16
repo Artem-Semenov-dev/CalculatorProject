@@ -36,7 +36,7 @@ public class BinaryOperatorTransducer<O, E extends Exception> implements Transdu
             return false;
         }
 
-        Optional<AbstractBinaryOperator> operator = factory.create(inputChain.readOperator());
+        Optional<AbstractBinaryOperator> operator = factory.create(inputChain.readOperator(factory.getOperators()));
 
         if (operator.isPresent()) {
 
@@ -46,9 +46,7 @@ public class BinaryOperatorTransducer<O, E extends Exception> implements Transdu
 
             return true;
         }
-        if(inputChain.previous() == '>' || inputChain.previous() == '<'){
-            inputChain.decrementPosition();
-        }
+
         return false;
     }
 }
