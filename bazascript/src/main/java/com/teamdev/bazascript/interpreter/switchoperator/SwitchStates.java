@@ -1,6 +1,10 @@
 package com.teamdev.bazascript.interpreter.switchoperator;
 
-public enum SwitchStates {
+/**
+ * {@code SwitchStates} is an enumeration of states that used in {@link SwitchOperatorMachine}.
+ */
+
+enum SwitchStates {
 
     START,
     FINISH,

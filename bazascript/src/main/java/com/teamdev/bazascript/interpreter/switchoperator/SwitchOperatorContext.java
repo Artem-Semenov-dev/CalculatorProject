@@ -6,6 +6,11 @@ import com.teamdev.implementations.type.Value;
 
 import java.util.Objects;
 
+/**
+ * {@code SwitchOperatorContext} is an implementation of {@link WithContext}
+ * that used like an output chain for {@link SwitchOperatorMachine}.
+ */
+
 public class SwitchOperatorContext implements WithContext {
 
     private final ScriptContext scriptContext;

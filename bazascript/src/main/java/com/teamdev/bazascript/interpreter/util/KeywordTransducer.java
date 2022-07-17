@@ -6,6 +6,12 @@ import com.teamdev.fsm.Transducer;
 
 import java.util.List;
 
+/**
+ * {@code KeywordTransducer} is an implementation of {@link Transducer}
+ * that used for read keywords.
+ * @param <O> is an output chain that implements {@link WithContext}
+ */
+
 public class KeywordTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
 
     private final String keyword;

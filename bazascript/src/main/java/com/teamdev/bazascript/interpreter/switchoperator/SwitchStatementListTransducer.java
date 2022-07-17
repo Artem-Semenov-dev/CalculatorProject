@@ -9,7 +9,12 @@ import com.teamdev.fsm.Transducer;
 
 import java.util.List;
 
-public class SwitchStatementListTransducer implements Transducer<SwitchOperatorContext, ExecutionException> {
+/**
+ * {@code SwitchStatementListTransducer} is an implementation of {@link Transducer}
+ * that create and run machine for parsing statement list inside braces for switch operator case.
+ */
+
+class SwitchStatementListTransducer implements Transducer<SwitchOperatorContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 

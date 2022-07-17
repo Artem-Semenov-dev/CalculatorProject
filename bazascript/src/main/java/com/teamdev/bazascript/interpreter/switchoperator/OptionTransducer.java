@@ -7,7 +7,13 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
-public class OptionTransducer implements Transducer<SwitchOperatorContext, ExecutionException> {
+/**
+ * {@code OptionTransducer} is an implementation of {@link Transducer}
+ * that create and execute {@link ScriptElementExecutor} for Expressions.
+ * {@code OptionTransducer} compare result of expression to compared value of switch operator.
+ */
+
+class OptionTransducer implements Transducer<SwitchOperatorContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 

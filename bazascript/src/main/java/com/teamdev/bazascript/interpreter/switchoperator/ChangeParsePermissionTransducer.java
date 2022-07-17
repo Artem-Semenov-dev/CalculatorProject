@@ -5,7 +5,13 @@ import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
-public class ChangeParsePermissionTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
+/**
+ * {@code ChangeParsePermissionTransducer} is an implementation of {@link Transducer}
+ * that change parse permission in ScriptContext through {@link WithContext} interface.
+ * @param <O> output chain that implements {@link WithContext}
+ */
+
+class ChangeParsePermissionTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
 
     private final Boolean permission;
 

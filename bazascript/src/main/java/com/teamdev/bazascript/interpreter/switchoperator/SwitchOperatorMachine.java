@@ -10,6 +10,12 @@ import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.switchoperator.SwitchStates.*;
 
+/**
+ * {@code SwitchOperatorMachine} implementation of {@link FiniteStateMachine} which is intended to process
+ * switch operator in BazaScript language.
+ * Compared value of witch operator may be a variable, but case option may be an expression.
+ */
+
 public final class SwitchOperatorMachine extends FiniteStateMachine<SwitchStates, SwitchOperatorContext, ExecutionException> {
 
     private SwitchOperatorMachine(TransitionMatrix<SwitchStates> matrix, ExceptionThrower<ExecutionException> exceptionThrower,

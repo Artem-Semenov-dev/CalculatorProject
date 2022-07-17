@@ -8,7 +8,12 @@ import com.teamdev.fsm.Transducer;
 
 import java.util.List;
 
-public class SwitchVariableTransducer implements Transducer<SwitchOperatorContext, ExecutionException> {
+/**
+ * {@code SwitchVariableTransducer} is an implementation of {@link Transducer}
+ * that used for read variable inside brackets as compared value for switch operator.
+ */
+
+class SwitchVariableTransducer implements Transducer<SwitchOperatorContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
