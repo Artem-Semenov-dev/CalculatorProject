@@ -31,7 +31,7 @@ class SwitchStatementListTransducer implements Transducer<SwitchOperatorContext,
                 },
                 List.of(),
                 List.of(Transducer.checkAndPassChar('{'),
-                        new StatementListTransducer<>(factory),
+                        new StatementListTransducer<SwitchOperatorContext>(factory).named("Statement list inside case"),
                         Transducer.checkAndPassChar('}'),
                         new ChangeParsePermissionTransducer<>(outputChain.isCaseExecuted())
                 ));
