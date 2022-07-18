@@ -1,6 +1,7 @@
 package com.teamdev.calculator.resolvers;
 
 import com.teamdev.calculator.fsm.calculator.DetachedShuntingYardTransducer;
+import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.machines.function.FunctionFactory;
 import com.teamdev.calculator.math.MathElement;
 import com.teamdev.calculator.math.MathElementResolver;
@@ -35,7 +36,10 @@ public class FunctionResolver implements MathElementResolver {
         FunctionHolder holder = new FunctionHolder();
 
         var functionMachine = FunctionMachine.create(new DetachedShuntingYardTransducer<>(
-                        MathElement.EXPRESSION, FunctionHolder::setArgument, elementResolverFactory), FunctionHolder::setFunctionName,
+                        MathElement.EXPRESSION, FunctionHolder::setArgument, elementResolverFactory),
+                Transducer.checkAndPassChar('('),
+                Transducer.checkAndPassChar(')'),
+                FunctionHolder::setFunctionName,
                 errorMessage -> {throw new ResolvingException(errorMessage);});
 
         if (functionMachine.run(inputChain, holder)) {

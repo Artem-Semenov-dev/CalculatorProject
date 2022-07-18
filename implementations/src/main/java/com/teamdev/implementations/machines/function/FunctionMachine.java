@@ -14,6 +14,8 @@ import static com.teamdev.implementations.machines.function.FunctionStates.*;
 public final class FunctionMachine<O, E extends Exception> extends FiniteStateMachine<FunctionStates, O, E> {
 
     public static <O, E extends Exception> FunctionMachine<O, E> create(Transducer<O, E> expressionFunctionTransducer,
+                                                                        Transducer<O, E> openingSignTransducer,
+                                                                        Transducer<O, E> closingSignTransducer,
                                                                         BiConsumer<O, String> biConsumer,
                                                                         ExceptionThrower<E> exceptionThrower){
 
@@ -30,18 +32,20 @@ public final class FunctionMachine<O, E extends Exception> extends FiniteStateMa
 
                 .build();
 
-        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer, exceptionThrower);
+        return new FunctionMachine<>(matrix, expressionFunctionTransducer, openingSignTransducer, closingSignTransducer,
+                biConsumer, exceptionThrower);
     }
 
 
     private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O, E> expressionFunctionTransducer,
+                            Transducer<O, E> openingSignTransducer, Transducer<O, E> closingSignTransducer,
                             BiConsumer<O, String> biConsumer, ExceptionThrower<E> exceptionThrower) {
         super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(FINISH, Transducer.autoTransition());
-        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
-        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(OPENING_BRACKET, openingSignTransducer);
+        registerTransducer(CLOSING_BRACKET, closingSignTransducer);
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
         registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer, exceptionThrower).named("Function name"));
         registerTransducer(EXPRESSION, expressionFunctionTransducer);

@@ -10,6 +10,7 @@ import com.teamdev.bazascript.interpreter.program.ProgramMachine;
 import com.teamdev.bazascript.interpreter.util.*;
 import com.teamdev.bazascript.interpreter.whileoperator.WhileOperatorExecutor;
 import com.teamdev.fsm.FiniteStateMachine;
+import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.machines.brackets.BracketsMachine;
 import com.teamdev.implementations.machines.expression.ExpressionMachine;
@@ -92,6 +93,8 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                 new FunctionFactoryExecutor<>(FunctionMachine.create(
                         new FunctionTransducer<>(FunctionHolderWithContext::addArgument, this, ScriptElement.NUMERIC_EXPRESSION)
                                 .named("Expression inside function"),
+                        Transducer.checkAndPassChar('('),
+                        Transducer.checkAndPassChar(')'),
                         FunctionHolderWithContext::setFunctionName,
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
@@ -138,6 +141,8 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
         executors.put(ScriptElement.PROCEDURE, () -> new FunctionExecutor(
                 new ProcedureFactoryExecutor<>(FunctionMachine.create(
                         new FunctionTransducer<>(FunctionHolderWithContext::addArgument, this, ScriptElement.EXPRESSION),
+                        Transducer.checkAndPassChar('('),
+                        Transducer.checkAndPassChar(')'),
                         FunctionHolderWithContext::setFunctionName,
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
