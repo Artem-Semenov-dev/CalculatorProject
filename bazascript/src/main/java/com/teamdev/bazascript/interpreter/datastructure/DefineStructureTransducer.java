@@ -5,7 +5,7 @@ import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.machines.function.FunctionMachine;
-import com.teamdev.implementations.machines.function.FunctionNameTransducer;
+import com.teamdev.implementations.machines.function.NameTransducer;
 
 import java.util.function.BiConsumer;
 
@@ -14,10 +14,12 @@ public class DefineStructureTransducer implements Transducer<DataStructureDefine
     public boolean doTransition(CharSequenceReader inputChain, DataStructureDefineContext outputChain) throws ExecutionException {
 
         FunctionMachine<DataStructureDefineContext, ExecutionException> defineStructureMachine = FunctionMachine.create(
-                new FunctionNameTransducer<>(
+                new NameTransducer<>(
                         DataStructureDefineContext::addFieldName, errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 }),
+                Transducer.checkAndPassChar('{'),
+                Transducer.checkAndPassChar('}'),
                 new BiConsumer<DataStructureDefineContext, String>() {
                     @Override
                     public void accept(DataStructureDefineContext dataStructureDefineContext, String s) {
