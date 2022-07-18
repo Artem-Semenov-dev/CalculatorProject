@@ -19,5 +19,6 @@ public enum ScriptElement {
     PROCEDURE,
     READ_VARIABLE,
     WHILE_OPERATOR,
-    TERNARY_OPERATOR
+    TERNARY_OPERATOR,
+    SWITCH_OPERATOR
 }

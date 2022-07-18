@@ -7,8 +7,12 @@ import com.teamdev.bazascript.interpreter.initvar.InitVarMachine;
 import com.teamdev.bazascript.interpreter.initvar.ternary.TernaryOperatorContext;
 import com.teamdev.bazascript.interpreter.initvar.ternary.TernaryOperatorMachine;
 import com.teamdev.bazascript.interpreter.program.ProgramMachine;
+import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
+import com.teamdev.bazascript.interpreter.switchoperator.SwitchOperatorContext;
+import com.teamdev.bazascript.interpreter.switchoperator.SwitchOperatorMachine;
 import com.teamdev.bazascript.interpreter.util.*;
 import com.teamdev.bazascript.interpreter.whileoperator.WhileOperatorExecutor;
+import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.identifier.IdentifierMachine;
@@ -155,6 +159,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         },
                         new ExecutorProgramElementTransducer(ScriptElement.WHILE_OPERATOR, this).named("While loop"),
+                        new ExecutorProgramElementTransducer(ScriptElement.SWITCH_OPERATOR, this),
                         new ExecutorProgramElementTransducer(ScriptElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this).named("Procedure"))));
 
@@ -175,6 +180,17 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
             TernaryOperatorContext ternaryOperatorContext = new TernaryOperatorContext(output);
 
             return ternaryOperatorMachine.run(inputChain, ternaryOperatorContext);
+        });
+
+        executors.put(ScriptElement.SWITCH_OPERATOR, () -> (inputChain, output) -> {
+
+            SwitchOperatorMachine switchOperatorMachine = SwitchOperatorMachine.create(this, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
+
+            SwitchOperatorContext switchOperatorContext = new SwitchOperatorContext(output);
+
+            return switchOperatorMachine.run(inputChain, switchOperatorContext);
         });
     }
 
