@@ -1,6 +1,7 @@
 package com.teamdev.implementations.type;
 
 public class DoubleValueVisitor implements ValueVisitor {
+
     private Double doubleValue;
 
     private boolean isDouble;
@@ -24,6 +25,16 @@ public class DoubleValueVisitor implements ValueVisitor {
 
         if (throwExceptionPermission) {
             throw new IllegalArgumentException("Type mismatch: expected double but boolean provided");
+        }
+
+        isDouble = false;
+    }
+
+    @Override
+    public void visit(DataStructureValue value) {
+
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected double but data structure provided");
         }
 
         isDouble = false;
