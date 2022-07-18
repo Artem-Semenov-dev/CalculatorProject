@@ -56,9 +56,9 @@ public class DataStructureValueVisitor implements ValueVisitor {
         return visitor.getFields();
     }
 
-    public static Boolean isDataSTructure(Value value){
+    public static Boolean isDataStructure(Value value){
 
-        DataStructureValueVisitor visitor = new DataStructureValueVisitor(true);
+        DataStructureValueVisitor visitor = new DataStructureValueVisitor(false);
 
         value.accept(visitor);
 

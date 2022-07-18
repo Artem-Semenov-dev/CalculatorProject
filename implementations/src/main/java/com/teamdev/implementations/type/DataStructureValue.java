@@ -19,4 +19,11 @@ public class DataStructureValue implements Value{
     public Map<String, Value> getFields() {
         return Collections.unmodifiableMap(fields);
     }
+
+    @Override
+    public String toString() {
+        return "DataStructureValue{" +
+                "fields=" + fields +
+                '}';
+    }
 }

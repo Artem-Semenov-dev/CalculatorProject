@@ -7,7 +7,7 @@ import com.teamdev.fsm.ExceptionThrower;
 import com.teamdev.fsm.FiniteStateMachine;
 import com.teamdev.fsm.Transducer;
 import com.teamdev.fsm.TransitionMatrix;
-import com.teamdev.implementations.machines.function.FunctionNameTransducer;
+import com.teamdev.implementations.machines.function.NameTransducer;
 
 import static com.teamdev.bazascript.interpreter.initvar.InitVarStates.*;
 
@@ -25,7 +25,7 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
 
         registerTransducer(ASSIGN, Transducer.checkAndPassChar('='));
 
-        registerTransducer(NAME, new FunctionNameTransducer<>(InitVarContext::setVariableName,
+        registerTransducer(NAME, new NameTransducer<>(InitVarContext::setVariableName,
                 errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 }).named("Variable name"));
