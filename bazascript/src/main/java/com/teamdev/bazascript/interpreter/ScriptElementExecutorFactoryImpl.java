@@ -1,12 +1,15 @@
 package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
+import com.teamdev.bazascript.interpreter.datastructure.DefineDataStructureExecutor;
+import com.teamdev.bazascript.interpreter.datastructure.FillDataStructureExecutor;
 import com.teamdev.bazascript.interpreter.executors.*;
 import com.teamdev.bazascript.interpreter.initvar.InitVarContext;
 import com.teamdev.bazascript.interpreter.initvar.InitVarMachine;
 import com.teamdev.bazascript.interpreter.initvar.ternary.TernaryOperatorContext;
 import com.teamdev.bazascript.interpreter.initvar.ternary.TernaryOperatorMachine;
 import com.teamdev.bazascript.interpreter.program.ProgramMachine;
+import com.teamdev.bazascript.interpreter.raeddatastructure.DataStructureReadExecutor;
 import com.teamdev.bazascript.interpreter.util.*;
 import com.teamdev.bazascript.interpreter.whileoperator.WhileOperatorExecutor;
 import com.teamdev.fsm.FiniteStateMachine;
@@ -69,9 +72,11 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
+                        new ExecutorProgramElementTransducer(ScriptElement.FILL_DATA_STRUCTURE, this).named("Fill data structure"),
                         new ExecutorProgramElementTransducer(ScriptElement.TERNARY_OPERATOR, this).named("Ternary operator"),
                         new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, this).named("Relational expression"),
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("Numeric expression"))));
+                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("Numeric expression")
+                )));
 
         executors.put(ScriptElement.OPERAND, () -> new NoSpecialActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(
@@ -81,6 +86,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                         new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this).named("Number"),
                         new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this).named("Brackets"),
                         new ExecutorProgramElementTransducer(ScriptElement.FUNCTION, this).named("Function"),
+                        new ExecutorProgramElementTransducer(ScriptElement.READ_DATA_STRUCTURE, this).named("Read data structure"),
                         new ExecutorProgramElementTransducer(ScriptElement.READ_VARIABLE, this).named("Read variable"))));
 
         executors.put(ScriptElement.BRACKETS, () -> new NoSpecialActionExecutor<>(
@@ -155,6 +161,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         },
                         new ExecutorProgramElementTransducer(ScriptElement.WHILE_OPERATOR, this).named("While loop"),
+                        new ExecutorProgramElementTransducer(ScriptElement.DEFINE_STRUCTURE, this).named("Define structure"),
                         new ExecutorProgramElementTransducer(ScriptElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this).named("Procedure"))));
 
@@ -176,6 +183,12 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
             return ternaryOperatorMachine.run(inputChain, ternaryOperatorContext);
         });
+
+        executors.put(ScriptElement.DEFINE_STRUCTURE, DefineDataStructureExecutor::new);
+
+        executors.put(ScriptElement.FILL_DATA_STRUCTURE, () -> new FillDataStructureExecutor(this));
+
+        executors.put(ScriptElement.READ_DATA_STRUCTURE, DataStructureReadExecutor::new);
     }
 
     @Override

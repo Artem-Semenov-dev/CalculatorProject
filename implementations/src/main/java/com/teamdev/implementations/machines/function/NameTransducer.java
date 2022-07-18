@@ -15,15 +15,15 @@ import java.util.function.BiConsumer;
  * that produce a name of function for {@link com.teamdev.implementations.datastructures.FunctionHolder} output.
  */
 
-public class FunctionNameTransducer<O, E extends Exception> implements Transducer<O, E> {
+public class NameTransducer<O, E extends Exception> implements Transducer<O, E> {
 
     private final BiConsumer<O, String> resultConsumer;
 
     private final ExceptionThrower<E> exceptionThrower;
 
-    private static final Logger logger = LoggerFactory.getLogger(FunctionNameTransducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(NameTransducer.class);
 
-    public FunctionNameTransducer(BiConsumer<O, String> resultConsumer, ExceptionThrower<E> exceptionThrower) {
+    public NameTransducer(BiConsumer<O, String> resultConsumer, ExceptionThrower<E> exceptionThrower) {
 
         this.resultConsumer = Preconditions.checkNotNull(resultConsumer);
 

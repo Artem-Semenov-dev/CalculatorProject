@@ -47,7 +47,7 @@ public final class FunctionMachine<O, E extends Exception> extends FiniteStateMa
         registerTransducer(OPENING_BRACKET, openingSignTransducer);
         registerTransducer(CLOSING_BRACKET, closingSignTransducer);
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
-        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer, exceptionThrower).named("Function name"));
+        registerTransducer(IDENTIFIER, new NameTransducer<>(biConsumer, exceptionThrower).named("Function name"));
         registerTransducer(EXPRESSION, expressionFunctionTransducer);
     }
 }

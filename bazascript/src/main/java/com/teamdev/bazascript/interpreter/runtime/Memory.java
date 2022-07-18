@@ -2,9 +2,12 @@ package com.teamdev.bazascript.interpreter.runtime;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.implementations.type.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * {@code Memory} is a class that used to store Double type variables.
@@ -12,7 +15,26 @@ import java.util.Map;
 
 public class Memory {
 
+    private static final Logger logger = LoggerFactory.getLogger(Memory.class);
+
     private final Map<String, Value> variables = new HashMap<>();
+
+    private final Map<String, Set<String>> structureTemplates = new HashMap<>();
+
+    public void addStructureTemplate(String structureName, Set<String> fields){
+
+        structureTemplates.put(structureName, fields);
+
+        if (logger.isInfoEnabled()){
+
+            logger.info("Put data structure template -> {}, with name -> {}", getTemplate(structureName), structureName);
+        }
+    }
+
+    public Set<String> getTemplate(String structureName){
+
+        return structureTemplates.get(structureName);
+    }
 
     public void setVariable(String identifier, Value value) {
 
