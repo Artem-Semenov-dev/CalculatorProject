@@ -29,6 +29,15 @@ public class BooleanValueVisitor implements ValueVisitor{
         isBoolean = true;
     }
 
+    @Override
+    public void visit(DataStructureValue value) {
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected boolean but data structure provided");
+        }
+
+        isBoolean = false;
+    }
+
     private boolean getBooleanValue(){
         return booleanValue;
     }
