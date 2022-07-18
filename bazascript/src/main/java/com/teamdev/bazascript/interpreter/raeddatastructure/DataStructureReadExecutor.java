@@ -5,6 +5,11 @@ import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.fsm.CharSequenceReader;
 
+/**
+ * {@code DataStructureReadExecutor} is an implementation of {@link ScriptElementExecutor}
+ * that create and run {@link DataStructureReadMachine}.
+ */
+
 public class DataStructureReadExecutor implements ScriptElementExecutor {
 
     @Override

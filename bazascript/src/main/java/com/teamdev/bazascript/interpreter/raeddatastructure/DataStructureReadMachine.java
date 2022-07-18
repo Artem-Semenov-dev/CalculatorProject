@@ -9,6 +9,11 @@ import com.teamdev.fsm.TransitionMatrix;
 
 import static com.teamdev.bazascript.interpreter.raeddatastructure.DataStructureReadStates.*;
 
+/**
+ * {@code DataStructureReadMachine} is an implementation of {@link FiniteStateMachine} which is intended to read
+ * data structure field referencing.
+ */
+
 public final class DataStructureReadMachine extends FiniteStateMachine<DataStructureReadStates, ScriptContext, ExecutionException> {
 
     public static DataStructureReadMachine create(ExceptionThrower<ExecutionException> exceptionThrower) {

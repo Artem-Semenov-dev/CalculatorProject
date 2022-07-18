@@ -8,7 +8,12 @@ import com.teamdev.fsm.identifier.IdentifierMachine;
 import com.teamdev.implementations.type.DataStructureValueVisitor;
 import com.teamdev.implementations.type.Value;
 
-public class DataStructureNameTransducer implements Transducer<ScriptContext, ExecutionException> {
+/**
+ * {@code DataStructureNameTransducer} is an implementation of {@link Transducer}
+ * that read data structure name and produce value of that data structure to {@link ScriptContext}.
+ */
+
+class DataStructureNameTransducer implements Transducer<ScriptContext, ExecutionException> {
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
 

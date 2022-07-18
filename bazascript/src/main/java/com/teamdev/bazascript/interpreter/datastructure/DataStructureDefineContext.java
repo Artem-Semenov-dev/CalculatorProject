@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * {@code DataStructureDefineContext} is an output chain that used for define data structure.
+ */
+
 class DataStructureDefineContext {
 
     private String structureName;

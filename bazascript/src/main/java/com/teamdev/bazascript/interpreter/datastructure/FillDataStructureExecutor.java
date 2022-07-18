@@ -10,6 +10,11 @@ import com.teamdev.implementations.machines.function.FunctionMachine;
 import com.teamdev.implementations.type.DataStructureValue;
 import com.teamdev.implementations.type.Value;
 
+/**
+ * {@code FillDataStructureExecutor} is an implementation of {@link ScriptElementExecutor}
+ * that create and run fillDataStructureMachine for fill template of data structure.
+ */
+
 public class FillDataStructureExecutor implements ScriptElementExecutor {
 
     private final ScriptElementExecutorFactory factory;

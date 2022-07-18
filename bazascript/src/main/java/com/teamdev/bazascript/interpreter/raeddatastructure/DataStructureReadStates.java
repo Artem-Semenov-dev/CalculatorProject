@@ -1,6 +1,10 @@
 package com.teamdev.bazascript.interpreter.raeddatastructure;
 
-public enum DataStructureReadStates {
+/**
+ * {@code DataStructureReadStates} enumeration that used in {@link DataStructureReadMachine}.
+ */
+
+enum DataStructureReadStates {
 
     START,
     DATA_STRUCTURE_NAME,

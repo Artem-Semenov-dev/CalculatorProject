@@ -11,7 +11,13 @@ import com.teamdev.implementations.type.Value;
 import java.util.Optional;
 import java.util.Set;
 
-public class DataStructureExpressionTransducer implements Transducer<DataStructureContext, ExecutionException> {
+
+/**
+ * {@code DataStructureExpressionTransducer} is an implementation of {@link Transducer}
+ * that produce a filed value in result of execution expression to {@link DataStructureContext}.
+ */
+
+class DataStructureExpressionTransducer implements Transducer<DataStructureContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 

@@ -8,6 +8,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * {@code DataStructureContext} is an implementation of {@link WithContext}.
+ * {@code DataStructureContext} can be used like output chain for fill data structure executor machine.
+ */
+
 public class DataStructureContext implements WithContext {
 
     private final ScriptContext scriptContext;

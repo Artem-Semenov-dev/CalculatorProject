@@ -8,6 +8,11 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.machines.function.FunctionMachine;
 import com.teamdev.implementations.machines.function.NameTransducer;
 
+/**
+ * {@code DefineDataStructureExecutor} is an implementation of {@link ScriptElementExecutor}
+ * that create and run defineStructureMachine that invaded to define templates of data structures.
+ */
+
 public class DefineDataStructureExecutor implements ScriptElementExecutor {
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {

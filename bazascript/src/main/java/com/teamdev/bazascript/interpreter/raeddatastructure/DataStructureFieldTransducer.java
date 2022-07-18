@@ -10,7 +10,12 @@ import com.teamdev.implementations.type.Value;
 
 import java.util.Map;
 
-public class DataStructureFieldTransducer implements Transducer<ScriptContext, ExecutionException> {
+/**
+ * {@code DataStructureFieldTransducer} is an implementation of {@link Transducer}
+ * that produce value of data structure field to {@link ScriptContext}.
+ */
+
+class DataStructureFieldTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
