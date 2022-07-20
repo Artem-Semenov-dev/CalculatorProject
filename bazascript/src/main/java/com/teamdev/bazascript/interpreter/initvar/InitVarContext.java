@@ -22,7 +22,7 @@ public class InitVarContext implements WithContext {
         this.scriptContext = scriptContext;
     }
 
-    String getVariableName() {
+    public String getVariableName() {
         return variableName;
     }
 
@@ -30,7 +30,7 @@ public class InitVarContext implements WithContext {
         this.variableName = Preconditions.checkNotNull(variableName);
     }
 
-    Value getVariableValue() {
+    public Value getVariableValue() {
         return variableValue;
     }
 
