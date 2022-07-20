@@ -4,13 +4,25 @@ import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.runtime.WithContext;
 import com.teamdev.implementations.type.Value;
 
-public class ForLoopContext implements WithContext {
+class ForLoopContext implements WithContext {
 
     private final ScriptContext scriptContext;
 
     private boolean condition;
 
     private Value initializedVariable;
+
+    private int savedPosition;
+
+    public int getSavedPosition() {
+
+        return savedPosition;
+    }
+
+    public void setSavedPosition(int savedPosition) {
+
+        this.savedPosition = savedPosition;
+    }
 
     public boolean condition() {
         return condition;
@@ -20,7 +32,7 @@ public class ForLoopContext implements WithContext {
         return initializedVariable;
     }
 
-    public void setConditionValue(boolean condition) {
+    void setConditionValue(boolean condition) {
         this.condition = condition;
     }
 
@@ -28,7 +40,7 @@ public class ForLoopContext implements WithContext {
         this.initializedVariable = initializedVariable;
     }
 
-    public ForLoopContext(ScriptContext scriptContext) {
+    ForLoopContext(ScriptContext scriptContext) {
         this.scriptContext = scriptContext;
     }
 
