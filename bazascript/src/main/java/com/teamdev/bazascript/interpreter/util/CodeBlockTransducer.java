@@ -7,11 +7,11 @@ import com.teamdev.fsm.Transducer;
 
 import java.util.List;
 
-public class StatementListInBracketsTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
+public class CodeBlockTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
-    public StatementListInBracketsTransducer(ScriptElementExecutorFactory factory) {
+    public CodeBlockTransducer(ScriptElementExecutorFactory factory) {
         this.factory = factory;
     }
 

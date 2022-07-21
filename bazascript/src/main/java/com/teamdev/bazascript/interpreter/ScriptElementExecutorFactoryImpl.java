@@ -2,6 +2,7 @@ package com.teamdev.bazascript.interpreter;
 
 import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.executors.*;
+import com.teamdev.bazascript.interpreter.forloop.ForLoopExecutor;
 import com.teamdev.bazascript.interpreter.program.ProgramMachine;
 import com.teamdev.bazascript.interpreter.util.*;
 import com.teamdev.bazascript.interpreter.whileoperator.WhileOperatorExecutor;
@@ -107,6 +108,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         },
                         new ExecutorProgramElementTransducer(ScriptElement.WHILE_OPERATOR, this).named("While loop"),
+                        new ExecutorProgramElementTransducer(ScriptElement.FOR_LOOP, this).named("For loop"),
                         new ExecutorProgramElementTransducer(ScriptElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this).named("Procedure")
                 )
@@ -121,6 +123,8 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
         executors.put(ScriptElement.WHILE_OPERATOR, () -> new WhileOperatorExecutor(this));
 
         executors.put(ScriptElement.TERNARY_OPERATOR, () -> new TernaryOperatorExecutor(this));
+
+        executors.put(ScriptElement.FOR_LOOP, () -> new ForLoopExecutor(this));
     }
 
     @Override
