@@ -1,5 +1,6 @@
 package com.teamdev.bazascript.interpreter.forloop;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
@@ -18,7 +19,7 @@ class UpdateVariableTransducer implements Transducer<ForLoopOutputChain, Executi
     private final ScriptElementExecutorFactory factory;
 
     UpdateVariableTransducer(ScriptElementExecutorFactory factory) {
-        this.factory = factory;
+        this.factory = Preconditions.checkNotNull(factory);
     }
 
     @Override

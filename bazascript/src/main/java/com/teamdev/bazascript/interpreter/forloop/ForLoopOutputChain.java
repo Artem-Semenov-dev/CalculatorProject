@@ -1,5 +1,6 @@
 package com.teamdev.bazascript.interpreter.forloop;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.runtime.WithContext;
 
@@ -24,7 +25,7 @@ class ForLoopOutputChain implements WithContext {
     private int updateVariablePosition;
 
     ForLoopOutputChain(ScriptContext scriptContext) {
-        this.scriptContext = scriptContext;
+        this.scriptContext = Preconditions.checkNotNull(scriptContext);
     }
 
     boolean getConditionValue() {

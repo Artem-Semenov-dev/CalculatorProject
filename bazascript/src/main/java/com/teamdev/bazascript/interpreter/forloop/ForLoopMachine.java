@@ -17,7 +17,7 @@ import static com.teamdev.bazascript.interpreter.forloop.ForLoopMachineStates.*;
  * <a href =https://www.w3schools.com/java/java_for_loop.asp>click here</a>.
  */
 
-public final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForLoopOutputChain, ExecutionException> {
+final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForLoopOutputChain, ExecutionException> {
 
     private ForLoopMachine(TransitionMatrix<ForLoopMachineStates> matrix, ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower, boolean allowedSkippingWhitespaces) {
         super(matrix, exceptionThrower);

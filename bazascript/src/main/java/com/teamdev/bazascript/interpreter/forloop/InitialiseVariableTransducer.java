@@ -1,5 +1,6 @@
 package com.teamdev.bazascript.interpreter.forloop;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.bazascript.interpreter.util.ExecutionException;
 import com.teamdev.bazascript.interpreter.util.ScriptElement;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
@@ -17,7 +18,7 @@ class InitialiseVariableTransducer implements Transducer<ForLoopOutputChain, Exe
     private final ScriptElementExecutorFactory factory;
 
     InitialiseVariableTransducer(ScriptElementExecutorFactory factory) {
-        this.factory = factory;
+        this.factory = Preconditions.checkNotNull(factory);
     }
 
     @Override
