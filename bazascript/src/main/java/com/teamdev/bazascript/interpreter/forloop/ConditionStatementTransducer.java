@@ -9,7 +9,14 @@ import com.teamdev.fsm.Transducer;
 import com.teamdev.implementations.type.BooleanValueVisitor;
 import com.teamdev.implementations.type.Value;
 
-public class ConditionStatementTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+/**
+ * {@code ConditionStatementTransducer} is an implementation of {@link Transducer}
+ * that produce value of loop condition to {@link ForLoopOutputChain}.
+ * Also {@code ConditionStatementTransducer} gives permission to only parsing input chain
+ * in case of value of loop condition is false.
+ */
+
+class ConditionStatementTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
@@ -25,7 +32,7 @@ public class ConditionStatementTransducer implements Transducer<ForLoopOutputCha
 
         outputChain.getScriptContext().systemStack().create();
 
-        if (relationalExecutor.execute(inputChain, outputChain.getScriptContext())){
+        if (relationalExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
             if (outputChain.isParseOnly()) {
                 return true;
@@ -39,7 +46,7 @@ public class ConditionStatementTransducer implements Transducer<ForLoopOutputCha
 
                 outputChain.setConditionValue(BooleanValueVisitor.read(conditionValue));
 
-                if (!outputChain.getConditionValue()){
+                if (!outputChain.getConditionValue()) {
 
                     outputChain.parseOnly();
                 }

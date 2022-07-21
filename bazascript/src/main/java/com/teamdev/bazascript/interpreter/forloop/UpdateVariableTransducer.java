@@ -7,22 +7,28 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
-public class UpdateVariableTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+/**
+ * {@code UpdateVariableTransducer} is an implementation of {@link Transducer}
+ * that create and execute {@link ScriptElementExecutor} for statement that must update variable in for loop.
+ * Also, it jumps to condition of for loop, to see details go to {@link ForLoopOutputChain}.
+ */
+
+class UpdateVariableTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
-    public UpdateVariableTransducer(ScriptElementExecutorFactory factory) {
+    UpdateVariableTransducer(ScriptElementExecutorFactory factory) {
         this.factory = factory;
     }
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ForLoopOutputChain outputChain) throws ExecutionException {
 
-        ScriptElementExecutor updateVariableExecutor = factory.create(ScriptElement.INIT_VAR);
+        ScriptElementExecutor updateVariableExecutor = factory.create(ScriptElement.STATEMENT);
 
-        if (updateVariableExecutor.execute(inputChain, outputChain.getScriptContext())){
+        if (updateVariableExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            if (outputChain.isParseOnly()){
+            if (outputChain.isParseOnly()) {
 
                 return true;
             }

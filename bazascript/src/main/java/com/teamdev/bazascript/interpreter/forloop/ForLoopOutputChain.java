@@ -3,6 +3,14 @@ package com.teamdev.bazascript.interpreter.forloop;
 import com.teamdev.bazascript.interpreter.runtime.ScriptContext;
 import com.teamdev.bazascript.interpreter.runtime.WithContext;
 
+/**
+ * {@code ForLoopOutputChain} is an implementation of {@link WithContext}
+ * which used like output chain for {@link ForLoopMachine}.
+ * It stores condition statement position and statement for updating variable position of for loop.
+ * {@link ForLoopMachine} need condition statement position to be stored for possibility to cycle the loop body.
+ * Position of statement that update variable is needed for execute that statement after the body of loop was executed.
+ */
+
 class ForLoopOutputChain implements WithContext {
 
     private final ScriptContext scriptContext;
@@ -15,6 +23,10 @@ class ForLoopOutputChain implements WithContext {
 
     private int updateVariablePosition;
 
+    ForLoopOutputChain(ScriptContext scriptContext) {
+        this.scriptContext = scriptContext;
+    }
+
     boolean getConditionValue() {
         return conditionValue;
     }
@@ -23,25 +35,23 @@ class ForLoopOutputChain implements WithContext {
         this.conditionValue = conditionValue;
     }
 
-    void parseOnly(){
+    void parseOnly() {
 
         if (!initialParsingStatus) {
             scriptContext.setParsingPermission(true);
         }
     }
 
-    void prohibitParseOnly(){
+    void prohibitParseOnly() {
 
         if (!initialParsingStatus) {
             scriptContext.setParsingPermission(false);
         }
     }
 
-
     void setInitialParsingStatus(boolean initialParcingStatus) {
         this.initialParsingStatus = initialParcingStatus;
     }
-
 
     int getConditionPosition() {
 
@@ -59,11 +69,6 @@ class ForLoopOutputChain implements WithContext {
 
     void setUpdateVariablePosition(int updateVariablePosition) {
         this.updateVariablePosition = updateVariablePosition;
-    }
-
-
-    ForLoopOutputChain(ScriptContext scriptContext) {
-        this.scriptContext = scriptContext;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package com.teamdev.bazascript.interpreter.forloop;
 
-public enum ForLoopStates {
+/**
+ * {@code ForLoopStates} is an enumeration of states that used in {@link ForLoopMachine}.
+ */
+
+enum ForLoopMachineStates {
 
     START,
     FINISH,

@@ -6,6 +6,11 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutor;
 import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 
+/**
+ * {@code ForLoopExecutor} is an implementation of {@link ScriptElementExecutor}
+ * that create and run {@link ForLoopMachine}.
+ */
+
 public class ForLoopExecutor implements ScriptElementExecutor {
 
     private final ScriptElementExecutorFactory factory;
@@ -17,7 +22,7 @@ public class ForLoopExecutor implements ScriptElementExecutor {
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
-        ForLoopMachine forLoopMachine =  ForLoopMachine.create(factory, errorMessage -> {
+        ForLoopMachine forLoopMachine = ForLoopMachine.create(factory, errorMessage -> {
             throw new ExecutionException(errorMessage);
         });
 

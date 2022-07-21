@@ -7,7 +7,13 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
-public class ParseUpdateVariableStatementTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+/**
+ * {@code ParseUpdateVariableStatementTransducer} is an implementation of {@link Transducer}
+ * that create and execute {@link ScriptElementExecutor} for statement that must update variable in for loop.
+ * This transducer can only parse statement and save it position, to see details go to {@link ForLoopOutputChain}.
+ */
+
+class ParseUpdateVariableStatementTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
@@ -20,11 +26,11 @@ public class ParseUpdateVariableStatementTransducer implements Transducer<ForLoo
 
         outputChain.parseOnly();
 
-        ScriptElementExecutor updateVariableExecutor = factory.create(ScriptElement.INIT_VAR);
+        ScriptElementExecutor updateVariableExecutor = factory.create(ScriptElement.STATEMENT);
 
         outputChain.setUpdateVariablePosition(inputChain.position());
 
-        if (updateVariableExecutor.execute(inputChain, outputChain.getScriptContext())){
+        if (updateVariableExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
             if (outputChain.getConditionValue()) {
 

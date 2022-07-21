@@ -7,7 +7,12 @@ import com.teamdev.bazascript.interpreter.util.ScriptElementExecutorFactory;
 import com.teamdev.fsm.CharSequenceReader;
 import com.teamdev.fsm.Transducer;
 
-public class InitialiseVariableTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+/**
+ * {@code InitialiseVariableTransducer} is an implementation of {@link Transducer} that
+ * create and execute {@link ScriptElementExecutor} for variable initialisation.
+ */
+
+class InitialiseVariableTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
